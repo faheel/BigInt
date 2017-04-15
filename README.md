@@ -1,2 +1,2 @@
-# Big-Integer
-BigInteger class for C++
+# BigInt
+Arbitrary-sized integer class for C++
