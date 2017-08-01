@@ -64,24 +64,24 @@ class BigInt {
         BigInt operator--(int); // post-decrement   TODO
 
         // Relational operators:
-        bool operator==(const BigInt&) const;
-        bool operator!=(const BigInt&) const;
         bool operator<(const BigInt&) const;
         bool operator>(const BigInt&) const;
         bool operator<=(const BigInt&) const;
         bool operator>=(const BigInt&) const;
-        bool operator==(const long long&) const;
-        bool operator!=(const long long&) const;
+        bool operator==(const BigInt&) const;
+        bool operator!=(const BigInt&) const;
         bool operator<(const long long&) const;
         bool operator>(const long long&) const;
         bool operator<=(const long long&) const;
         bool operator>=(const long long&) const;
-        bool operator==(const std::string&) const;
-        bool operator!=(const std::string&) const;
+        bool operator==(const long long&) const;
+        bool operator!=(const long long&) const;
         bool operator<(const std::string&) const;
         bool operator>(const std::string&) const;
         bool operator<=(const std::string&) const;
         bool operator>=(const std::string&) const;
+        bool operator==(const std::string&) const;
+        bool operator!=(const std::string&) const;
 
         // I/O stream operators:
         friend std::istream& operator>>(std::istream&, BigInt&);
