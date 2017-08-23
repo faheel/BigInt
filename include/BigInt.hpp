@@ -1,3 +1,9 @@
+/*
+    BigInt
+    ------
+    Definition for the BigInt class.
+*/
+
 #ifndef BIG_INT_HPP
 #define BIG_INT_HPP
 
