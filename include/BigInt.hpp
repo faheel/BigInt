@@ -20,8 +20,8 @@ class BigInt {
         BigInt& operator=(const std::string&);
 
         // Unary arithmetic operators:
-        BigInt operator+() const;   // unary +  TODO
-        BigInt operator-() const;   // unary -  TODO
+        BigInt operator+() const;   // unary +
+        BigInt operator-() const;   // unary -
 
         // Binary arithmetic operators:
         BigInt operator+(const BigInt&) const;  // TODO
