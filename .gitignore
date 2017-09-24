@@ -3,3 +3,6 @@ bin
 
 # Intermediate build files
 build
+
+# Release files
+release
