@@ -33,7 +33,7 @@ DEPENDENCIES := $(patsubst test/%.cpp, build/%.d, $(SOURCES))
 all: dirs $(EXECUTABLES)
 
 build/%.o: test/%.cpp
-	printf '\e[94m%s\e[0m%s' 'Compiling test' ': $@ ... '
+	printf '\e[94m%s\e[0m%s' 'Compiling test ' ': $@ ... '
 	$(CXX) -c $(CXXFLAGS) $(INCLUDES) -o $@ $<
 	printf '\e[92m%s\e[0m\n' 'Done!'
 
@@ -44,7 +44,7 @@ bin/%: build/%.o
 
 .PHONY: test
 test: dirs $(EXECUTABLES)
-	find . -type f -name "*.test" -exec {} \;
+	find * -name *.test -exec bash -c "echo {}:; ./{}" \;
 
 .PHONY: dirs
 dirs:
