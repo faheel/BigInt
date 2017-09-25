@@ -7,19 +7,19 @@
 
 ## Basic usage
 1. Download the [single-include header file](../../releases) to a location under
-  your include path. Then `#include` it in your code:
-  ```C++
-  #include "BigInt.hpp"   // the actual path may vary
-  ```
+    your include path. Then `#include` it in your code:
+    ```C++
+    #include "BigInt.hpp"   // the actual path may vary
+    ```
 
 1. Create objects of the `BigInt` class, and do what you got to do!
-  ```C++
-  BigInt num1 = 1234567890;
-  BigInt num2 = "12345678901234567890123456789012345678901234567890";
+    ```C++
+    BigInt num1 = 1234567890;
+    BigInt num2 = "12345678901234567890123456789012345678901234567890";
 
-  std::cout << num1 * num2 << "\n";
-  // Output: 15241578751714678875171467887517146788751714678875019052100
-  ```
+    std::cout << num1 * num2 << "\n";
+    // Output: 15241578751714678875171467887517146788751714678875019052100
+    ```
 
 ## Features
 ### Operators
