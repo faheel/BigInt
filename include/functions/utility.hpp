@@ -4,6 +4,9 @@
     ===========================================================================
 */
 
+#ifndef BIG_INT_UTILITY_FUNCTIONS_HPP
+#define BIG_INT_UTILITY_FUNCTIONS_HPP
+
 
 /*
     is_valid_number
@@ -29,3 +32,5 @@ bool is_valid_number(const std::string& num) {
 void notify_invalid_input(const std::string& input) {
     std::cerr << "Invalid input! Expected an integer, got \'" << input << "\'.\n";
 }
+
+#endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
