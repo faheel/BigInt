@@ -10,10 +10,8 @@ TEST_CASE("Constructors", "[constructors]") {
     BigInt num1;
     BigInt num2(0);
     BigInt num3("0");
-    // TODO:    BigInt num4 = "0";
 
     REQUIRE(num1 == 0);
     REQUIRE(num2 == num1);
     REQUIRE(num3 == num2);
-    // TODO:    REQUIRE(num4 == num3);
 }

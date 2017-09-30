@@ -8,7 +8,7 @@
 #define BIG_INT_CONSTRUCTORS_HPP
 
 #include "BigInt.hpp"
-#include "utils.hpp"
+#include "functions/utility.hpp"
 
 
 /*
