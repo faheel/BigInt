@@ -1,11 +1,13 @@
 #!/bin/sh
 
-files="BigInt.hpp \
-utils.hpp \
+header_files="BigInt.hpp \
+functions/utility.hpp \
 constructors/constructors.hpp \
 operators/assignment.hpp \
-operators/relational.hpp \
 operators/unary_arithmetic.hpp \
+operators/relational.hpp \
+functions/math.hpp \
+operators/binary_arithmetic.hpp \
 operators/io_stream.hpp"
 
 release_dir="../release"
@@ -16,6 +18,10 @@ rm -f "$release_file"
 
 comment="\
 /*\n\
+    BigInt\n\
+    ------\n\
+    Arbitrary-sized integer class for C++.\n\
+    \n\
     Version: $1\n\
     Author: Syed Faheel Ahmad\n\
     License: MIT\n\
@@ -24,7 +30,7 @@ comment="\
 
 printf "$comment" >> "$release_file"
 
-for file in $files
+for file in $header_files
 do
     cat "../include/$file" >> "$release_file"
     printf "\n\n" >> "$release_file"
