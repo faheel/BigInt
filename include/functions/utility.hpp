@@ -33,4 +33,23 @@ void notify_invalid_input(const std::string& input) {
     std::cerr << "Invalid input! Expected an integer, got \'" << input << "\'.\n";
 }
 
+
+/*
+    strip_leading_zeroes
+    --------------------
+    Strip the leading zeroes from a number represented as a string.
+*/
+
+void strip_leading_zeroes(std::string& num) {
+    size_t i;
+    for (i = 0; i < num.size(); i++)
+        if (num[i] != '0')
+            break;
+
+    if (i == num.size())
+        num = "0";
+    else
+        num = num.substr(i);
+}
+
 #endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
