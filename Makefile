@@ -44,7 +44,7 @@ bin/%: build/%.o
 
 .PHONY: test
 test: dirs $(EXECUTABLES)
-	find * -name *.test -exec bash -c "echo {}:; ./{}" \;
+	find * -name *.test -exec sh -c "echo {}:; ./{}" \;
 
 .PHONY: dirs
 dirs:
