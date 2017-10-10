@@ -65,10 +65,10 @@ class BigInt {
         BigInt& operator%=(const std::string&);   // TODO
 
         // Increment and decrement operators:
-        BigInt& operator++();   // pre-increment    TODO
-        BigInt& operator--();   // pre-decrement    TODO
-        BigInt operator++(int); // post-increment   TODO
-        BigInt operator--(int); // post-decrement   TODO
+        BigInt& operator++();       // pre-increment
+        BigInt& operator--();       // pre-decrement
+        BigInt operator++(int);     // post-increment
+        BigInt operator--(int);     // post-decrement
 
         // Relational operators:
         bool operator<(const BigInt&) const;
