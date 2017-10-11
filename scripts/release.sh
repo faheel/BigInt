@@ -8,6 +8,8 @@ operators/unary_arithmetic.hpp \
 operators/relational.hpp \
 functions/math.hpp \
 operators/binary_arithmetic.hpp \
+operators/arithmetic_assignment.hpp \
+operators/increment_decrement.hpp \
 operators/io_stream.hpp"
 
 release_dir="../release"
