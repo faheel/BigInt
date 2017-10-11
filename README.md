@@ -55,6 +55,30 @@
       big_int_1 = big_int_2 - "123456789012345678901234567890";
       big_int_1 = big_int_2 - big_int_3;
       ```
+* #### Arithmetic-assignment
+  * #### `+=`
+    ```C++
+    my_big_int += 1234567890;
+    my_big_int += "123456789012345678901234567890";
+    my_big_int += my_other_big_int;
+    ```
+  * #### `-=`
+    ```C++
+    my_big_int -= 1234567890;
+    my_big_int -= "123456789012345678901234567890";
+    my_big_int -= my_other_big_int;
+    ```
+* #### Increment and decrement
+  * #### `++`
+    ```C++
+    some_big_int = ++my_big_int;   // pre-increment
+    some_big_int = my_big_int++;   // post-increment
+    ```
+  * #### `--`
+    ```C++
+    some_big_int = --my_big_int;   // pre-decrement
+    some_big_int = my_big_int--;   // post-decrement
+    ```
 * #### Relational
   * #### `<`
     ```C++
