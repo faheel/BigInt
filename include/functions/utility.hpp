@@ -7,6 +7,8 @@
 #ifndef BIG_INT_UTILITY_FUNCTIONS_HPP
 #define BIG_INT_UTILITY_FUNCTIONS_HPP
 
+#include <tuple>
+
 
 /*
     is_valid_number
@@ -50,6 +52,56 @@ void strip_leading_zeroes(std::string& num) {
         num = "0";
     else
         num = num.substr(i);
+}
+
+
+/*
+    add_leading_zeroes
+    ------------------
+    Adds a given number of leading zeroes to a string-represented integer `num`.
+*/
+
+void add_leading_zeroes(std::string& num, size_t num_zeroes) {
+    num = std::string(num_zeroes, '0') + num;
+}
+
+
+/*
+    add_trailing_zeroes
+    -------------------
+    Adds a given number of trailing zeroes to a string-represented integer `num`.
+*/
+
+void add_trailing_zeroes(std::string& num, size_t num_zeroes) {
+    num += std::string(num_zeroes, '0');
+}
+
+
+/*
+    get_larger_and_smaller
+    ----------------------
+    Identifies the given string-represented integers as `larger` and `smaller`,
+    padding the smaller number with leading zeroes to make it equal in length to
+    the larger number.
+*/
+
+std::tuple<std::string, std::string> get_larger_and_smaller(const std::string& num1,
+        const std::string& num2) {
+    std::string larger, smaller;
+    if (num1.size() > num2.size() or
+        (num1.size() == num2.size() and num1 > num2)) {
+        larger = num1;
+        smaller = num2;
+    }
+    else {
+        larger = num2;
+        smaller = num1;
+    }
+
+    // pad the smaller number with zeroes
+    add_leading_zeroes(smaller, larger.size() - smaller.size());
+
+    return std::make_tuple(larger, smaller);
 }
 
 #endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
