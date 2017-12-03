@@ -50,17 +50,17 @@ class BigInt {
         // Arithmetic-assignment operators:
         BigInt& operator+=(const BigInt&);
         BigInt& operator-=(const BigInt&);
-        BigInt& operator*=(const BigInt&);  // TODO
+        BigInt& operator*=(const BigInt&);
         BigInt& operator/=(const BigInt&);  // TODO
         BigInt& operator%=(const BigInt&);  // TODO
         BigInt& operator+=(const long long&);
         BigInt& operator-=(const long long&);
-        BigInt& operator*=(const long long&);   // TODO
+        BigInt& operator*=(const long long&);
         BigInt& operator/=(const long long&);   // TODO
         BigInt& operator%=(const long long&);   // TODO
         BigInt& operator+=(const std::string&);
         BigInt& operator-=(const std::string&);
-        BigInt& operator*=(const std::string&);   // TODO
+        BigInt& operator*=(const std::string&);
         BigInt& operator/=(const std::string&);   // TODO
         BigInt& operator%=(const std::string&);   // TODO
 
