@@ -33,17 +33,17 @@ class BigInt {
         // Binary arithmetic operators:
         BigInt operator+(const BigInt&) const;
         BigInt operator-(const BigInt&) const;
-        BigInt operator*(const BigInt&) const;  // TODO
+        BigInt operator*(const BigInt&) const;
         BigInt operator/(const BigInt&) const;  // TODO
         BigInt operator%(const BigInt&) const;  // TODO
         BigInt operator+(const long long&) const;
         BigInt operator-(const long long&) const;
-        BigInt operator*(const long long&) const;   // TODO
+        BigInt operator*(const long long&) const;
         BigInt operator/(const long long&) const;   // TODO
         BigInt operator%(const long long&) const;   // TODO
         BigInt operator+(const std::string&) const;
         BigInt operator-(const std::string&) const;
-        BigInt operator*(const std::string&) const;   // TODO
+        BigInt operator*(const std::string&) const;
         BigInt operator/(const std::string&) const;   // TODO
         BigInt operator%(const std::string&) const;   // TODO
 
