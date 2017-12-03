@@ -9,6 +9,7 @@
 
 #include <climits>
 #include <cmath>
+#include <string>
 
 #include "BigInt.hpp"
 #include "constructors/constructors.hpp"
@@ -151,8 +152,8 @@ BigInt BigInt::operator*(const BigInt& num) const {
      return *this;
 
     BigInt product;
-    if (*this <= FLOOR_SQRT_LONG_LONG_MAX and num <= FLOOR_SQRT_LONG_LONG_MAX)
-        product = stoll(this->value) * stoll(num.value);
+    if (abs(*this) <= FLOOR_SQRT_LONG_LONG_MAX and abs(num) <= FLOOR_SQRT_LONG_LONG_MAX)
+        product = std::stoll(this->value) * std::stoll(num.value);
     else {
         // identify the numbers as `larger` and `smaller`
         std::string larger, smaller;
