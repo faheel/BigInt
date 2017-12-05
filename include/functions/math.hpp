@@ -11,22 +11,19 @@
 /*
     abs
     ---
-    Returns the absolute value of a BigInt
+    Returns the absolute value of a BigInt.
 */
 
 BigInt abs(const BigInt& num) {
-    if (num < 0)
-        return -num;
-
-    return num;
+    return num < 0 ? -num : num;
 }
 
 
 /*
-    pow10
-    -----
-    Returns the value of 10^exponent.
-    NOTE: exponent should be a non-negative integer.
+    big_pow10
+    ---------
+    Returns a BigInt equal to 10^exponent.
+    NOTE: `exponent` should be a non-negative integer.
 */
 
 BigInt big_pow10(size_t exponent) {
