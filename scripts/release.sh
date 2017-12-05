@@ -12,11 +12,13 @@ operators/arithmetic_assignment.hpp \
 operators/increment_decrement.hpp \
 operators/io_stream.hpp"
 
-release_dir="../release"
+release_dir="release"
 release_file="$release_dir/BigInt.hpp"
 
 mkdir -p "$release_dir"
 rm -f "$release_file"
+
+read -p "Enter version to release: " version
 
 comment="\
 /*\n\
@@ -24,7 +26,8 @@ comment="\
     ------\n\
     Arbitrary-sized integer class for C++.\n\
     \n\
-    Version: $1\n\
+    Version: $version\n\
+    Released on: $(date +"%c")\n\
     Author: Syed Faheel Ahmad\n\
     License: MIT\n\
     Project on GitHub: https://github.com/faheel/Big-Int-Cpp\n\
@@ -34,7 +37,7 @@ printf "$comment" >> "$release_file"
 
 for file in $header_files
 do
-    cat "../include/$file" >> "$release_file"
+    cat "include/$file" >> "$release_file"
     printf "\n\n" >> "$release_file"
 done
 
