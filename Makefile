@@ -46,6 +46,10 @@ bin/%: build/%.o
 test: dirs $(EXECUTABLES)
 	find * -name *.test -exec sh -c "echo {}:; ./{}" \;
 
+.PHONY: release
+release:
+	scripts/release.sh
+
 .PHONY: dirs
 dirs:
 	mkdir -p $(patsubst %, build/%, $(DIRS)) $(patsubst %, bin/%, $(DIRS))
