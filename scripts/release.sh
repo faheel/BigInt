@@ -27,10 +27,10 @@ comment="\
     Arbitrary-sized integer class for C++.\n\
     \n\
     Version: $version\n\
-    Released on: $(date +"%c")\n\
-    Author: Syed Faheel Ahmad\n\
-    License: MIT\n\
+    Released on: $(date +'%d %B %Y %R %Z')\n\
+    Author: Syed Faheel Ahmad (faheel@live.in)\n\
     Project on GitHub: https://github.com/faheel/Big-Int-Cpp\n\
+    License: MIT\n\
 */\n\n"
 
 printf "$comment" >> "$release_file"
