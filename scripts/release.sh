@@ -29,7 +29,7 @@ comment="\
     Version: $version\n\
     Released on: $(date +'%d %B %Y %R %Z')\n\
     Author: Syed Faheel Ahmad (faheel@live.in)\n\
-    Project on GitHub: https://github.com/faheel/Big-Int-Cpp\n\
+    Project on GitHub: https://github.com/faheel/BigInt\n\
     License: MIT\n\
 */\n\n"
 

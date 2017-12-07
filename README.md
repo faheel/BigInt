@@ -144,7 +144,7 @@
   * #### `>>`
     ```C++
     std::cin >> big_int_1 >> big_int_2;
-    input_file >> my_big_int >> big_int_2;
+    input_file >> big_int_1 >> big_int_2;
     ```
   * #### `<<`
     ```C++
@@ -166,4 +166,4 @@
 ## License
 This project is licensed under the terms of the [MIT license](LICENSE).
 
-[release-link]: https://github.com/faheel/Big-Int-Cpp/releases
+[release-link]: https://github.com/faheel/BigInt/releases
