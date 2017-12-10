@@ -3,6 +3,6 @@
 tests=$(find * -name *.test)
 for test in $tests
 do
-    printf '\e[94m%s\e[0m%s\n' $test ':'
-    $test
+    printf '%s:\n' $test
+    $test -r compact
 done
