@@ -1,10 +1,8 @@
-#define CATCH_CONFIG_MAIN
-
 #include "constructors/constructors.hpp"
 #include "operators/io_stream.hpp"
 #include "operators/relational.hpp"
-#include "third_party/catch.hpp"
 
+#include "third_party/catch.hpp"
 
 TEST_CASE("Constructors", "[constructors]") {
     BigInt num1;

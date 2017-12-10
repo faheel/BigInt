@@ -1,9 +1,8 @@
-#define CATCH_CONFIG_MAIN
-
 #include "constructors/constructors.hpp"
 #include "operators/assignment.hpp"
 #include "operators/io_stream.hpp"
 #include "operators/relational.hpp"
+
 #include "third_party/catch.hpp"
 
 

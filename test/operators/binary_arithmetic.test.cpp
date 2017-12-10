@@ -1,5 +1,3 @@
-#define CATCH_CONFIG_MAIN
-
 #include <random>
 
 #include "constructors/constructors.hpp"
@@ -7,6 +5,7 @@
 #include "operators/io_stream.hpp"
 #include "operators/relational.hpp"
 #include "operators/binary_arithmetic.hpp"
+
 #include "third_party/catch.hpp"
 
 
