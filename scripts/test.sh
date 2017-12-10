@@ -1,7 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-tests=$(find * -name *.test)
-for test in $tests
+for test in $(find * -name *.test)
 do
     printf '%s:\n' $test
     $test -r compact
