@@ -1,24 +1,14 @@
-#!/bin/sh
-
-header_files="BigInt.hpp \
-functions/utility.hpp \
-constructors/constructors.hpp \
-operators/assignment.hpp \
-operators/unary_arithmetic.hpp \
-operators/relational.hpp \
-functions/math.hpp \
-operators/binary_arithmetic.hpp \
-operators/arithmetic_assignment.hpp \
-operators/increment_decrement.hpp \
-operators/io_stream.hpp"
+#!/bin/bash
 
 release_dir="release"
 release_file="$release_dir/BigInt.hpp"
 
+# create release directory, if it doesn't exist
 mkdir -p "$release_dir"
+# remove previous release file, if it exists
 rm -f "$release_file"
 
-read -p "Enter version to release: " version
+read -p "Enter release version: " version
 
 comment="\
 /*\n\
@@ -35,6 +25,19 @@ comment="\
 
 printf "$comment" >> "$release_file"
 
+# topologically sorted list of header files
+header_files="BigInt.hpp \
+    functions/utility.hpp \
+    constructors/constructors.hpp \
+    operators/assignment.hpp \
+    operators/unary_arithmetic.hpp \
+    operators/relational.hpp \
+    functions/math.hpp \
+    operators/binary_arithmetic.hpp \
+    operators/arithmetic_assignment.hpp \
+    operators/increment_decrement.hpp \
+    operators/io_stream.hpp"
+
 for file in $header_files
 do
     cat "include/$file" >> "$release_file"
@@ -42,9 +45,9 @@ do
 done
 
 patterns=("#ifndef *" \
-"#endif *" \
-"#define *" \
-"#include \"*\"")
+    "#endif *" \
+    "#define *" \
+    "#include \"*\"")
 
 for pattern in "${patterns[@]}"
 do
