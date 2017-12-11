@@ -37,19 +37,12 @@ header_files="BigInt.hpp \
     operators/arithmetic_assignment.hpp \
     operators/increment_decrement.hpp \
     operators/io_stream.hpp"
-
+# append the contents of each header file to the release file
 for file in $header_files
 do
     cat "include/$file" >> "$release_file"
     printf "\n\n" >> "$release_file"
 done
 
-patterns=("#ifndef *" \
-    "#endif *" \
-    "#define *" \
-    "#include \"*\"")
-
-for pattern in "${patterns[@]}"
-do
-    sed -i "/$pattern/d" "$release_file"
-done
+# delete includes for non-standard header files from the release file
+sed -i "/#include \"*\"/d" "$release_file"
