@@ -235,12 +235,12 @@ std::tuple<BigInt, BigInt> divide(const BigInt& dividend, const BigInt& divisor)
 */
 
 BigInt BigInt::operator/(const BigInt& num) const {
-    BigInt dividend = abs(*this);
-    BigInt divisor = abs(num);
+    BigInt abs_dividend = abs(*this);
+    BigInt abs_divisor = abs(num);
 
     if (num == 0)
         throw std::logic_error("Attempted division by zero");
-    if (dividend < divisor)
+    if (abs_dividend < abs_divisor)
         return BigInt(0);
     if (num == 1)
         return *this;
@@ -248,33 +248,33 @@ BigInt BigInt::operator/(const BigInt& num) const {
         return -(*this);
 
     BigInt quotient;
-    if (dividend <= LONG_LONG_MAX and divisor <= LONG_LONG_MAX)
-        quotient = std::stoll(dividend.value) / std::stoll(divisor.value);
+    if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
+        quotient = std::stoll(abs_dividend.value) / std::stoll(abs_divisor.value);
     else {
         quotient.value = "";    // the value is cleared as digits will be appended
         BigInt chunk, q, r;
         size_t chunk_index = 0;
-        r.value = dividend.value.substr(chunk_index, divisor.value.size() - 1);
-        chunk_index = divisor.value.size() - 1;
-        while (chunk_index < dividend.value.size()) {
-            chunk.value = r.value.append(1, dividend.value[chunk_index]);
+        r.value = abs_dividend.value.substr(chunk_index, abs_divisor.value.size() - 1);
+        chunk_index = abs_divisor.value.size() - 1;
+        while (chunk_index < abs_dividend.value.size()) {
+            chunk.value = r.value.append(1, abs_dividend.value[chunk_index]);
             strip_leading_zeroes(chunk.value);
             chunk_index++;
-            while (chunk < divisor) {
+            while (chunk < abs_divisor) {
                 quotient.value += "0";
-                if (chunk_index < dividend.value.size()) {
-                    chunk.value.append(1, dividend.value[chunk_index]);
+                if (chunk_index < abs_dividend.value.size()) {
+                    chunk.value.append(1, abs_dividend.value[chunk_index]);
                     chunk_index++;
                 }
                 else
                     break;
             }
-            if (chunk == divisor) {
+            if (chunk == abs_divisor) {
                 quotient.value += "1";
                 r = 0;
             }
-            else if (chunk > divisor) {
-                std::tie(q, r) = divide(chunk, divisor);
+            else if (chunk > abs_divisor) {
+                std::tie(q, r) = divide(chunk, abs_divisor);
                 quotient.value += q.value;
             }
         }
@@ -286,6 +286,36 @@ BigInt BigInt::operator/(const BigInt& num) const {
         quotient.sign = '-';
 
     return quotient;
+}
+
+
+/*
+    BigInt % BigInt
+    ---------------
+    Computes the remainder on diving two BigInts (a modulo b).
+    The operand on the RHS of the modulo (the divisor) is `num`.
+*/
+
+BigInt BigInt::operator%(const BigInt& num) const {
+    BigInt abs_dividend = abs(*this);
+    BigInt abs_divisor = abs(num);
+
+    if (abs_divisor == 0)
+        throw std::logic_error("Attempted division by zero");
+    if (abs_divisor == 1)
+        return *this;
+
+    BigInt remainder;
+    if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
+        remainder = std::stoll(abs_dividend.value) % std::stoll(abs_divisor.value);
+    else {
+        BigInt quotient = abs_dividend / abs_divisor;
+        remainder = abs_dividend - quotient * abs_divisor;
+    }
+
+    remainder.sign = this->sign;
+
+    return remainder;
 }
 
 
@@ -330,6 +360,16 @@ BigInt BigInt::operator/(const long long& num) const {
 
 
 /*
+    BigInt % Integer
+    ----------------
+*/
+
+BigInt BigInt::operator%(const long long& num) const {
+    return *this % BigInt(num);
+}
+
+
+/*
     BigInt + String
     ---------------
 */
@@ -366,6 +406,16 @@ BigInt BigInt::operator*(const std::string& num) const {
 
 BigInt BigInt::operator/(const std::string& num) const {
     return *this / BigInt(num);
+}
+
+
+/*
+    BigInt % String
+    ---------------
+*/
+
+BigInt BigInt::operator%(const std::string& num) const {
+    return *this % BigInt(num);
 }
 
 #endif  // BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
