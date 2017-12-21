@@ -14,6 +14,9 @@
 /*
     +BigInt
     -------
+    Returns the value of a BigInt.
+    NOTE: This function does not return the absolute value. To get the absolute
+    value of a BigInt, use the `abs` function.
 */
 
 BigInt BigInt::operator+() const {
@@ -24,6 +27,7 @@ BigInt BigInt::operator+() const {
 /*
     -BigInt
     -------
+    Returns the negative of a BigInt.
 */
 
 BigInt BigInt::operator-() const {
