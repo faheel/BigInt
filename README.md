@@ -4,6 +4,7 @@
 <h3 align="center">Arbitrary-sized integer class for C++</h3>
 
 ---
+[![Build Status][travis-status]](https://travis-ci.org/faheel/BigInt)
 
 ## Usage
 1. Download the [single-include header file][release-link] to a location under
@@ -115,5 +116,6 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
 ## License
 This project is licensed under the terms of the [MIT license](LICENSE).
 
+[travis-status]: https://travis-ci.org/faheel/BigInt.svg?branch=master
 [release-link]: https://github.com/faheel/BigInt/releases
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
