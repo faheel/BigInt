@@ -18,7 +18,7 @@ TEST_CASE("Addition and subtraction of BigInts",
     // uniform distribution of numbers from -2^62 to 2^62-1
     std::uniform_int_distribution<long long> distribution(-4611686018427387904,
             4611686018427387903);
-    for (size_t i = 0; i < 30; i++) {
+    for (size_t i = 0; i < 20; i++) {
         long long rand_num1 = distribution(generator);
         long long rand_num2 = distribution(generator);
 
@@ -80,7 +80,7 @@ TEST_CASE("Multiplication of BigInts", "[binary-arithmetic][operators]"
     // uniform distribution of numbers from -3037000499 to 3037000499:
     std::uniform_int_distribution<long long>
             distribution(-FLOOR_SQRT_LONG_LONG_MAX, FLOOR_SQRT_LONG_LONG_MAX);
-    for (size_t i = 0; i < 30; i++) {
+    for (size_t i = 0; i < 20; i++) {
         long long rand_num1 = distribution(generator);
         long long rand_num2 = distribution(generator);
 
@@ -98,19 +98,18 @@ TEST_CASE("Division of BigInts", "[binary-arithmetic][operators][division]") {
     // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
     std::uniform_int_distribution<long long>
             distribution(LONG_LONG_MIN, LONG_LONG_MAX);
-    for (size_t i = 0; i < 30; i++) {
+    for (size_t i = 0; i < 20; i++) {
         long long rand_num1 = distribution(generator);
         long long rand_num2 = distribution(generator);
 
-        num1 = rand_num1;
-        num2 = rand_num2;
-        if (num2 == 0) {    // prevent division by zero
+        if (rand_num2 == 0) {    // prevent division by zero
             i--;
             continue;
         }
-
         long long quotient = rand_num1 / rand_num2;
 
+        num1 = rand_num1;
+        num2 = rand_num2;
         REQUIRE(num1 / num2 == quotient);
     }
 }
@@ -156,7 +155,7 @@ TEST_CASE("Multiplication and division of BigInts with integers and strings",
     */
 }
 
-TEST_CASE("Multiplication of really big numbers",
+TEST_CASE("Multiplication of big numbers",
         "[binary-arithmetic][operators][multiplication][big]") {
     BigInt num1, num2;
     num1 = "1234567890";
@@ -193,7 +192,7 @@ TEST_CASE("Multiplication of really big numbers",
     REQUIRE(num1 * num2 == big_pow10(43326));
 }
 
-TEST_CASE("Division of really big numbers",
+TEST_CASE("Division of big numbers",
         "[binary-arithmetic][operators][division][big]") {
     BigInt num1, num2;
     num1 = "12345678901234567890";
@@ -220,15 +219,124 @@ TEST_CASE("Division of really big numbers",
     REQUIRE(num1 / num2 == "729258211092795635494143745485389681543083349270759"
         "3708106029725015022394056069241322168656324094196515329458910");
 
-    num1 = big_pow10(2750);
-    num2 = big_pow10(1525);
-    REQUIRE(num1 / num2 == big_pow10(1225));
+    num1 = big_pow10(456);
+    num2 = big_pow10(123);
+    REQUIRE(num1 / num2 == big_pow10(333));
 
-    num1 = -big_pow10(5490);
-    num2 = big_pow10(3875);
-    REQUIRE(num1 / num2 == -big_pow10(1615));
+    num1 = big_pow10(2749);
+    num2 = big_pow10(1523);
+    REQUIRE(num1 / num2 == big_pow10(1226));
+
+    num1 = -big_pow10(5483);
+    num2 = big_pow10(3877);
+    REQUIRE(num1 / num2 == -big_pow10(1606));
+
+    num1 = big_pow10(23459);
+    num2 = big_pow10(19867);
+    REQUIRE(num1 / num2 == big_pow10(3592));
+}
+
+TEST_CASE("Modulo of BigInts", "[binary-arithmetic][operators][modulo]") {
+    BigInt num1, num2;
+
+    std::random_device generator;
+    // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
+    std::uniform_int_distribution<long long>
+            distribution(LONG_LONG_MIN, LONG_LONG_MAX);
+    for (size_t i = 0; i < 20; i++) {
+        long long rand_num1 = distribution(generator);
+        long long rand_num2 = distribution(generator);
+
+        if (rand_num2 == 0) {    // prevent division by zero
+            i--;
+            continue;
+        }
+        long long remainder = rand_num1 % rand_num2;
+
+        num1 = rand_num1;
+        num2 = rand_num2;
+        REQUIRE(num1 % num2 == remainder);
+    }
+}
+
+TEST_CASE("Modulo of BigInts with integers and strings",
+        "[binary-arithmetic][operators][modulo]") {
+    BigInt num = 1234567890987654321;
+    REQUIRE(num % 583 == 98);
+    REQUIRE(num % -583 == 98);
+    REQUIRE(-num % 583 == -98);
+    REQUIRE(-num % -583 == -98);
+
+    REQUIRE(num % 490612 == 216761);
+    REQUIRE(num % -490612 == 216761);
+    REQUIRE(-num % 490612 == -216761);
+    REQUIRE(-num % -490612 == -216761);
+
+    REQUIRE(num % "583" == 98);
+    REQUIRE(num % "-583" == 98);
+    REQUIRE(-num % "583" == -98);
+    REQUIRE(-num % "-583" == -98);
+
+    REQUIRE(num % "490612" == 216761);
+    REQUIRE(num % "-490612" == 216761);
+    REQUIRE(-num % "490612" == -216761);
+    REQUIRE(-num % "-490612" == -216761);
+
+    // catch division by zero
+    try {
+        BigInt trouble = num % 0;
+    }
+    catch (std::logic_error e) {
+        CHECK(e.what() == std::string("Attempted division by zero"));
+    }
+
+    /*
+        TODO
+        ----
+        Make the following work:
+        BigInt num = 123;
+        REQUIRE(583 % num == 91);
+        REQUIRE("-490612" % num == -88);
+    */
+}
+
+TEST_CASE("Modulo of big numbers",
+        "[binary-arithmetic][operators][modulo][big]") {
+    BigInt num1, num2;
+    num1 = "12345678909876543210123456789";
+    num2 = 1234567890;
+    REQUIRE(num1 % num2 == 819);
+
+    num1 = "-74795969103554554996215276693934490847811844274620";
+    num2 = "529185762356584466093018272610473188178149";
+    REQUIRE(num1 % num2 == "-404625987744468732097714762347932921438432");
+
+    num1 = "9582518950379800614306095260421646856475999938972041161410754824718"
+        "8530515989621711174263184271175858137696144827610415473041959151743248"
+        "42298961307365134004615";
+    num2 = "7183178499181562107254471437293951674461271038850005413302515662375"
+        "5697355361810132505715688137025455771038053164648324034388264089738986";
+    REQUIRE(num1 % num2 == "502008140524007203128630082431770583307845442935791"
+        "9728555544083411210356832664053040147221561393576626728850496195492998"
+        "0314390096754463");
+
+    num1 = "920132912302829612061902393145744233945758297736906406054053889535"
+        "6968429805690068413076628064294801864511568551589205855316992620853084"
+        "3219577396774861536705894326785721164938367932913682323736670444";
+    num2 = "-126173815845557317670134103088446550114061753703252550511788939308"
+        "82979573617430830373800";
+    REQUIRE(num1 % num2 == "103737999458960727172146109955280604488347153612922"
+        "63695257182569105701287999976696112444");
+
+    num1 = big_pow10(456);
+    num2 = big_pow10(123);
+    REQUIRE(num1 % num2 == 0);
+
+    num1 = -big_pow10(6789);
+    num2 = big_pow10(2345);
+    REQUIRE(num1 % num2 == 0);
 
     num1 = big_pow10(23450);
     num2 = big_pow10(19876);
-    REQUIRE(num1 / num2 == big_pow10(3574));
+    REQUIRE(num1 % num2 == 0);
 }
