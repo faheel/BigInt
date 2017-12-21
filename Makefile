@@ -30,16 +30,15 @@ DEPENDENCIES := $(patsubst test/%.cpp, build/%.d, $(SOURCES))
 -include $(DEPENDENCIES)
 
 .PHONY: all
-all: dirs test_runner $(OBJECTS)
+all: dirs $(OBJECTS)
 
 # create `build` and `bin` directories
 .PHONY: dirs
 dirs:
 	mkdir -p $(patsubst %, build/%, $(DIRS)) $(patsubst %, bin/%, $(DIRS))
 
-# compile object file for Catch test runner (only once)
-.PHONY: test_runner
-test_runner:
+# compile object file for Catch test runner
+build/test_runner.o:
 	printf '\e[94m%s\e[0m%s' 'Compiling test runner' ' ... '
 	$(CXX) -c $(INCLUDES) test/test_runner.cpp -o build/test_runner.o
 	printf '\e[92m%s\e[0m\n' 'Done!'
@@ -51,9 +50,9 @@ build/%.o: test/%.cpp
 	printf '\e[92m%s\e[0m\n' 'Done!'
 
 # create test binaries from compiled objects and the test runner
-bin/%: build/%.o
+bin/%: build/%.o build/test_runner.o
 	printf '\e[96m%s\e[0m%s' 'Creating binary' ': $@ ... '
-	$(CXX) $(CXXFLAGS) -o $@ $< build/test_runner.o
+	$(CXX) $(CXXFLAGS) -o $@ $+
 	printf '\e[92m%s\e[0m\n' 'Done!'
 
 # once created, run the binaries using the test script
