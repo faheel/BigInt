@@ -40,7 +40,7 @@ dirs:
 # compile object file for Catch test runner
 build/test_runner.o:
 	printf '\e[94m%s\e[0m%s' 'Compiling test runner' ' ... '
-	$(CXX) -c $(INCLUDES) test/test_runner.cpp -o build/test_runner.o
+	$(CXX) -c $(CXXFLAGS) $(INCLUDES) test/test_runner.cpp -o build/test_runner.o
 	printf '\e[92m%s\e[0m\n' 'Done!'
 
 # compile test objects from source files
