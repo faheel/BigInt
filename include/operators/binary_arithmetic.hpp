@@ -147,7 +147,7 @@ BigInt BigInt::operator-(const BigInt& num) const {
 
 BigInt BigInt::operator*(const BigInt& num) const {
     if (*this == 0 or num == 0)
-        return 0;
+        return BigInt(0);
     if (*this == 1)
         return num;
     if (num == 1)
@@ -250,15 +250,16 @@ BigInt BigInt::operator/(const BigInt& num) const {
     BigInt quotient;
     if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
         quotient = std::stoll(abs_dividend.value) / std::stoll(abs_divisor.value);
+    else if (abs_dividend == abs_divisor)
+        quotient = 1;
     else {
         quotient.value = "";    // the value is cleared as digits will be appended
-        BigInt chunk, q, r;
+        BigInt chunk, chunk_quotient, chunk_remainder;
         size_t chunk_index = 0;
-        r.value = abs_dividend.value.substr(chunk_index, abs_divisor.value.size() - 1);
+        chunk_remainder.value = abs_dividend.value.substr(chunk_index, abs_divisor.value.size() - 1);
         chunk_index = abs_divisor.value.size() - 1;
         while (chunk_index < abs_dividend.value.size()) {
-            chunk.value = r.value.append(1, abs_dividend.value[chunk_index]);
-            strip_leading_zeroes(chunk.value);
+            chunk.value = chunk_remainder.value.append(1, abs_dividend.value[chunk_index]);
             chunk_index++;
             while (chunk < abs_divisor) {
                 quotient.value += "0";
@@ -271,11 +272,12 @@ BigInt BigInt::operator/(const BigInt& num) const {
             }
             if (chunk == abs_divisor) {
                 quotient.value += "1";
-                r = 0;
+                chunk_remainder = 0;
             }
             else if (chunk > abs_divisor) {
-                std::tie(q, r) = divide(chunk, abs_divisor);
-                quotient.value += q.value;
+                strip_leading_zeroes(chunk.value);
+                std::tie(chunk_quotient, chunk_remainder) = divide(chunk, abs_divisor);
+                quotient.value += chunk_quotient.value;
             }
         }
     }
@@ -292,7 +294,7 @@ BigInt BigInt::operator/(const BigInt& num) const {
 /*
     BigInt % BigInt
     ---------------
-    Computes the remainder on diving two BigInts (a modulo b).
+    Computes the modulo (remainder on division) of two BigInts.
     The operand on the RHS of the modulo (the divisor) is `num`.
 */
 
@@ -303,17 +305,24 @@ BigInt BigInt::operator%(const BigInt& num) const {
     if (abs_divisor == 0)
         throw std::logic_error("Attempted division by zero");
     if (abs_divisor == 1)
-        return *this;
+        return BigInt(0);
+    if (abs_dividend == abs_divisor)
+        return BigInt(0);
 
     BigInt remainder;
     if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
         remainder = std::stoll(abs_dividend.value) % std::stoll(abs_divisor.value);
+    else if (abs_dividend < abs_divisor)
+        remainder = abs_dividend;
     else {
         BigInt quotient = abs_dividend / abs_divisor;
         remainder = abs_dividend - quotient * abs_divisor;
     }
 
+    // remainder has the same sign as that of the dividend
     remainder.sign = this->sign;
+    if (remainder.value == "0")     // except if its zero
+        remainder.sign = '+';
 
     return remainder;
 }
