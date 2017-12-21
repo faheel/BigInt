@@ -25,145 +25,95 @@
 
 ## Features
 ### Operators
-* #### Assignment
-  * #### `=`
+All binary operators can have either an integer (upto `signed long long int`),
+a string (`std::string` or a string literal), or another `BigInt` as the second operand.
+* #### Assignment: `=`
+  ```C++
+  my_big_int = 1234567890;
+  my_big_int = "123456789012345678901234567890";
+  my_big_int = other_big_int;
+  ```
+* #### Unary arithmetic: `+`, `-`
+  ```C++
+  my_big_int = +other_big_int;  // doesn't return the absolute value
+  my_big_int = -other_big_int;
+  ```
+* #### Binary arithmetic: `+`, `-`, `*`, `/`, `%`
+  ```C++
+  big_int_1 = big_int_2 + 1234567890;
+  big_int_1 = big_int_2 - "123456789012345678901234567890";
+  big_int_1 = big_int_2 * big_int_3;
+  big_int_1 = big_int_2 / 1234567890;
+  big_int_1 = big_int_2 % "123456789012345678901234567890";
+  ```
+* #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
     ```C++
-    my_big_int = 1234567890;
-    my_big_int = "123456789012345678901234567890";
-    my_big_int = other_big_int;
+    big_int_1 += big_int_2;
+    big_int_1 -= 1234567890;
+    big_int_1 *= "123456789012345678901234567890";
+    big_int_1 /= big_int_2;
+    big_int_1 %= 1234567890;
     ```
-* #### Arithmetic
-  * #### Unary
-    * #### `+`
-      ```C++
-      my_big_int = +other_big_int;
-      ```
-    * #### `-`
-      ```C++
-      my_big_int = -other_big_int;
-      ```
-  * #### Binary
-    * #### `+`
-      ```C++
-      big_int_1 = big_int_2 + 1234567890;
-      big_int_1 = big_int_2 + "123456789012345678901234567890";
-      big_int_1 = big_int_2 + big_int_3;
-      ```
-    * #### `-`
-      ```C++
-      big_int_1 = big_int_2 - 1234567890;
-      big_int_1 = big_int_2 - "123456789012345678901234567890";
-      big_int_1 = big_int_2 - big_int_3;
-      ```
-    * #### `*`
-      ```C++
-      big_int_1 = big_int_2 * 1234567890;
-      big_int_1 = big_int_2 * "123456789012345678901234567890";
-      big_int_1 = big_int_2 * big_int_3;
-      ```
-* #### Arithmetic-assignment
-  * #### `+=`
-    ```C++
-    my_big_int += 1234567890;
-    my_big_int += "123456789012345678901234567890";
-    my_big_int += other_big_int;
-    ```
-  * #### `-=`
-    ```C++
-    my_big_int -= 1234567890;
-    my_big_int -= "123456789012345678901234567890";
-    my_big_int -= other_big_int;
-    ```
-  * #### `*=`
-    ```C++
-    my_big_int *= 1234567890;
-    my_big_int *= "123456789012345678901234567890";
-    my_big_int *= other_big_int;
-    ```
-* #### Increment and decrement
-  * #### `++`
-    ```C++
-    some_big_int = ++my_big_int;   // pre-increment
-    some_big_int = my_big_int++;   // post-increment
-    ```
-  * #### `--`
-    ```C++
-    some_big_int = --my_big_int;   // pre-decrement
-    some_big_int = my_big_int--;   // post-decrement
-    ```
-* #### Relational
-  * #### `<`
-    ```C++
-    if (big_int_1 < 1234567890 or
-        big_int_1 < "123456789012345678901234567890" or
-        big_int_1 < big_int_2) {
-        ...
-    }
-    ```
-  * #### `>`
-    ```C++
-    if (big_int_1 > 1234567890 or
-        big_int_1 > "123456789012345678901234567890" or
-        big_int_1 > big_int_2) {
-        ...
-    }
-    ```
-  * #### `<=`
-    ```C++
-    if (big_int_1 <= 1234567890 or
-        big_int_1 <= "123456789012345678901234567890" or
-        big_int_1 <= big_int_2) {
-        ...
-    }
-    ```
-  * #### `>=`
-    ```C++
-    if (big_int_1 >= 1234567890 or
-        big_int_1 >= "123456789012345678901234567890" or
-        big_int_1 >= big_int_2) {
-        ...
-    }
-    ```
-  * #### `==`
-    ```C++
-    if (big_int_1 == 1234567890 or
-        big_int_1 == "123456789012345678901234567890" or
-        big_int_1 == big_int_2) {
-        ...
-    }
-    ```
-  * #### `!=`
-    ```C++
-    if (big_int_1 != 1234567890 or
-        big_int_1 != "123456789012345678901234567890" or
-        big_int_1 != big_int_2) {
-        ...
-    }
-    ```
-* #### I/O stream
-  * #### `>>`
-    ```C++
-    std::cin >> big_int_1 >> big_int_2;
-    input_file >> big_int_1 >> big_int_2;
-    ```
-  * #### `<<`
-    ```C++
-    std::cout << big_int_1 << ", " << big_int_2 << "\n";
-    output_file << big_int_1 << ", " << big_int_2 << "\n";
-    ```
+* #### Increment and decrement: `++`, `--`
+  ```C++
+  some_big_int = ++my_big_int;   // pre-increment
+  some_big_int = --my_big_int;   // pre-decrement
+
+  some_big_int = my_big_int++;   // post-increment
+  some_big_int = my_big_int--;   // post-decrement
+  ```
+* #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
+  ```C++
+  if (big_int_1 < 1234567890
+      or big_int_1 > "123456789012345678901234567890"
+      or big_int_1 <= big_int_2
+      or big_int_1 >= 1234567890
+      or big_int_1 == "123456789012345678901234567890"
+      or big_int_1 != big_int_3) {
+      ...
+  }
+  ```
+* #### I/O stream: `<<`, `>>`
+  ```C++
+  std::cout << big_int_1 << ", " << big_int_2 << "\n";
+  output_file << big_int_1 << ", " << big_int_2 << "\n";
+
+  std::cin >> big_int_1 >> big_int_2;
+  input_file >> big_int_1 >> big_int_2;
+  ```
 
 ### Functions
+* #### Conversion: `to_string`, `to_int`, `to_long`, `to_long_long`
+  Convert a `BigInt` to either a `string`, `int`, `long`, or `long long`.
+
+  **Note**: If the `BigInt` is beyond the range of the target type, an
+  [out_of_range exception][out_of_range-exception] is thrown.
+
+    ```C++
+    some_str = my_big_int.to_string();
+
+    some_int = my_big_int.to_int();
+
+    some_long = my_big_int.to_long();
+
+    some_long_long = my_big_int.to_long_long();
+    ```
 * #### Math
   * #### `abs`
+    Get the absolute value of a `BigInt`.
+
     ```C++
     my_big_int = abs(other_big_int);
     ```
   * #### `big_pow10`
+    Get a `BigInt` equal to 10<sup>x</sup>.
+
     ```C++
-    my_big_int = big_pow10(1500);   // my_big_int = 10^1500
+    my_big_int = big_pow10(5000);   // my_big_int = 10^5000
     ```
 
 ## License
 This project is licensed under the terms of the [MIT license](LICENSE).
 
 [release-link]: https://github.com/faheel/BigInt/releases
+[out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
