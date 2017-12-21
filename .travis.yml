@@ -1,3 +1,4 @@
+group: travis_latest
 language: cpp
 sudo: true
 
@@ -39,4 +40,4 @@ before_install:
 install: true
 
 script:
-  - make test
+  - make && make test
