@@ -22,7 +22,7 @@ TEST_CASE("Construct zero-valued BigInts", "[constructors]") {
     REQUIRE(num4 == 0);
 }
 
-TEST_CASE("Construct random BigInts", "[constructors]") {
+TEST_CASE("Construct BigInts from integers and strings", "[constructors]") {
     std::random_device generator;
     // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
     std::uniform_int_distribution<long long>
@@ -31,5 +31,14 @@ TEST_CASE("Construct random BigInts", "[constructors]") {
         long long rand_num = distribution(generator);
 
         REQUIRE(BigInt(rand_num) == rand_num);
+        REQUIRE(BigInt(std::to_string(rand_num)) == rand_num);
+    }
+
+    // catch invalid argument
+    try {
+        BigInt trouble("123BigInt");
+    }
+    catch (std::logic_error e) {
+        CHECK(e.what() == std::string("Expected an integer, got \'123BigInt\'"));
     }
 }

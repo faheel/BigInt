@@ -62,8 +62,7 @@ BigInt::BigInt(const std::string& num) {
             sign = num[0];
         }
         else {
-            notify_invalid_input(num);
-            exit(EXIT_FAILURE);
+            throw std::invalid_argument("Expected an integer, got \'" + num + "\'");
         }
     }
     else {      // if no sign is specified
@@ -72,8 +71,7 @@ BigInt::BigInt(const std::string& num) {
             sign = '+';    // positive by default
         }
         else {
-            notify_invalid_input(num);
-            exit(EXIT_FAILURE);
+            throw std::invalid_argument("Expected an integer, got \'" + num + "\'");
         }
     }
 }

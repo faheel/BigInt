@@ -26,17 +26,6 @@ bool is_valid_number(const std::string& num) {
 
 
 /*
-    notify_invalid_input
-    --------------------
-    Writes to the standard error stream if the input was not a valid integer.
-*/
-
-void notify_invalid_input(const std::string& input) {
-    std::cerr << "Invalid input! Expected an integer, got \'" << input << "\'.\n";
-}
-
-
-/*
     strip_leading_zeroes
     --------------------
     Strip the leading zeroes from a number represented as a string.
