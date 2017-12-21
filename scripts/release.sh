@@ -29,6 +29,7 @@ printf "$comment" >> "$release_file"
 header_files="BigInt.hpp \
     functions/utility.hpp \
     constructors/constructors.hpp \
+    functions/conversion.hpp \
     operators/assignment.hpp \
     operators/unary_arithmetic.hpp \
     operators/relational.hpp \
