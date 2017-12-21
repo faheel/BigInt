@@ -1,11 +1,11 @@
-group: travis_latest
 language: cpp
-sudo: true
+sudo: required
 
 matrix:
   include:
-    # Linux GCC 6
+    # Linux GCC 6 build
     - os: linux
+      compiler: gcc
       addons:
         apt:
           sources:
@@ -13,10 +13,11 @@ matrix:
           packages:
             - g++-6
       env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - COMPILER='g++-6'
 
-    # Linux GCC 7
+    # Linux GCC 7 build
     - os: linux
+      compiler: gcc
       addons:
         apt:
           sources:
@@ -24,51 +25,54 @@ matrix:
           packages:
             - g++-7
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - COMPILER='g++-7'
 
-    # Linux Clang 4
+    # Linux Clang 4 build
     - os: linux
+      compiler: clang
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-4.0
           packages:
             - clang-4.0
       env:
-        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+        - COMPILER='clang++-4.0'
 
-    # Linux Clang 5
+    # Linux Clang 5 build
     - os: linux
+      compiler: clang
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
           packages:
             - clang-5.0
       env:
-        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        - COMPILER='clang++-5.0'
 
-    # OSX GCC 6
+    # OS X Xcode8 GCC build
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+
+    # OS X Xcode9 GCC build
     - os: osx
       osx_image: xcode9.2
-      env:
-        - MATRIX_EVAL="brew install gcc6 && CC=gcc-6 && CXX=g++-6"
+      compiler: gcc
 
-    # OSX GCC 7
+    # OS X Xcode8 Clang build
     - os: osx
-      osx_image: xcode9.2
-      env:
-        - MATRIX_EVAL="brew install gcc && CC=gcc-7 && CXX=g++-7"
+      osx_image: xcode8.3
+      compiler: clang
 
-    # OSX Clang build
+    # OS X Xcode9 Clang build
     - os: osx
       osx_image: xcode9.2
       compiler: clang
 
 before_install:
-  - eval "${MATRIX_EVAL}"
+  - export CXX=${COMPILER}
 
 install: true
 
