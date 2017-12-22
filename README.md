@@ -41,7 +41,7 @@
     ```
 
 To get started, download a minimalistic project with the above example from the
-[release section][release_link].
+[release section][release-link].
 
 ## Features
 ### Operators
