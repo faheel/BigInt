@@ -10,9 +10,10 @@
 
 #### Contents
 * [Highlights](#highlights)
-* [Components](#components)
+* [Usage](#usage)
 * [Features](#features)
 * [Compiling / testing](#compiling--testing)
+* [Contributing](#contributing)
 * [License](#license)
 
 ## Highlights
@@ -38,9 +39,6 @@
     std::cout << num1 * num2 * 123456 << "\n";
     // Output: 1505331490682966620443288524512589666204282352096057600
     ```
-
-To get started, download a minimalistic project with the above example from the
-[release section][release_link].
 
 ## Features
 ### Operators
@@ -139,9 +137,14 @@ However, there are unit tests for each header file that the project is split int
 
 You will need to run **`make`** at least once before you can run **`make test`**.
 
+## Contributing
+Please read the [contributing guidelines][contributing-link] for details on
+how to contribute to the project.
+
 ## License
 This project is licensed under the terms of the [MIT license](LICENSE).
 
 [travis-status]: https://travis-ci.org/faheel/BigInt.svg?branch=master
 [release-link]: https://github.com/faheel/BigInt/releases
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
+[contributing-link]: https://github.com/faheel/BigInt/blob/master/CONTRIBUTING.md
