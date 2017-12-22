@@ -4,11 +4,15 @@
 <h3 align="center">Arbitrary-sized integer class for C++</h3>
 
 ---
-[![Build Status][travis-status]](https://travis-ci.org/faheel/BigInt)
+[![Release version][release-shield]][release-link]
+[![Travis status][travis-shield]][travis-link]
+[![Try it online][try-online-shield]][try-online-link]
+[![License][license-shield]][license-link]
 
 :construction: Work in progress :construction:
 
 #### Contents
+
 * [Highlights](#highlights)
 * [Usage](#usage)
 * [Features](#features)
@@ -17,6 +21,7 @@
 * [License](#license)
 
 ## Highlights
+
 * No additional dependencies apart from the standard library.
 * Modern C++ (compiles with C++11 / C++14 / C++17).
 * No special compiling or linking required. Simply download the
@@ -24,6 +29,7 @@
   however you would.
 
 ## Usage
+
 1. Download the [single-include header file][release-link] to a location under
     your include path. Then `#include` it in your code:
     ```C++
@@ -41,20 +47,25 @@
     ```
 
 ## Features
+
 ### Operators
+
 All binary operators can have either an integer (upto `signed long long int`),
 a string (`std::string` or a string literal), or another `BigInt` as the second operand.
+
 * #### Assignment: `=`
   ```C++
   my_big_int = 1234567890;
   my_big_int = "123456789012345678901234567890";
   my_big_int = other_big_int;
   ```
+
 * #### Unary arithmetic: `+`, `-`
   ```C++
   my_big_int = +other_big_int;  // doesn't return the absolute value
   my_big_int = -other_big_int;
   ```
+
 * #### Binary arithmetic: `+`, `-`, `*`, `/`, `%`
   ```C++
   big_int_1 = big_int_2 + 1234567890;
@@ -63,6 +74,7 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
   big_int_1 = big_int_2 / 1234567890;
   big_int_1 = big_int_2 % "123456789012345678901234567890";
   ```
+
 * #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
     ```C++
     big_int_1 += big_int_2;
@@ -71,6 +83,7 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
     big_int_1 /= big_int_2;
     big_int_1 %= 1234567890;
     ```
+
 * #### Increment and decrement: `++`, `--`
   ```C++
   some_big_int = ++my_big_int;   // pre-increment
@@ -79,6 +92,7 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
   some_big_int = my_big_int++;   // post-increment
   some_big_int = my_big_int--;   // post-decrement
   ```
+
 * #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
   ```C++
   if (big_int_1 < 1234567890
@@ -90,6 +104,7 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
       ...
   }
   ```
+
 * #### I/O stream: `<<`, `>>`
   ```C++
   std::cout << big_int_1 << ", " << big_int_2 << "\n";
@@ -100,6 +115,7 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
   ```
 
 ### Functions
+
 * #### Conversion: `to_string`, `to_int`, `to_long`, `to_long_long`
   Convert a `BigInt` to either a `string`, `int`, `long`, or `long long`.
 
@@ -115,13 +131,16 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
 
     some_long_long = my_big_int.to_long_long();
     ```
+
 * #### Math
+
   * #### `abs`
     Get the absolute value of a `BigInt`.
 
     ```C++
     my_big_int = abs(other_big_int);
     ```
+
   * #### `big_pow10`
     Get a `BigInt` equal to 10<sup>x</sup>.
 
@@ -130,6 +149,7 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
     ```
 
 ## Compiling / testing
+
 Since this project is built as a library, there are no source files.
 However, there are unit tests for each header file that the project is split into.
 * To compile the tests, run **`make`**.
@@ -138,13 +158,22 @@ However, there are unit tests for each header file that the project is split int
 You will need to run **`make`** at least once before you can run **`make test`**.
 
 ## Contributing
+
 Please read the [contributing guidelines][contributing-link] for details on
 how to contribute to the project.
 
 ## License
-This project is licensed under the terms of the [MIT license](LICENSE).
 
-[travis-status]: https://travis-ci.org/faheel/BigInt.svg?branch=master
+This project is licensed under the terms of the [MIT license][license-link].
+
+
+[release-shield]: https://img.shields.io/github/release/faheel/BigInt/all.svg?style=for-the-badge
 [release-link]: https://github.com/faheel/BigInt/releases
+[travis-shield]: https://img.shields.io/travis/faheel/BigInt.svg?style=for-the-badge
+[travis-link]: https://travis-ci.org/faheel/BigInt
+[try-online-shield]: https://img.shields.io/badge/Try_online-Wandbox-E91E63.svg?style=for-the-badge
+[try-online-link]: https://wandbox.org/permlink/J9eEgFpryxDwc3th
+[license-shield]: https://img.shields.io/github/license/faheel/BigInt.svg?style=for-the-badge
+[license-link]: https://github.com/faheel/BigInt/blob/master/LICENSE
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
 [contributing-link]: https://github.com/faheel/BigInt/blob/master/CONTRIBUTING.md
