@@ -94,12 +94,32 @@ bool BigInt::operator==(const long long& num) const {
 
 
 /*
+    Integer == BigInt
+    -----------------
+*/
+
+bool operator==(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) == rhs;
+}
+
+
+/*
     BigInt != Integer
     -----------------
 */
 
 bool BigInt::operator!=(const long long& num) const {
     return !(*this == BigInt(num));
+}
+
+
+/*
+    Integer != BigInt
+    -----------------
+*/
+
+bool operator!=(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) != rhs;
 }
 
 
@@ -114,12 +134,32 @@ bool BigInt::operator<(const long long& num) const {
 
 
 /*
+    Integer < BigInt
+    ----------------
+*/
+
+bool operator<(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) < rhs;
+}
+
+
+/*
     BigInt > Integer
     ----------------
 */
 
 bool BigInt::operator>(const long long& num) const {
     return *this > BigInt(num);
+}
+
+
+/*
+    Integer > BigInt
+    ----------------
+*/
+
+bool operator>(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) > rhs;
 }
 
 
@@ -134,12 +174,32 @@ bool BigInt::operator<=(const long long& num) const {
 
 
 /*
+    Integer <= BigInt
+    -----------------
+*/
+
+bool operator<=(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) <= rhs;
+}
+
+
+/*
     BigInt >= Integer
     -----------------
 */
 
 bool BigInt::operator>=(const long long& num) const {
     return !(*this < BigInt(num));
+}
+
+
+/*
+    Integer >= BigInt
+    -----------------
+*/
+
+bool operator>=(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) >= rhs;
 }
 
 
@@ -154,12 +214,32 @@ bool BigInt::operator==(const std::string& num) const {
 
 
 /*
+    String == BigInt
+    ----------------
+*/
+
+bool operator==(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) == rhs;
+}
+
+
+/*
     BigInt != String
     ----------------
 */
 
 bool BigInt::operator!=(const std::string& num) const {
     return !(*this == BigInt(num));
+}
+
+
+/*
+    String != BigInt
+    ----------------
+*/
+
+bool operator!=(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) != rhs;
 }
 
 
@@ -174,12 +254,32 @@ bool BigInt::operator<(const std::string& num) const {
 
 
 /*
+    String < BigInt
+    ---------------
+*/
+
+bool operator<(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) < rhs;
+}
+
+
+/*
     BigInt > String
     ---------------
 */
 
 bool BigInt::operator>(const std::string& num) const {
     return *this > BigInt(num);
+}
+
+
+/*
+    String > BigInt
+    ---------------
+*/
+
+bool operator>(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) > rhs;
 }
 
 
@@ -194,12 +294,32 @@ bool BigInt::operator<=(const std::string& num) const {
 
 
 /*
+    String <= BigInt
+    ----------------
+*/
+
+bool operator<=(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) <= rhs;
+}
+
+
+/*
     BigInt >= String
     ----------------
 */
 
 bool BigInt::operator>=(const std::string& num) const {
     return !(*this < BigInt(num));
+}
+
+
+/*
+    String >= BigInt
+    ----------------
+*/
+
+bool operator>=(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) >= rhs;
 }
 
 #endif  // BIG_INT_RELATIONAL_OPERATORS_HPP
