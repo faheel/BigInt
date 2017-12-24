@@ -192,6 +192,7 @@ BigInt BigInt::operator*(const BigInt& num) const {
 
         product = prod_high + prod_mid + prod_low;
     }
+    strip_leading_zeroes(product.value);
 
     if (this->sign == num.sign)
         product.sign = '+';
@@ -281,6 +282,7 @@ BigInt BigInt::operator/(const BigInt& num) const {
             }
         }
     }
+    strip_leading_zeroes(quotient.value);
 
     if (this->sign == num.sign)
         quotient.sign = '+';
@@ -318,6 +320,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
         BigInt quotient = abs_dividend / abs_divisor;
         remainder = abs_dividend - quotient * abs_divisor;
     }
+    strip_leading_zeroes(remainder.value);
 
     // remainder has the same sign as that of the dividend
     remainder.sign = this->sign;
@@ -339,12 +342,32 @@ BigInt BigInt::operator+(const long long& num) const {
 
 
 /*
+    Integer + BigInt
+    ----------------
+*/
+
+BigInt operator+(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) + rhs;
+}
+
+
+/*
     BigInt - Integer
     ----------------
 */
 
 BigInt BigInt::operator-(const long long& num) const {
     return *this - BigInt(num);
+}
+
+
+/*
+    Integer - BigInt
+    ----------------
+*/
+
+BigInt operator-(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) - rhs;
 }
 
 
@@ -359,12 +382,32 @@ BigInt BigInt::operator*(const long long& num) const {
 
 
 /*
+    Integer * BigInt
+    ----------------
+*/
+
+BigInt operator*(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) * rhs;
+}
+
+
+/*
     BigInt / Integer
     ----------------
 */
 
 BigInt BigInt::operator/(const long long& num) const {
     return *this / BigInt(num);
+}
+
+
+/*
+    Integer / BigInt
+    ----------------
+*/
+
+BigInt operator/(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) / rhs;
 }
 
 
@@ -379,12 +422,32 @@ BigInt BigInt::operator%(const long long& num) const {
 
 
 /*
+    Integer % BigInt
+    ----------------
+*/
+
+BigInt operator%(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) % rhs;
+}
+
+
+/*
     BigInt + String
     ---------------
 */
 
 BigInt BigInt::operator+(const std::string& num) const {
     return *this + BigInt(num);
+}
+
+
+/*
+    String + BigInt
+    ---------------
+*/
+
+BigInt operator+(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) + rhs;
 }
 
 
@@ -399,12 +462,32 @@ BigInt BigInt::operator-(const std::string& num) const {
 
 
 /*
+    String - BigInt
+    ---------------
+*/
+
+BigInt operator-(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) - rhs;
+}
+
+
+/*
     BigInt * String
     ---------------
 */
 
 BigInt BigInt::operator*(const std::string& num) const {
     return *this * BigInt(num);
+}
+
+
+/*
+    String * BigInt
+    ---------------
+*/
+
+BigInt operator*(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) * rhs;
 }
 
 
@@ -419,12 +502,32 @@ BigInt BigInt::operator/(const std::string& num) const {
 
 
 /*
+    String / BigInt
+    ---------------
+*/
+
+BigInt operator/(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) / rhs;
+}
+
+
+/*
     BigInt % String
     ---------------
 */
 
 BigInt BigInt::operator%(const std::string& num) const {
     return *this % BigInt(num);
+}
+
+
+/*
+    String % BigInt
+    ---------------
+*/
+
+BigInt operator%(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) % rhs;
 }
 
 #endif  // BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
