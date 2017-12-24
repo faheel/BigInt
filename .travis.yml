@@ -55,21 +55,29 @@ matrix:
     - os: osx
       osx_image: xcode8.3
       compiler: gcc
+      env:
+        - COMPILER='g++'
 
     # OS X Xcode9 GCC build
     - os: osx
       osx_image: xcode9.2
       compiler: gcc
+      env:
+        - COMPILER='g++'
 
     # OS X Xcode8 Clang build
     - os: osx
       osx_image: xcode8.3
       compiler: clang
+      env:
+        - COMPILER='clang++'
 
     # OS X Xcode9 Clang build
     - os: osx
       osx_image: xcode9.2
       compiler: clang
+      env:
+        - COMPILER='clang++'
 
 before_install:
   - export CXX=${COMPILER}

@@ -8,7 +8,6 @@
 #define BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
 
 #include <climits>
-#include <cmath>
 #include <string>
 
 #include "BigInt.hpp"
@@ -20,8 +19,9 @@
 #include "operators/increment_decrement.hpp"
 #include "operators/relational.hpp"
 #include "operators/unary_arithmetic.hpp"
+#include <cmath>
 
-const long long FLOOR_SQRT_LONG_LONG_MAX = 3037000499;
+const long long FLOOR_SQRT_LLONG_MAX = 3037000499;
 
 
 /*
@@ -154,7 +154,7 @@ BigInt BigInt::operator*(const BigInt& num) const {
      return *this;
 
     BigInt product;
-    if (abs(*this) <= FLOOR_SQRT_LONG_LONG_MAX and abs(num) <= FLOOR_SQRT_LONG_LONG_MAX)
+    if (abs(*this) <= FLOOR_SQRT_LLONG_MAX and abs(num) <= FLOOR_SQRT_LLONG_MAX)
         product = std::stoll(this->value) * std::stoll(num.value);
     else {
         // identify the numbers as `larger` and `smaller`
@@ -192,6 +192,7 @@ BigInt BigInt::operator*(const BigInt& num) const {
 
         product = prod_high + prod_mid + prod_low;
     }
+    strip_leading_zeroes(product.value);
 
     if (this->sign == num.sign)
         product.sign = '+';
@@ -248,7 +249,7 @@ BigInt BigInt::operator/(const BigInt& num) const {
         return -(*this);
 
     BigInt quotient;
-    if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
+    if (abs_dividend <= LLONG_MAX and abs_divisor <= LLONG_MAX)
         quotient = std::stoll(abs_dividend.value) / std::stoll(abs_divisor.value);
     else if (abs_dividend == abs_divisor)
         quotient = 1;
@@ -281,6 +282,7 @@ BigInt BigInt::operator/(const BigInt& num) const {
             }
         }
     }
+    strip_leading_zeroes(quotient.value);
 
     if (this->sign == num.sign)
         quotient.sign = '+';
@@ -310,7 +312,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
         return BigInt(0);
 
     BigInt remainder;
-    if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
+    if (abs_dividend <= LLONG_MAX and abs_divisor <= LLONG_MAX)
         remainder = std::stoll(abs_dividend.value) % std::stoll(abs_divisor.value);
     else if (abs_dividend < abs_divisor)
         remainder = abs_dividend;
@@ -318,6 +320,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
         BigInt quotient = abs_dividend / abs_divisor;
         remainder = abs_dividend - quotient * abs_divisor;
     }
+    strip_leading_zeroes(remainder.value);
 
     // remainder has the same sign as that of the dividend
     remainder.sign = this->sign;
@@ -339,12 +342,32 @@ BigInt BigInt::operator+(const long long& num) const {
 
 
 /*
+    Integer + BigInt
+    ----------------
+*/
+
+BigInt operator+(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) + rhs;
+}
+
+
+/*
     BigInt - Integer
     ----------------
 */
 
 BigInt BigInt::operator-(const long long& num) const {
     return *this - BigInt(num);
+}
+
+
+/*
+    Integer - BigInt
+    ----------------
+*/
+
+BigInt operator-(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) - rhs;
 }
 
 
@@ -359,12 +382,32 @@ BigInt BigInt::operator*(const long long& num) const {
 
 
 /*
+    Integer * BigInt
+    ----------------
+*/
+
+BigInt operator*(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) * rhs;
+}
+
+
+/*
     BigInt / Integer
     ----------------
 */
 
 BigInt BigInt::operator/(const long long& num) const {
     return *this / BigInt(num);
+}
+
+
+/*
+    Integer / BigInt
+    ----------------
+*/
+
+BigInt operator/(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) / rhs;
 }
 
 
@@ -379,12 +422,32 @@ BigInt BigInt::operator%(const long long& num) const {
 
 
 /*
+    Integer % BigInt
+    ----------------
+*/
+
+BigInt operator%(const long long& lhs, const BigInt& rhs) {
+    return BigInt(lhs) % rhs;
+}
+
+
+/*
     BigInt + String
     ---------------
 */
 
 BigInt BigInt::operator+(const std::string& num) const {
     return *this + BigInt(num);
+}
+
+
+/*
+    String + BigInt
+    ---------------
+*/
+
+BigInt operator+(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) + rhs;
 }
 
 
@@ -399,12 +462,32 @@ BigInt BigInt::operator-(const std::string& num) const {
 
 
 /*
+    String - BigInt
+    ---------------
+*/
+
+BigInt operator-(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) - rhs;
+}
+
+
+/*
     BigInt * String
     ---------------
 */
 
 BigInt BigInt::operator*(const std::string& num) const {
     return *this * BigInt(num);
+}
+
+
+/*
+    String * BigInt
+    ---------------
+*/
+
+BigInt operator*(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) * rhs;
 }
 
 
@@ -419,12 +502,32 @@ BigInt BigInt::operator/(const std::string& num) const {
 
 
 /*
+    String / BigInt
+    ---------------
+*/
+
+BigInt operator/(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) / rhs;
+}
+
+
+/*
     BigInt % String
     ---------------
 */
 
 BigInt BigInt::operator%(const std::string& num) const {
     return *this % BigInt(num);
+}
+
+
+/*
+    String % BigInt
+    ---------------
+*/
+
+BigInt operator%(const std::string& lhs, const BigInt& rhs) {
+    return BigInt(lhs) % rhs;
 }
 
 #endif  // BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
