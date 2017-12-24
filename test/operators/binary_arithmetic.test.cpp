@@ -9,51 +9,100 @@
 #include "third_party/catch.hpp"
 
 
-TEST_CASE("Addition and subtraction of BigInts",
-        "[binary-arithmetic][operators][addition][subtraction]") {
-    BigInt num1;
-    BigInt num2;
-
+TEST_CASE("Binary arithmetic operations on BigInts with integers, strings and BigInts",
+        "[operators][binary-arithmetic][addition][subtraction][multiplication]"
+        "[division][modulo][integer][string][BigInt]") {
     std::random_device generator;
-    // uniform distribution of numbers from -2^62 to 2^62-1
-    std::uniform_int_distribution<long long> distribution(-4611686018427387904,
-            4611686018427387903);
+    // uniform distribution of numbers from -3037000499 to 3037000499:
+    std::uniform_int_distribution<long long> distribution(-FLOOR_SQRT_LONG_LONG_MAX,
+            FLOOR_SQRT_LONG_LONG_MAX);
     for (size_t i = 0; i < 20; i++) {
-        long long rand_num1 = distribution(generator);
-        long long rand_num2 = distribution(generator);
+        long long integer1 = distribution(generator);
+        long long integer2 = distribution(generator);
+        if (integer1 == 0 or integer2 == 0) {   // prevent division by zero
+            i--;
+            continue;
+        }
 
-        num1 = rand_num1;
-        num2 = rand_num2;
+        BigInt big_int1 = integer1;
+        BigInt big_int2 = integer2;
+        std::string integer2_str = std::to_string(integer2);
 
-        long long sum = rand_num1 + rand_num2;
-        long long diff = rand_num1 - rand_num2;
+        // addition:
+        long long sum = integer1 + integer2;
+        REQUIRE(big_int1 + big_int2     == sum);
+        REQUIRE(big_int1 + integer2     == sum);
+        REQUIRE(big_int1 + integer2_str == sum);
+        REQUIRE(big_int2     + big_int1 == sum);
+        REQUIRE(integer2     + big_int1 == sum);
+        REQUIRE(integer2_str + big_int1 == sum);
 
-        REQUIRE(num1 + num2 == sum);
-        REQUIRE(num1 - num2 == diff);
+        // subtraction:
+        long long difference = integer1 - integer2;
+        REQUIRE(big_int1 - big_int2     == difference);
+        REQUIRE(big_int1 - integer2     == difference);
+        REQUIRE(big_int1 - integer2_str == difference);
+        REQUIRE(big_int2     - big_int1 == -difference);
+        REQUIRE(integer2     - big_int1 == -difference);
+        REQUIRE(integer2_str - big_int1 == -difference);
+
+        // multiplication:
+        long long product = integer1 * integer2;
+        REQUIRE(big_int1 * big_int2     == product);
+        REQUIRE(big_int1 * integer2     == product);
+        REQUIRE(big_int1 * integer2_str == product);
+        REQUIRE(big_int2     * big_int1 == product);
+        REQUIRE(integer2     * big_int1 == product);
+        REQUIRE(integer2_str * big_int1 == product);
+
+        // division:
+        long long quotient = integer1 / integer2;
+        long long quotient_reciprocal = integer2 / integer1;
+        REQUIRE(big_int1 / big_int2     == quotient);
+        REQUIRE(big_int1 / integer2     == quotient);
+        REQUIRE(big_int1 / integer2_str == quotient);
+        REQUIRE(big_int2     / big_int1 == quotient_reciprocal);
+        REQUIRE(integer2     / big_int1 == quotient_reciprocal);
+        REQUIRE(integer2_str / big_int1 == quotient_reciprocal);
+
+        // modulo:
+        long long remainder = integer1 % integer2;
+        long long remainder_reciprocal = integer2 % integer1;
+        REQUIRE(big_int1 % big_int2     == remainder);
+        REQUIRE(big_int1 % integer2     == remainder);
+        REQUIRE(big_int1 % integer2_str == remainder);
+        REQUIRE(big_int2     % big_int1 == remainder_reciprocal);
+        REQUIRE(integer2     % big_int1 == remainder_reciprocal);
+        REQUIRE(integer2_str % big_int1 == remainder_reciprocal);
     }
 }
 
-TEST_CASE("Addition and subtraction of BigInts with integers and strings",
-        "[binary-arithmetic][operators][addition][subtraction]") {
-    BigInt num = 123;
-    REQUIRE(num + 5 == 128);
-    REQUIRE(num - 5 == 118);
-    REQUIRE(num + 456 == 579);
-    REQUIRE(num - 456 == -333);
-    REQUIRE(num + "5" == 128);
-    REQUIRE(num - "5" == 118);
-    REQUIRE(num + "456" == 579);
-    REQUIRE(num - "456" == -333);
-    /*
-        TODO
-        ----
-        Make the following work:
-        BigInt num = 123;
-        REQUIRE(5 + num == 128);
-        REQUIRE(5 - num == -118);
-        REQUIRE("5" + num == 128);
-        REQUIRE("5" - num == -118);
-    */
+TEST_CASE("Binary arithmetic operations on BigInts and zeroes",
+        "[operators][binary-arithmetic][addition][subtraction][multiplication]"
+        "[division][modulo][integer][string][BigInt]") {
+    BigInt big_int = 1234567890;
+
+    REQUIRE(big_int + 0 == big_int);
+    REQUIRE(big_int - 0 == big_int);
+    REQUIRE(big_int * 0 == 0);
+    try {
+        BigInt this_is_undefined = big_int / 0;
+    }
+    catch (std::logic_error e) {
+        CHECK(e.what() == std::string("Attempted division by zero"));
+    }
+    try {
+        BigInt this_is_undefined = big_int % 0;
+    }
+    catch (std::logic_error e) {
+        CHECK(e.what() == std::string("Attempted division by zero"));
+    }
+
+    REQUIRE(0 + big_int == big_int);
+    REQUIRE(0 - big_int == -big_int);
+    REQUIRE(0 * big_int == 0);
+    REQUIRE(0 / big_int == 0);
+    REQUIRE(0 % big_int == 0);
 }
 
 TEST_CASE("Chaining addition and subtraction",
@@ -72,87 +121,124 @@ TEST_CASE("Chaining addition and subtraction",
     REQUIRE(num1 - num2 - num3 - num4 == -13298183);
 }
 
-TEST_CASE("Multiplication of BigInts", "[binary-arithmetic][operators]"
-                                       "[multiplication]") {
-    BigInt num1, num2;
-
-    std::random_device generator;
-    // uniform distribution of numbers from -3037000499 to 3037000499:
-    std::uniform_int_distribution<long long>
-            distribution(-FLOOR_SQRT_LONG_LONG_MAX, FLOOR_SQRT_LONG_LONG_MAX);
-    for (size_t i = 0; i < 20; i++) {
-        long long rand_num1 = distribution(generator);
-        long long rand_num2 = distribution(generator);
-
-        num1 = rand_num1;
-        num2 = rand_num2;
-
-        long long product = rand_num1 * rand_num2;
-    }
+TEST_CASE("Chaining multiplication, division and modulo",
+        "[binary-arithmetic][operators][multiplication][division][modulo]") {
+    BigInt num1 = 313233343536373839;
+    BigInt num2 = 212223242526272829;
+    BigInt num3 = 111213141516171819;
+    BigInt num4 = 12345678910;
+    REQUIRE(num1 * num2 / num3 % num4 == 9021418300);
+    REQUIRE(num1 * num2 % num3 / num4 == 6392448);
+    REQUIRE(num1 / num2 * num3 % num4 == 6635659579);
+    REQUIRE(num1 / num2 % num3 * num4 == 12345678910);
+    REQUIRE(num1 % num2 * num3 / num4 == "909925710857417206643517");
+    REQUIRE(num1 % num2 / num3 * num4 == 0);
 }
 
-TEST_CASE("Division of BigInts", "[binary-arithmetic][operators][division]") {
+TEST_CASE("Addition of big numbers",
+        "[binary-arithmetic][operators][addition][big]") {
     BigInt num1, num2;
+    num1 = "964793941351798875130890128898086485681241334814868066116469822595"
+           "687598448053045508928021048387109439448430241206886222949385913536"
+           "17836411623804682393334501579397617644828334316728238955353058394264";
+    num2 = "542060529704217132357214772959828385120983424339263541090375634996"
+           "368065850294867611447397165152437998796443501783597014569840671683"
+           "13210331303669787440432347511637996556242776045622241233979589718916";
+    REQUIRE(num1 + num2 == "15068544710560160074881049018579148708022247591541"
+            "31607206845457592055664298347913120375418213539547438244873742990"
+            "48323751922658521931046742927474469833766849091035614201071110362"
+            "350480189332648113180");
 
-    std::random_device generator;
-    // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
-    std::uniform_int_distribution<long long>
-            distribution(LONG_LONG_MIN, LONG_LONG_MAX);
-    for (size_t i = 0; i < 20; i++) {
-        long long rand_num1 = distribution(generator);
-        long long rand_num2 = distribution(generator);
+    num1 = "-19456862453160453307638071783433388649631926064367472120354136295"
+           "908610671862754051755238831363430525061125138089083649263206899106"
+           "180343851589754547911836910916517013121829987691413708752682939530093";
+    num2 = "816553076977620349766958416466042124954414412870431261355772588173"
+           "273756816453377871361812881641294479548961786166170884010949495342"
+           "27956257833623792756494659469534082561332606937935191051654689548416";
+    REQUIRE(num1 + num2 == "62198445244601581669057769863170823845809515222675"
+            "65401522312252141876500978258373538094245680069892289377104052753"
+            "34391378880504280476124062438692448446577485530170694395026192465"
+            "21482298971750018323");
 
-        if (rand_num2 == 0) {    // prevent division by zero
-            i--;
-            continue;
-        }
-        long long quotient = rand_num1 / rand_num2;
+    num1 = "239051672644169719606760847726448849722952349353674737803305086175"
+           "964897566266679588060951437665097321115985305673099530769568871522"
+           "45499107716567135414777307777041355408432721268223982670393229830408";
+    num2 = "-45388635689554372889456021208799010297399750799135284700297465410"
+           "290594446637518031367847208953611686547054464297776583106699748315"
+           "71906644184297446268805816895836929754710634789080915280425559423001";
+    REQUIRE(num1 + num2 == "19366303695461534671730482651764983942555259855453"
+            "94531030076207656743031196291615566931042287114856345689308413753"
+            "22947662869123206735924635322696891459714908812044256537220864791"
+            "43067389967670407407");
 
-        num1 = rand_num1;
-        num2 = rand_num2;
-        REQUIRE(num1 / num2 == quotient);
-    }
+    std::string sum;
+    num1 = big_pow10(1525);
+    num2 = big_pow10(2750);
+    sum = "1" + std::string(2750 - 1525 - 1, '0') + "1" + std::string(1525, '0');
+    REQUIRE(num1 + num2 == sum);
+
+    num1 = big_pow10(3875);
+    num2 = -big_pow10(5490);
+    sum = "-" + std::string(5490 - 3875, '9') + std::string(3875, '0');
+    REQUIRE(num1 + num2 == sum);
+
+    num1 = big_pow10(19876);
+    num2 = big_pow10(23450);
+    sum = "1" + std::string(23450 - 19876 - 1, '0') + "1" + std::string(19876, '0');
+    REQUIRE(num1 + num2 == sum);
 }
 
-TEST_CASE("Multiplication and division of BigInts with integers and strings",
-        "[binary-arithmetic][operators][multiplication][division]") {
-    BigInt num = 123;
-    REQUIRE(num * 5 == 615);
-    REQUIRE(num * -5 == -615);
-    REQUIRE(num * 456 == 56088);
-    REQUIRE(num * -456 == -56088);
-    REQUIRE(num * "5" == 615);
-    REQUIRE(num * "-5" == -615);
-    REQUIRE(num * "456" == 56088);
-    REQUIRE(num * "-456" == -56088);
+TEST_CASE("Subtraction of big numbers",
+        "[binary-arithmetic][operators][subtraction][big]") {
+    BigInt num1, num2;
+    num1 = "244519519883208981610410491992186770044882615922116562728872847144"
+           "421092065072619855932223524830025832896873758619497075789940851207"
+           "16036623521081847217851760412478092335656686950878812602818804060088";
+    num2 = "-94425733811917851828605532625703702955076512086024371088350998261"
+           "196757834829702575354045148220569953447106949397940559706260326388"
+           "28634363448939208619936099903329996345089935704304349196301998955360";
+    REQUIRE(num1 - num2 == "33894525369512683343901602461789047299995912800814"
+            "09338172238454056178498999023224312862686730505957863439807080174"
+            "37635496201177595446709869700210558377878603158080886807466226551"
+            "83161799120803015448");
 
-    REQUIRE(num / 5 == 24);
-    REQUIRE(num / -5 == -24);
-    REQUIRE(num / 456 == 0);
-    REQUIRE(num / -456 == 0);
-    REQUIRE(num / "5" == 24);
-    REQUIRE(num / "-5" == -24);
-    REQUIRE(num / "456" == 0);
-    REQUIRE(num / "-456" == 0);
+    num1 = "-68985388257152076898307722398568069114569275150745660636500453122"
+           "361335250374573735886985878878256091550832525534234783139806339978"
+           "04531841900565455099200079685136917576702910555227461601790724376924";
+    num2 = "727483877648813365652533679594255899405397184767522058008426131998"
+           "131529490549312516017332620262440606302137189946954415157145256899"
+           "53212281719565428986155762468758034363469065219343576930733687283864";
+    REQUIRE(num1 - num2 == "-7964692659059654425508414019928239685199664599182"
+            "67718644926585120492864740923886251904318499140696697852969715481"
+            "18919829695159687757744123620130884085355842153894951940171975774"
+            "571038532524411660788");
 
-    // catch division by zero
-    try {
-        BigInt trouble = num / 0;
-    }
-    catch (std::logic_error e) {
-        CHECK(e.what() == std::string("Attempted division by zero"));
-    }
+    num1 = "925303738374648618488768260990584709987661046412988919780698877679"
+           "650011360190156923243086758248351549060110046601233139482977571723"
+           "68389150744548489610998029282638268114361253166438240576351224508584";
+    num2 = "523739575704971221852123690170162065549469315720636849353841858576"
+           "794958912896691529594741418267238468975328418156471008089785554092"
+           "454742205154244706320735384145817395506750071592361784501457672552";
+    REQUIRE(num1 - num2 == "92006634261759890627024702408888308933216635325578"
+            "25512871604590938820617710611900079471393440656791643703567624196"
+            "68429402079716182759344085393942449046772938984924507188545030948"
+            "45878791849766836032");
 
-    /*
-        TODO
-        ----
-        Make the following work:
-        BigInt num = 123;
-        REQUIRE(5 * num == 615);
-        REQUIRE("-456" * num == -56088);
-        REQUIRE(5 / num == 0);
-        REQUIRE("-456" / num == -3);
-    */
+    std::string difference;
+    num1 = big_pow10(3126);
+    num2 = big_pow10(2097);
+    difference = std::string(3126 - 2097, '9') + std::string(2097, '0');
+    REQUIRE(num1 - num2 == difference);
+
+    num1 = big_pow10(3875);
+    num2 = -big_pow10(5490);
+    difference = "1" + std::string(5490 - 3875 - 1, '0') + "1" + std::string(3875, '0');
+    REQUIRE(num1 - num2 == difference);
+
+    num1 = big_pow10(35088);
+    num2 = big_pow10(27149);
+    difference = std::string(35088 - 27149, '9') + std::string(27149, '0');
+    REQUIRE(num1 - num2 == difference);
 }
 
 TEST_CASE("Multiplication of big numbers",
@@ -197,7 +283,7 @@ TEST_CASE("Division of big numbers",
     BigInt num1, num2;
     num1 = "12345678901234567890";
     num2 = "1234567890";
-    REQUIRE(num1 / num2 == "10000000001");
+    REQUIRE(num1 / num2 == 10000000001);
 
     num1 = "74795969103554554996215276693934490847811844274620";
     num2 = "-5291857623565844660930182726104731881781491980";
@@ -234,70 +320,6 @@ TEST_CASE("Division of big numbers",
     num1 = big_pow10(23459);
     num2 = big_pow10(19867);
     REQUIRE(num1 / num2 == big_pow10(3592));
-}
-
-TEST_CASE("Modulo of BigInts", "[binary-arithmetic][operators][modulo]") {
-    BigInt num1, num2;
-
-    std::random_device generator;
-    // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
-    std::uniform_int_distribution<long long>
-            distribution(LONG_LONG_MIN, LONG_LONG_MAX);
-    for (size_t i = 0; i < 20; i++) {
-        long long rand_num1 = distribution(generator);
-        long long rand_num2 = distribution(generator);
-
-        if (rand_num2 == 0) {    // prevent division by zero
-            i--;
-            continue;
-        }
-        long long remainder = rand_num1 % rand_num2;
-
-        num1 = rand_num1;
-        num2 = rand_num2;
-        REQUIRE(num1 % num2 == remainder);
-    }
-}
-
-TEST_CASE("Modulo of BigInts with integers and strings",
-        "[binary-arithmetic][operators][modulo]") {
-    BigInt num = 1234567890987654321;
-    REQUIRE(num % 583 == 98);
-    REQUIRE(num % -583 == 98);
-    REQUIRE(-num % 583 == -98);
-    REQUIRE(-num % -583 == -98);
-
-    REQUIRE(num % 490612 == 216761);
-    REQUIRE(num % -490612 == 216761);
-    REQUIRE(-num % 490612 == -216761);
-    REQUIRE(-num % -490612 == -216761);
-
-    REQUIRE(num % "583" == 98);
-    REQUIRE(num % "-583" == 98);
-    REQUIRE(-num % "583" == -98);
-    REQUIRE(-num % "-583" == -98);
-
-    REQUIRE(num % "490612" == 216761);
-    REQUIRE(num % "-490612" == 216761);
-    REQUIRE(-num % "490612" == -216761);
-    REQUIRE(-num % "-490612" == -216761);
-
-    // catch division by zero
-    try {
-        BigInt trouble = num % 0;
-    }
-    catch (std::logic_error e) {
-        CHECK(e.what() == std::string("Attempted division by zero"));
-    }
-
-    /*
-        TODO
-        ----
-        Make the following work:
-        BigInt num = 123;
-        REQUIRE(583 % num == 91);
-        REQUIRE("-490612" % num == -88);
-    */
 }
 
 TEST_CASE("Modulo of big numbers",
