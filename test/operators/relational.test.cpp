@@ -41,3 +41,44 @@ TEST_CASE("Relational operators", "[relational][operators]") {
         }
     }
 }
+
+TEST_CASE("Relational operators with BigInts and integers or strings",
+        "[relational][operators][integer][string]") {
+    BigInt num = 1234567890;
+
+    SECTION("Left operand: BigInt, right operand: integer") {
+        REQUIRE((num < 1234567890) == false);
+        REQUIRE((num > 1234567890) == false);
+        REQUIRE((num <= 1234567890) == true);
+        REQUIRE((num >= 1234567890) == true);
+        REQUIRE((num == 1234567890) == true);
+        REQUIRE((num != 1234567890) == false);
+    }
+
+    SECTION("Left operand: integer, right operand: BigInt") {
+        REQUIRE((1234567890 < num) == false);
+        REQUIRE((1234567890 > num) == false);
+        REQUIRE((1234567890 <= num) == true);
+        REQUIRE((1234567890 >= num) == true);
+        REQUIRE((1234567890 == num) == true);
+        REQUIRE((1234567890 != num) == false);
+    }
+
+    SECTION("Left operand: BigInt, right operand: string") {
+        REQUIRE((num < "1234567890") == false);
+        REQUIRE((num > "1234567890") == false);
+        REQUIRE((num <= "1234567890") == true);
+        REQUIRE((num >= "1234567890") == true);
+        REQUIRE((num == "1234567890") == true);
+        REQUIRE((num != "1234567890") == false);
+    }
+
+    SECTION("Left operand: string, right operand: BigInt") {
+        REQUIRE(("1234567890" < num) == false);
+        REQUIRE(("1234567890" > num) == false);
+        REQUIRE(("1234567890" <= num) == true);
+        REQUIRE(("1234567890" >= num) == true);
+        REQUIRE(("1234567890" == num) == true);
+        REQUIRE(("1234567890" != num) == false);
+    }
+}
