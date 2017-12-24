@@ -74,6 +74,7 @@ BigInt::BigInt(const std::string& num) {
             throw std::invalid_argument("Expected an integer, got \'" + num + "\'");
         }
     }
+    strip_leading_zeroes(value);
 }
 
 #endif  // BIG_INT_CONSTRUCTORS_HPP
