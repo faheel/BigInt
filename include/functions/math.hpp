@@ -7,6 +7,9 @@
 #ifndef BIG_INT_MATH_FUNCTIONS_HPP
 #define BIG_INT_MATH_FUNCTIONS_HPP
 
+#include "operators/relational.hpp"
+#include "operators/unary_arithmetic.hpp"
+
 
 /*
     abs
