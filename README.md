@@ -38,11 +38,10 @@
 
 1. Create objects of the `BigInt` class, and do what you got to do!
     ```C++
-    BigInt num1, num2;
-    num1 = 1234567890;
-    num2 = "9876543210123456789098765432101234567890";
+    BigInt big1 = 1234567890, big2;
+    big2 = "9876543210123456789098765432101234567890";
 
-    std::cout << num1 * num2 * 123456 << "\n";
+    std::cout << big1 * big2 * 123456 << "\n";
     // Output: 1505331490682966620443288524512589666204282352096057600
     ```
 
@@ -50,68 +49,69 @@
 
 ### Operators
 
-All binary operators can have either an integer (upto `signed long long int`),
-a string (`std::string` or a string literal), or another `BigInt` as the second operand.
-
 * #### Assignment: `=`
+  The second operand can either be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
   ```C++
-  my_big_int = 1234567890;
-  my_big_int = "123456789012345678901234567890";
-  my_big_int = other_big_int;
+  big1 = 1234567890;
+  big1 = "123456789012345678901234567890";
+  big1 = big2;
   ```
 
 * #### Unary arithmetic: `+`, `-`
   ```C++
-  my_big_int = +other_big_int;  // doesn't return the absolute value
-  my_big_int = -other_big_int;
+  big1 = +big2;   // doesn't return the absolute value
+  big1 = -big2;
   ```
 
 * #### Binary arithmetic: `+`, `-`, `*`, `/`, `%`
+  One of the operands has to be a `BigInt` and the other can be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
   ```C++
-  big_int_1 = big_int_2 + 1234567890;
-  big_int_1 = big_int_2 - "123456789012345678901234567890";
-  big_int_1 = big_int_2 * big_int_3;
-  big_int_1 = big_int_2 / 1234567890;
-  big_int_1 = big_int_2 % "123456789012345678901234567890";
+  big1 = big2 + 1234567890;
+  big1 = big2 - "123456789012345678901234567890";
+  big1 = big2 * big3;
+  big1 = 1234567890 / big2;
+  big1 = "123456789012345678901234567890" % big2;
   ```
 
 * #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
+  The second operand can either be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
     ```C++
-    big_int_1 += big_int_2;
-    big_int_1 -= 1234567890;
-    big_int_1 *= "123456789012345678901234567890";
-    big_int_1 /= big_int_2;
-    big_int_1 %= 1234567890;
+    big1 += big2;
+    big1 -= 1234567890;
+    big1 *= "123456789012345678901234567890";
+    big1 /= big2;
+    big1 %= 1234567890;
     ```
 
 * #### Increment and decrement: `++`, `--`
   ```C++
-  some_big_int = ++my_big_int;   // pre-increment
-  some_big_int = --my_big_int;   // pre-decrement
+  big1 = ++big2;   // pre-increment
+  big1 = --big2;   // pre-decrement
 
-  some_big_int = my_big_int++;   // post-increment
-  some_big_int = my_big_int--;   // post-decrement
+  big1 = big2++;   // post-increment
+  big1 = big2--;   // post-decrement
   ```
 
 * #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
+  One of the operands has to be a `BigInt` and the other can be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
   ```C++
-  if (big_int_1 < 1234567890
-      or big_int_1 > "123456789012345678901234567890"
-      or big_int_1 <= big_int_2
-      or big_int_1 >= 1234567890
-      or big_int_1 == "123456789012345678901234567890"
-      or big_int_1 != big_int_3) {
+  if (big1 < 1234567890
+      or big1 > "123456789012345678901234567890"
+      or big1 <= big2
+      or 1234567890 >= big1
+      or "123456789012345678901234567890" == big1
+      or big1 != big3) {
       ...
   }
   ```
 
 * #### I/O stream: `<<`, `>>`
   ```C++
-  std::cout << big_int_1 << ", " << big_int_2 << "\n";
-  output_file << big_int_1 << ", " << big_int_2 << "\n";
+  std::cout << big1 << ", " << big2 << "\n";
+  output_file << big1 << ", " << big2 << "\n";
 
-  std::cin >> big_int_1 >> big_int_2;
-  input_file >> big_int_1 >> big_int_2;
+  std::cin >> big1 >> big2;
+  input_file >> big1 >> big2;
   ```
 
 ### Functions
@@ -123,13 +123,13 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
   [out_of_range exception][out_of_range-exception] is thrown.
 
     ```C++
-    some_str = my_big_int.to_string();
+    some_str = big1.to_string();
 
-    some_int = my_big_int.to_int();
+    some_int = big1.to_int();
 
-    some_long = my_big_int.to_long();
+    some_long = big1.to_long();
 
-    some_long_long = my_big_int.to_long_long();
+    some_long_long = big1.to_long_long();
     ```
 
 * #### Math
@@ -138,14 +138,14 @@ a string (`std::string` or a string literal), or another `BigInt` as the second 
     Get the absolute value of a `BigInt`.
 
     ```C++
-    my_big_int = abs(other_big_int);
+    big1 = abs(big2);
     ```
 
   * #### `big_pow10`
     Get a `BigInt` equal to 10<sup>x</sup>.
 
     ```C++
-    my_big_int = big_pow10(5000);   // my_big_int = 10^5000
+    big1 = big_pow10(5000);   // big1 = 10^5000
     ```
 
 ## Compiling / testing
@@ -172,7 +172,7 @@ This project is licensed under the terms of the [MIT license][license-link].
 [travis-shield]: https://img.shields.io/travis/faheel/BigInt.svg?style=for-the-badge
 [travis-link]: https://travis-ci.org/faheel/BigInt
 [try-online-shield]: https://img.shields.io/badge/Try_online-Wandbox-E91E63.svg?style=for-the-badge
-[try-online-link]: https://wandbox.org/permlink/J9eEgFpryxDwc3th
+[try-online-link]: https://wandbox.org/permlink/Fb6C7h8fREHg8WWr
 [license-shield]: https://img.shields.io/github/license/faheel/BigInt.svg?style=for-the-badge
 [license-link]: https://github.com/faheel/BigInt/blob/master/LICENSE
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
