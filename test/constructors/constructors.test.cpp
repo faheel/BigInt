@@ -24,9 +24,8 @@ TEST_CASE("Construct zero-valued BigInts", "[constructors]") {
 
 TEST_CASE("Randomly construct BigInts from integers and strings", "[constructors]") {
     std::random_device generator;
-    // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
-    std::uniform_int_distribution<long long> distribution((LONG_LONG_MIN),
-            (LONG_LONG_MAX));
+    // uniform distribution of numbers from LLONG_MIN to LLONG_MAX:
+    std::uniform_int_distribution<long long> distribution((LLONG_MIN), (LLONG_MAX));
     for (size_t i = 0; i < 30; i++) {
         long long rand_num = distribution(generator);
 

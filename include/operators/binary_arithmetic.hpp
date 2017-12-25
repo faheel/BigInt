@@ -21,7 +21,7 @@
 #include "operators/relational.hpp"
 #include "operators/unary_arithmetic.hpp"
 
-const long long FLOOR_SQRT_LONG_LONG_MAX = 3037000499;
+const long long FLOOR_SQRT_LLONG_MAX = 3037000499;
 
 
 /*
@@ -154,7 +154,7 @@ BigInt BigInt::operator*(const BigInt& num) const {
      return *this;
 
     BigInt product;
-    if (abs(*this) <= FLOOR_SQRT_LONG_LONG_MAX and abs(num) <= FLOOR_SQRT_LONG_LONG_MAX)
+    if (abs(*this) <= FLOOR_SQRT_LLONG_MAX and abs(num) <= FLOOR_SQRT_LLONG_MAX)
         product = std::stoll(this->value) * std::stoll(num.value);
     else {
         // identify the numbers as `larger` and `smaller`
@@ -249,7 +249,7 @@ BigInt BigInt::operator/(const BigInt& num) const {
         return -(*this);
 
     BigInt quotient;
-    if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
+    if (abs_dividend <= LLONG_MAX and abs_divisor <= LLONG_MAX)
         quotient = std::stoll(abs_dividend.value) / std::stoll(abs_divisor.value);
     else if (abs_dividend == abs_divisor)
         quotient = 1;
@@ -312,7 +312,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
         return BigInt(0);
 
     BigInt remainder;
-    if (abs_dividend <= LONG_LONG_MAX and abs_divisor <= LONG_LONG_MAX)
+    if (abs_dividend <= LLONG_MAX and abs_divisor <= LLONG_MAX)
         remainder = std::stoll(abs_dividend.value) % std::stoll(abs_divisor.value);
     else if (abs_dividend < abs_divisor)
         remainder = abs_dividend;

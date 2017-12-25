@@ -14,8 +14,8 @@ TEST_CASE("Binary arithmetic operations on BigInts with integers, strings and Bi
         "[division][modulo][integer][string][BigInt]") {
     std::random_device generator;
     // uniform distribution of numbers from -3037000499 to 3037000499:
-    std::uniform_int_distribution<long long> distribution(-FLOOR_SQRT_LONG_LONG_MAX,
-            FLOOR_SQRT_LONG_LONG_MAX);
+    std::uniform_int_distribution<long long> distribution((-FLOOR_SQRT_LLONG_MAX),
+            (FLOOR_SQRT_LLONG_MAX));
     for (size_t i = 0; i < 20; i++) {
         long long integer1 = distribution(generator);
         long long integer2 = distribution(generator);

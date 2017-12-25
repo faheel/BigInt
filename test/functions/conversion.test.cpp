@@ -10,9 +10,8 @@
 
 TEST_CASE("Convert BigInt to string", "[conversion][string]") {
     std::random_device generator;
-    // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
-    std::uniform_int_distribution<long long> distribution((LONG_LONG_MIN),
-            (LONG_LONG_MAX));
+    // uniform distribution of numbers from LLONG_MIN to LLONG_MAX:
+    std::uniform_int_distribution<long long> distribution((LLONG_MIN), (LLONG_MAX));
     for (size_t i = 0; i < 20; i++) {
         long long rand_num = distribution(generator);
 
@@ -44,9 +43,8 @@ TEST_CASE("Convert BigInt to long int", "[conversion][long]") {
 
 TEST_CASE("Convert BigInt to long long int", "[conversion][long long]") {
     std::random_device generator;
-    // uniform distribution of numbers from LONG_LONG_MIN to LONG_LONG_MAX:
-    std::uniform_int_distribution<long long> distribution((LONG_LONG_MIN),
-            (LONG_LONG_MAX));
+    // uniform distribution of numbers from LLONG_MIN to LLONG_MAX:
+    std::uniform_int_distribution<long long> distribution((LLONG_MIN), (LLONG_MAX));
     for (size_t i = 0; i < 20; i++) {
         long long rand_num = distribution(generator);
 

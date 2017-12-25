@@ -52,7 +52,7 @@ TEST_CASE("abs of big integers", "[functions][math][abs][big]") {
 TEST_CASE("Randomised test for big_pow10", "[functions][math][big_pow10][random]") {
     std::random_device generator;
     // uniform distribution of numbers from 0 to SHRT_MAX:
-    std::uniform_int_distribution<short> distribution(0, SHRT_MAX);
+    std::uniform_int_distribution<short> distribution(0, (SHRT_MAX));
     BigInt big_num;
     for (size_t i = 0; i < 20; i++) {
         short rand_exponent = distribution(generator);
