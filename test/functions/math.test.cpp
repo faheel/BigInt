@@ -13,7 +13,7 @@
 TEST_CASE("Randomised test for abs", "[functions][math][abs][random]") {
     std::random_device generator;
     // uniform distribution of numbers from INT_MIN to INT_MAX:
-    std::uniform_int_distribution<int> distribution(INT_MIN, INT_MAX);
+    std::uniform_int_distribution<int> distribution((INT_MIN), (INT_MAX));
     for (size_t i = 0; i < 20; i++) {
         int rand_num = distribution(generator);
 
