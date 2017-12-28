@@ -4,6 +4,7 @@
 <h3 align="center">Arbitrary-sized integer class for C++</h3>
 
 ---
+
 [![Release version][release-shield]][release-link]
 [![Travis status][travis-shield]][travis-link]
 [![Try it online][try-online-shield]][try-online-link]
@@ -142,10 +143,19 @@
     ```
 
   * #### `big_pow10`
-    Get a `BigInt` equal to 10<sup>x</sup>.
+    Get a `BigInt` equal to _10<sup>exp</sup>_.
 
     ```C++
     big1 = big_pow10(5000);   // big1 = 10^5000
+    ```
+
+  * #### `pow`
+    Get the value of _base<sup>exp</sup>_ as a `BigInt`. The base can either be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
+
+    ```C++
+    big1 = pow(big2, 789);
+    big1 = pow(987654321LL, 456);   // suffix literal with LL to prevent conflicts
+    big1 = pow("1234567890", 123);
     ```
 
 ## Compiling / testing
@@ -165,6 +175,7 @@ how to contribute to the project.
 ## License
 
 This project is licensed under the terms of the [MIT license][license-link].
+
 
 [release-shield]: https://img.shields.io/github/release/faheel/BigInt/all.svg?style=for-the-badge
 [release-link]: https://github.com/faheel/BigInt/releases
