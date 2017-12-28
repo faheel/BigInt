@@ -8,7 +8,6 @@
 #define BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
 
 #include <climits>
-#include <cmath>
 #include <string>
 
 #include "BigInt.hpp"
@@ -20,6 +19,7 @@
 #include "operators/increment_decrement.hpp"
 #include "operators/relational.hpp"
 #include "operators/unary_arithmetic.hpp"
+#include <cmath>
 
 const long long FLOOR_SQRT_LLONG_MAX = 3037000499;
 

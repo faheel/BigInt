@@ -166,7 +166,6 @@ how to contribute to the project.
 
 This project is licensed under the terms of the [MIT license][license-link].
 
-
 [release-shield]: https://img.shields.io/github/release/faheel/BigInt/all.svg?style=for-the-badge
 [release-link]: https://github.com/faheel/BigInt/releases
 [travis-shield]: https://img.shields.io/travis/faheel/BigInt.svg?style=for-the-badge

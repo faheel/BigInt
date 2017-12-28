@@ -3,9 +3,10 @@
 #include <random>
 
 #include "constructors/constructors.hpp"
-#include "functions/conversion.hpp"
 #include "functions/math.hpp"
 #include "operators/io_stream.hpp"
+#include "operators/binary_arithmetic.hpp"
+#include "functions/conversion.hpp"
 
 #include "third_party/catch.hpp"
 
@@ -60,4 +61,28 @@ TEST_CASE("Randomised test for big_pow10", "[functions][math][big_pow10][random]
         big_num = big_pow10(rand_exponent);
         REQUIRE(big_num.to_string() == "1" + std::string(rand_exponent, '0'));
     }
+}
+
+TEST_CASE("Pow with BigInt", "[conversion][string]") {
+    BigInt a = 12;
+
+    REQUIRE(pow(a, 32ll) == "34182189187166852111368841966125056");
+    a = 32;
+    REQUIRE(pow(a, 12ll) == "1152921504606846976");
+    a = 50;
+    REQUIRE(pow(a, 23ll) == "1192092895507812500000000000000000000000");
+}
+
+TEST_CASE("Pow with long long", "[conversion][string]") {
+    REQUIRE(pow(20ll, 40ll) == "10995116277760000000000000000000000000000000000000000");
+    REQUIRE(pow(30ll, 45ll) == "2954312706550833698643000000000000000000000000000000000000000000000");
+    REQUIRE(pow(45ll, 30ll) == "39479842665806602234295041487552225589752197265625");
+    REQUIRE(pow(40ll, 20ll) == "109951162777600000000000000000000");
+}
+
+TEST_CASE("Pow with string", "[conversion][string]") {
+    REQUIRE(pow("33", 27ll) == "99971538734896047460249499950752967950177");
+    REQUIRE(pow("21", 59ll) == "1025506433613486607375777617584133309366191904729927960524981845743709132117581");
+    REQUIRE(pow("42", 59ll) == "591164210212831306083214062268562882225191490961799646040575789354982868342002274605481253142528");
+    REQUIRE(pow("50", 51ll) == "444089209850062616169452667236328125000000000000000000000000000000000000000000000000000");
 }
