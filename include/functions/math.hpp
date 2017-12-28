@@ -9,6 +9,7 @@
 
 #include <string>
 
+
 /*
     abs
     ---
@@ -23,52 +24,65 @@ BigInt abs(const BigInt& num) {
 /*
     big_pow10
     ---------
-    Returns a BigInt equal to 10^exponent.
-    NOTE: `exponent` should be a non-negative integer.
+    Returns a BigInt equal to 10^exp.
+    NOTE: exponent should be a non-negative integer.
 */
 
-BigInt big_pow10(size_t exponent) {
-    return BigInt("1" + std::string(exponent, '0'));
+BigInt big_pow10(size_t exp) {
+    return BigInt("1" + std::string(exp, '0'));
 }
+
 
 /*
-    pow
-    ---
-    Return a BigInt equal to my_big_int^x
-    NOTE: x could be BigInt, long long, or string
+    pow (BigInt)
+    ------------
+    Returns a BigInt equal to base^exp.
 */
-BigInt pow(const BigInt& my_big_int, const long long& x) {
-    BigInt a = my_big_int;
-    BigInt n = x;
 
-    if (n < 0) {
-        n = BigInt(1)/n;
-        a = -a;
+BigInt pow(const BigInt& base, int exp) {
+    if (exp < 0) {
+        if (base == 0)
+            throw std::logic_error("Cannot divide by zero");
+        return abs(base) == 1 ? base : 0;
+    }
+    if (exp == 0) {
+        if (base == 0)
+            throw std::logic_error("Zero cannot be raised to zero");
+        return 1;
     }
 
-    if (n == 0) return BigInt(1);
-
-    BigInt y = 1;
-    while (n > 1) {
-        if ((n % 2) == 0) {
-            a *= a;
-            n /= 2;
-        } else {
-            y *= a;
-            a *= a;
-            n = (n-1)/2;
-        }
+    BigInt result = base, result_odd = 1;
+    while (exp > 1) {
+        if (exp % 2)
+            result_odd *= result;
+        result *= result;
+        exp /= 2;
     }
-    return a*y;
+
+    return result * result_odd;
 }
 
-BigInt pow(const long long& my_big_int, const long long& x) {
-    return pow(BigInt(my_big_int), x);
+
+/*
+    pow (Integer)
+    -------------
+    Returns a BigInt equal to base^exp.
+*/
+
+BigInt pow(const long long& base, int exp) {
+    return pow(BigInt(base), exp);
 }
 
-BigInt pow(const std::string& my_big_int, const long long& x) {
-    return pow(BigInt(my_big_int), x);
-    
+
+/*
+    pow (String)
+    ------------
+    Returns a BigInt equal to base^exp.
+*/
+
+BigInt pow(const std::string& base, int exp) {
+    return pow(BigInt(base), exp);
+
 }
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
