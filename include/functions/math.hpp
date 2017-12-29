@@ -92,38 +92,39 @@ BigInt pow(const std::string& base, int exp) {
     NOTE: num must be a non-negative value
 */
 BigInt sqrt(const BigInt& num){
-    if (num >= 0) {
-        if (num == 0) { //accounts for base case num=0
-            return num;
-        } else if (num == 1 || num ==2) { //accounts for base case num=1 or num=2
-            BigInt temp = 1;
-            return temp;
+    if (num < 0) {
+        throw std::invalid_argument("Cannot compute square root of a negative integer");
+    }
+
+    if (num == 0) { //accounts for base case num=0
+        return num;
+    } else if (num == 1 || num ==2) { //accounts for base case num=1 or num=2
+        BigInt temp = 1;
+        return temp;
+    }
+
+    BigInt x0 = 1;
+    BigInt x1 = 1;
+    while(!(x0*x0 <= num && x1*x1 >= num)){ //checks that the square root of num falls between x0 and x1
+        BigInt betterEstimate;
+        if (x1 != 0) {
+            betterEstimate = ((num/x1)+x1)/2;
+        } else {
+            betterEstimate = 0;
         }
-        BigInt x0 = 1;
-        BigInt x1 = 1;
-        while(!(x0*x0 <= num && x1*x1 >= num)){ //checks that the square root of num falls between x0 and x1
-            BigInt betterEstimate;
-            if (x1 != 0) {
-                betterEstimate = ((num/x1)+x1)/2;
-            } else {
-                betterEstimate = 0;
-            }
-            x0 = x1;
-            x1 = betterEstimate;
-        }
-        if (x0 == x1) {
+        x0 = x1;
+        x1 = betterEstimate;
+    }
+    if (x0 == x1) {
+        return x0;
+    } else { //checks whether x0 or x1 is closer to the actual value of the square root
+        BigInt diff0 = abs(num-(x0*x0));
+        BigInt diff1 = abs((x1*x1)-num);
+        if (diff0 < diff1) {
             return x0;
-        } else { //checks whether x0 or x1 is closer to the actual value of the square root
-            BigInt diff0 = abs(num-(x0*x0));
-            BigInt diff1 = abs((x1*x1)-num);
-            if (diff0 < diff1) {
-                return x0;
-            } else {
-                return x1;
-            }
+        } else {
+            return x1;
         }
-    } else {
-        throw std::invalid_argument("Expected a non-negative BigInt");
     }
 }
 
