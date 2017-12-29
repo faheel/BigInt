@@ -92,7 +92,7 @@ BigInt pow(const std::string& base, int exp) {
     NOTE: num must be a non-negative value
 */
 BigInt sqrt(const BigInt& num){
-    if (num.sign == '+') {
+    if (num >= 0) {
         if (num == 0) { //accounts for base case num=0
             return num;
         } else if (num == 1 || num ==2) { //accounts for base case num=1 or num=2
@@ -102,7 +102,7 @@ BigInt sqrt(const BigInt& num){
         BigInt x0 = 1;
         BigInt x1 = 1;
         while(!(x0*x0 <= num && x1*x1 >= num)){ //checks that the square root of num falls between x0 and x1
-            BigInt betterEstimate();
+            BigInt betterEstimate;
             if (x1 != 0) {
                 betterEstimate = ((num/x1)+x1)/2;
             } else {
