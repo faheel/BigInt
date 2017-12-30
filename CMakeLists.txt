@@ -7,7 +7,6 @@ set(CMAKE_BUILD_TYPE Coverage)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 
 include_directories(include)
 
@@ -23,9 +22,13 @@ add_library(test_runner STATIC
         test/test_runner.cpp)
 
 # Integration test
-add_executable(integration.test
-        test/integration.test.cpp)
-target_link_libraries(integration.test test_runner)
-SETUP_TARGET_FOR_COVERAGE(integration_test_coverage
-        integration.test
-        coverage)
+add_executable(combined_tests
+        build/combined.test.cpp)
+target_link_libraries(combined_tests test_runner)
+install(TARGETS combined_tests
+        DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+
+# Target for integration test coverage
+SETUP_TARGET_FOR_COVERAGE(combined_tests_coverage   # make target
+        combined_tests  # executable
+        coverage)       # directory

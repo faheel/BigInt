@@ -18,7 +18,7 @@ test: bin/combined_tests
 # generate coverage report
 .PHONY: coverage
 coverage: bin/combined_tests
-	cd build && make combined_test_coverage
+	cd build && make combined_tests_coverage
 
 # create the single-include header file
 .PHONY: release
