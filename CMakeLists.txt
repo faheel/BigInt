@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -pedantic-errors -fprofile-arcs -ftest
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/modules/")
 include(CodeCoverage)
-set(LCOV_REMOVE_EXTRA "'test/*'" "'include/third_party/*'")
+set(LCOV_REMOVE_EXTRA "'test/*'" "'build/*'" "'include/third_party/*'")
 
 # Test runner
 add_library(test_runner STATIC
