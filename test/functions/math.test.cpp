@@ -204,17 +204,23 @@ TEST_CASE("Sqrt of big integers", "[functions][math][sqrt][big]") {
 }
 
 TEST_CASE("Base cases for sqrt", "[functions][math][sqrt]") {
+    BigInt num;
+
     // num = -1
+    num = -1;
     try {
-        BigInt undefined = sqrt("-1");
+        BigInt undefined = sqrt(num);
     }
     catch (std::logic_error e) {
         CHECK(e.what() == std::string("Cannot compute square root of a negative integer"));
     }
 
-    REQUIRE(sqrt("0") == 0);
+    num = 0;
+    REQUIRE(sqrt(num) == 0);
 
-    REQUIRE(sqrt("1") == 1);
+    num = 1;
+    REQUIRE(sqrt(num) == 1);
 
-    REQUIRE(sqrt("2") == 1);
+    num = 2;
+    REQUIRE(sqrt(num) == 1);
 }
