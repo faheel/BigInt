@@ -10,11 +10,11 @@ unit_tests="constructors/constructors.test.cpp \
     operators/relational.test.cpp \
     operators/unary_arithmetic.test.cpp"
 
-integration_test="build/integration.test.cpp"
+combined_test="build/combined.test.cpp"
+rm -f "$combined_test"
 
-rm -f "$integration_test"
 for test in ${unit_tests}
 do
-    cat "test/${test}" >> "$integration_test"
-    printf "\n\n" >> "$integration_test"
+    cat "test/${test}" >> "$combined_test"
+    printf "\n\n" >> "$combined_test"
 done
