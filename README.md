@@ -6,7 +6,8 @@
 ---
 
 [![Release version][release-shield]][release-link]
-[![Travis status][travis-shield]][travis-link]
+[![Travis][travis-shield]][travis-link]
+[![Codecov][codecov-shield]][codecov-link]
 [![Try it online][try-online-shield]][try-online-link]
 [![License][license-shield]][license-link]
 
@@ -17,7 +18,7 @@
 * [Highlights](#highlights)
 * [Usage](#usage)
 * [Features](#features)
-* [Compiling / testing](#compiling--testing)
+* [Compiling / testing](#compiling-and-testing)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -158,7 +159,7 @@
     big1 = pow("1234567890", 123);
     ```
 
-## Compiling / testing
+## Compiling and testing
 
 Since this project is built as a library, there are no source files.
 However, there are unit tests for each header file that the project is split into.
@@ -181,6 +182,8 @@ This project is licensed under the terms of the [MIT license][license-link].
 [release-link]: https://github.com/faheel/BigInt/releases
 [travis-shield]: https://img.shields.io/travis/faheel/BigInt.svg?style=for-the-badge
 [travis-link]: https://travis-ci.org/faheel/BigInt
+[codecov-shield]: https://img.shields.io/codecov/c/github/faheel/BigInt.svg?style=for-the-badge
+[codecov-link]: https://codecov.io/gh/faheel/BigInt
 [try-online-shield]: https://img.shields.io/badge/Try_online-Wandbox-E91E63.svg?style=for-the-badge
 [try-online-link]: https://wandbox.org/permlink/Fb6C7h8fREHg8WWr
 [license-shield]: https://img.shields.io/github/license/faheel/BigInt.svg?style=for-the-badge
