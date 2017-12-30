@@ -136,8 +136,9 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		MESSAGE(FATAL_ERROR "genhtml not found! Aborting...")
 	ENDIF() # NOT GENHTML_PATH
 
-	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.info")
-	SET(coverage_cleaned "${coverage_info}.cleaned")
+	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}")
+	SET(coverage_cleaned "${coverage_info}.info")
+	SET(coverage_info "${coverage_info}.orig")
 
 	SEPARATE_ARGUMENTS(test_command UNIX_COMMAND "${_testrunner}")
 
@@ -154,7 +155,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${coverage_info}
 		COMMAND ${LCOV_PATH} --remove ${coverage_info} 'tests/*' '/usr/*' ${LCOV_REMOVE_EXTRA} --output-file ${coverage_cleaned}
 		COMMAND ${GENHTML_PATH} -o ${_outputname} ${coverage_cleaned}
-		#COMMAND ${CMAKE_COMMAND} -E remove ${coverage_info} ${coverage_cleaned}
+		COMMAND ${CMAKE_COMMAND} -E remove ${coverage_info}
 
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
