@@ -12,6 +12,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-6
+            - lcov
       env:
         - COMPILER='g++-6'
 
@@ -24,6 +25,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
+            - lcov
       env:
         - COMPILER='g++-7'
 
@@ -36,6 +38,7 @@ matrix:
             - llvm-toolchain-trusty-4.0
           packages:
             - clang-4.0
+            - lcov
       env:
         - COMPILER='clang++-4.0'
 
@@ -48,6 +51,7 @@ matrix:
             - llvm-toolchain-trusty-5.0
           packages:
             - clang-5.0
+            - lcov
       env:
         - COMPILER='clang++-5.0'
 
@@ -82,7 +86,23 @@ matrix:
 before_install:
   - export CXX=${COMPILER}
 
-install: true
+install:
+  - mkdir -p tmp && cd tmp
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.tar.gz"
+      mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+      export PATH=tmp/cmake/bin:${PATH}
+    elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+        which cmake || brew install cmake;
+    fi
 
 script:
-  - make && make test
+  - |
+    make
+    make test
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]
+    then
+      make coverage
+      bash <(curl -s https://codecov.io/bash) -X gcov
+    fi
