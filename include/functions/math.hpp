@@ -105,7 +105,7 @@ BigInt sqrt(const BigInt& num){
 
     BigInt x0 = 1;
     BigInt x1 = 1;
-    while(!(x0*x0 <= num && x1*x1 >= num)){ //checks that the square root of num falls between x0 and x1
+    while(!(x1*x1 <= num && x0*x0 >= num)){ //checks that the square root of num falls between x0 and x1
         BigInt betterEstimate;
         if (x1 != 0) {
             betterEstimate = ((num/x1)+x1)/2;
@@ -118,8 +118,8 @@ BigInt sqrt(const BigInt& num){
     if (x0 == x1) {
         return x0;
     } else { //checks whether x0 or x1 is closer to the actual value of the square root
-        BigInt diff0 = abs(num-(x0*x0));
-        BigInt diff1 = abs((x1*x1)-num);
+        BigInt diff0 = abs((x0*x0)-num);
+        BigInt diff1 = abs(num-(x1*x1));
         if (diff0 < diff1) {
             return x0;
         } else {
