@@ -1,26 +1,31 @@
 # prevent printing of recipes
 .SILENT:
 
-# compile integration test using CMake
-build/bin/combined_tests:
-	mkdir -p bin build
-	scripts/combine_tests.sh
+# compile combined test using CMake
+.PHONY: default
+default: dirs build/combined.test.cpp
 	cd build && cmake .. && make
 
-bin/combined_tests: build/bin/combined_tests
-	cd build && make install
+# generate combined test whenever a unit test changes
+build/combined.test.cpp: dirs $(wildcard test/*/*.cpp)
+	scripts/combine_tests.sh
 
-# run tests
+# run combined test
 .PHONY: test
-test: bin/combined_tests
-	bin/combined_tests
+test: default
+	scripts/run_tests.sh
 
 # generate coverage report
 .PHONY: coverage
-coverage: bin/combined_tests
-	cd build && make combined_tests_coverage
+coverage: build/combined.test.cpp
+	cd build && make combined_test_coverage
 
-# create the single-include header file
+# create the single-include header file to release
 .PHONY: release
 release:
 	scripts/release.sh
+
+# create bin and build directories
+.PHONY: dirs
+dirs:
+	mkdir -p bin build
