@@ -1,6 +1,6 @@
 #!/bin/bash
 
-unit_tests="constructors/constructors.test.cpp \
+test_sources="constructors/constructors.test.cpp \
     functions/conversion.test.cpp \
     functions/math.test.cpp \
     operators/arithmetic_assignment.test.cpp \
@@ -11,10 +11,10 @@ unit_tests="constructors/constructors.test.cpp \
     operators/unary_arithmetic.test.cpp"
 
 combined_test="build/combined.test.cpp"
-rm -f "$combined_test"
 
-for test in ${unit_tests}
+echo "" > ${combined_test}      # clear file
+for source in ${test_sources}
 do
-    cat "test/${test}" >> "$combined_test"
-    printf "\n\n" >> "$combined_test"
+    cat "test/${source}" >> ${combined_test}
+    printf "\n\n" >> ${combined_test}
 done
