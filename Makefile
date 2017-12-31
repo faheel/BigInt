@@ -14,6 +14,7 @@ build/combined.test.cpp: dirs $(wildcard test/*/*.cpp)
 .PHONY: test
 test: default
 	scripts/run_tests.sh
+	rm testing_io_stream.txt
 
 # generate coverage report
 .PHONY: coverage
@@ -29,3 +30,8 @@ release:
 .PHONY: dirs
 dirs:
 	mkdir -p bin build
+
+# clean build files
+.PHONY: clean
+clean:
+	cd build && make clean
