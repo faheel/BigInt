@@ -7,6 +7,7 @@ test_sources="constructors/constructors.test.cpp \
     operators/assignment.test.cpp \
     operators/binary_arithmetic.test.cpp \
     operators/increment_decrement.test.cpp \
+    operators/io_stream.test.cpp \
     operators/relational.test.cpp \
     operators/unary_arithmetic.test.cpp"
 

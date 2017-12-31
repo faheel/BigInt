@@ -7,6 +7,7 @@ tests="Constructors.Test
     Operators.Assignment.Test
     Operators.BinaryArithmetic.Test
     Operators.IncrementDecrement.Test
+    Operators.IOStream.Test
     Operators.Relational.Test
     Operators.UnaryArithmetic.Test"
 

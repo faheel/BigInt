@@ -62,6 +62,10 @@ add_executable(Operators.IncrementDecrement.Test
         test/operators/increment_decrement.test.cpp)
 target_link_libraries(Operators.IncrementDecrement.Test TestRunner)
 
+add_executable(Operators.IOStream.Test
+        test/operators/io_stream.test.cpp)
+target_link_libraries(Operators.IOStream.Test TestRunner)
+
 add_executable(Operators.Relational.Test
         test/operators/relational.test.cpp)
 target_link_libraries(Operators.Relational.Test TestRunner)
