@@ -12,7 +12,7 @@
 #include "third_party/catch.hpp"
 
 
-TEST_CASE("Randomised test for abs", "[functions][math][abs][random]") {
+TEST_CASE("Randomised test for abs()", "[functions][math][abs][random]") {
     std::random_device generator;
     // uniform distribution of numbers from INT_MIN to INT_MAX:
     std::uniform_int_distribution<int> distribution((INT_MIN), (INT_MAX));
@@ -23,7 +23,7 @@ TEST_CASE("Randomised test for abs", "[functions][math][abs][random]") {
     }
 }
 
-TEST_CASE("abs of big integers", "[functions][math][abs][big]") {
+TEST_CASE("abs() of big integers", "[functions][math][abs][big]") {
     BigInt big_num, big_num_abs;
     big_num = "-26344012632774350668411924807957373509352408071007389017455689"
             "236404655575154572365301366147824648152450898838528";
@@ -51,7 +51,7 @@ TEST_CASE("abs of big integers", "[functions][math][abs][big]") {
     REQUIRE(big_num == -big_num_abs);
 }
 
-TEST_CASE("Randomised test for big_pow10", "[functions][math][big_pow10][random]") {
+TEST_CASE("Randomised test for big_pow10()", "[functions][math][big_pow10][random]") {
     std::random_device generator;
     // uniform distribution of numbers from 0 to SHRT_MAX:
     std::uniform_int_distribution<short> distribution(0, (SHRT_MAX));
@@ -64,19 +64,19 @@ TEST_CASE("Randomised test for big_pow10", "[functions][math][big_pow10][random]
     }
 }
 
-TEST_CASE("Base cases for pow", "[functions][math][pow]") {
+TEST_CASE("Base cases for pow()", "[functions][math][pow]") {
     // 0^-1
     try {
         BigInt undefined = pow("0", -1);
     }
-    catch (std::logic_error e) {
+    catch (std::logic_error &e) {
         CHECK(e.what() == std::string("Cannot divide by zero"));
     }
     // 0^0
     try {
         BigInt undefined = pow("0", 0);
     }
-    catch (std::logic_error e) {
+    catch (std::logic_error &e) {
         CHECK(e.what() == std::string("Zero cannot be raised to zero"));
     }
     REQUIRE(pow("0", 1) == 0);
@@ -90,7 +90,7 @@ TEST_CASE("Base cases for pow", "[functions][math][pow]") {
     REQUIRE(pow("-1",  1) == -1);
 }
 
-TEST_CASE("pow with BigInt base", "[functions][math][pow]") {
+TEST_CASE("pow() with BigInt base", "[functions][math][pow]") {
     BigInt num = 11;
     REQUIRE(pow(num, 9) == 2357947691);
     num = -27;
@@ -116,7 +116,7 @@ TEST_CASE("pow with BigInt base", "[functions][math][pow]") {
             "9365234375");
 }
 
-TEST_CASE("pow with integer base", "[functions][math][pow][integer]") {
+TEST_CASE("pow() with integer base", "[functions][math][pow][integer]") {
     long long num = 8;
     REQUIRE(pow(num, 243) == "282401395870821749694910884220462786335135391185"
             "15775246834019308626938303611984999058739209952299969708978654982"
@@ -146,7 +146,7 @@ TEST_CASE("pow with integer base", "[functions][math][pow][integer]") {
             "51337");
 }
 
-TEST_CASE("pow with string base", "[functions][math][pow][string]") {
+TEST_CASE("pow() with string base", "[functions][math][pow][string]") {
     std::string num = "15";
     REQUIRE(pow(num, 123) == "456273098478477754404871005449560512605808364897"
             "24452716204137204571502556329707022452196723171746311478388924420"
@@ -174,53 +174,69 @@ TEST_CASE("pow with string base", "[functions][math][pow][string]") {
             "4601932346249911644260403539535769743430516736");
 }
 
-TEST_CASE("Sqrt of big integers", "[functions][math][sqrt][big]") {
-    BigInt num = BigInt("3479680743635798438602889954485038919559460388450");
-    REQUIRE(sqrt(num) == "1865390238967653234193278");
+TEST_CASE("Base cases for sqrt()", "[functions][math][sqrt]") {
+    BigInt num = 0;
+    REQUIRE(sqrt(num) == 0);
+    num = 1;
+    REQUIRE(sqrt(num) == 1);
+    num = 2;
+    REQUIRE(sqrt(num) == 1);
+    num = 3;
+    REQUIRE(sqrt(num) == 1);
+    num = 4;
+    REQUIRE(sqrt(num) == 2);
 
-    num = "471336517784520212796937741396686403167942977773121645803479339647737161";
-    REQUIRE(sqrt(num) == "686539523832765372419381874316283619");
-
-    num = "304953007708768585645827645127232631942308013843965557450677671087391006548030000";
-    REQUIRE(sqrt(num) == "17462903759362833573945713140457169848646");
-
-    num = "81224"; // 5 digits
-    REQUIRE(sqrt(num) == "285");
-
-    num = "2802961249"; // 10 digits
-    REQUIRE(sqrt(num) == "52943");
-
-    num = "24465964562071830625"; // 20 digits
-    REQUIRE(sqrt(num) == "4946308175");
-
-    num = "34194353721643989214042055879801028224577442242064"; // 50 digits
-    REQUIRE(sqrt(num) == "5847593840345273947234581");
-
-    num = "1208006135370083192366171536761431070551010018430168557130297136814124413249425830934603622833272936"; // 100 digits
-    REQUIRE(sqrt(num) == "34756382656572349234723593456269236723897234598723");
-
-    num = "53962591338658142017063891932006898227115863415579060611743197310595624546190598499053664826956154825894621643111076086259061529893859072147579231493639756755211658494550031529896427679216992311649649"; // 200 digits
-    REQUIRE(sqrt(num) == "7345923450367430967234547374457324572368945609486134098523490875239876209348752098273450239487562343");
-}
-
-TEST_CASE("Base cases for sqrt", "[functions][math][sqrt]") {
-    BigInt num;
-
-    // num = -1
     num = -1;
     try {
         BigInt undefined = sqrt(num);
     }
-    catch (std::logic_error e) {
+    catch (std::logic_error &e) {
         CHECK(e.what() == std::string("Cannot compute square root of a negative integer"));
     }
+}
 
-    num = 0;
-    REQUIRE(sqrt(num) == 0);
+TEST_CASE("Randomised test for sqrt()", "[functions][math][sqrt][random]") {
+    std::random_device generator;
+    // uniform distribution of numbers from 0 to LLONG_MAX:
+    std::uniform_int_distribution<long long> distribution(0, (LLONG_MAX));
+    for (size_t i = 0; i < 100; i++) {
+        long long rand_num = distribution(generator);
 
-    num = 1;
-    REQUIRE(sqrt(num) == 1);
+        REQUIRE(sqrt(BigInt(rand_num)) == (long long) sqrt(rand_num));
+    }
+}
 
-    num = 2;
-    REQUIRE(sqrt(num) == 1);
+TEST_CASE("sqrt() of big integers", "[functions][math][sqrt][big]") {
+    BigInt num = 81224;
+    REQUIRE(sqrt(num) == 284);
+
+    num = 2802961249;
+    REQUIRE(sqrt(num) == 52943);
+
+    num = "24465964562071830625";
+    REQUIRE(sqrt(num) == 4946308175);
+
+    num = "3479680743635798438602889954485038919559460388450";
+    REQUIRE(sqrt(num) == "1865390238967653234193278");
+
+    num = "34194353721643989214042055879801028224577442242064";
+    REQUIRE(sqrt(num) == "5847593840345273947234580");
+
+    num = "4713365177845202127969377413966864031679429777731216458034793396477"
+          "37161";
+    REQUIRE(sqrt(num) == "686539523832765372419381874316283619");
+
+    num = "3049530077087685856458276451272326319423080138439655574506776710873"
+          "91006548030000";
+    REQUIRE(sqrt(num) == "17462903759362833573945713140457169848645");
+
+    num = "1208006135370083192366171536761431070551010018430168557130297136814"
+          "124413249425830934603622833272936";
+    REQUIRE(sqrt(num) == "34756382656572349234723593456269236723897234598723");
+
+    num = "5396259133865814201706389193200689822711586341557906061174319731059"
+          "5624546190598499053664826956154825894621643111076086259061529893859"
+          "072147579231493639756755211658494550031529896427679216992311649649";
+    REQUIRE(sqrt(num) == "7345923450367430967234547374457324572368945609486134"
+            "098523490875239876209348752098273450239487562343");
 }
