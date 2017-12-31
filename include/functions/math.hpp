@@ -85,48 +85,43 @@ BigInt pow(const std::string& base, int exp) {
 
 }
 
+
 /*
     sqrt
-    ---
-    Return a BigInt equal to the positive square root of num
-    NOTE: num must be a non-negative value
+    ----
+    Returns the positive square root of a BigInt.
+    NOTE: the input must be non-negative.
 */
+
 BigInt sqrt(const BigInt& num){
-    if (num < 0) {
+    if (num < 0)
         throw std::invalid_argument("Cannot compute square root of a negative integer");
+    if (num == 0)
+        return 0;
+    else if (num < 4)
+        return 1;
+
+    BigInt sqrt_low = 1;
+    BigInt sqrt_high = 1;
+    BigInt better_estimate;
+    // estimate the integer square root using Newton's method:
+    while (!(sqrt_high * sqrt_high <= num and sqrt_low * sqrt_low >= num)) {
+        if (sqrt_high != 0)
+            better_estimate = (num / sqrt_high + sqrt_high) / 2;
+        else
+            better_estimate = 0;
+        sqrt_low = sqrt_high;
+        sqrt_high = better_estimate;
     }
 
-    if (num == 0) { //accounts for base case num=0
-        return num;
-    } else if (num == 1 || num ==2) { //accounts for base case num=1 or num=2
-        BigInt temp = 1;
-        return temp;
-    }
+    if (sqrt_low == sqrt_high)      // estimates are the same
+        return sqrt_low;
 
-    BigInt x0 = 1;
-    BigInt x1 = 1;
-    while(!(x1*x1 <= num && x0*x0 >= num)){ //checks that the square root of num falls between x0 and x1
-        BigInt betterEstimate;
-        if (x1 != 0) {
-            betterEstimate = ((num/x1)+x1)/2;
-        } else {
-            betterEstimate = 0;
-        }
-        x0 = x1;
-        x1 = betterEstimate;
-    }
-    if (x0 == x1) {
-        return x0;
-    } else { //checks whether x0 or x1 is closer to the actual value of the square root
-        BigInt diff0 = abs((x0*x0)-num);
-        BigInt diff1 = abs(num-(x1*x1));
-        if (diff0 < diff1) {
-            return x0;
-        } else {
-            return x1;
-        }
-    }
+    // if estimates differ, return the one whose square is closest to num
+    if (abs(num - sqrt_low * sqrt_low) < abs(num - sqrt_high * sqrt_high))
+        return sqrt_low;
+    else
+        return sqrt_high;
 }
-
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
