@@ -179,12 +179,14 @@ TEST_CASE("Base cases for sqrt()", "[functions][math][sqrt]") {
     REQUIRE(sqrt(num) == 0);
     num = 1;
     REQUIRE(sqrt(num) == 1);
-    num = 2;
-    REQUIRE(sqrt(num) == 1);
     num = 3;
     REQUIRE(sqrt(num) == 1);
     num = 4;
     REQUIRE(sqrt(num) == 2);
+    num = 9;
+    REQUIRE(sqrt(num) == 3);
+    num = 10;
+    REQUIRE(sqrt(num) == 3);
 
     num = -1;
     try {
