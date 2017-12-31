@@ -18,7 +18,7 @@
 * [Highlights](#highlights)
 * [Usage](#usage)
 * [Features](#features)
-* [Compiling / testing](#compiling-and-testing)
+* [Development](#development)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -52,7 +52,8 @@
 ### Operators
 
 * #### Assignment: `=`
-  The second operand can either be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
+  The second operand can either be a `BigInt`, an integer (up to `long long`)
+  or a string (`std::string` or a string literal).
   ```C++
   big1 = 1234567890;
   big1 = "123456789012345678901234567890";
@@ -66,7 +67,8 @@
   ```
 
 * #### Binary arithmetic: `+`, `-`, `*`, `/`, `%`
-  One of the operands has to be a `BigInt` and the other can be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
+  One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
+  integer (up to `long long`) or a string (`std::string` or a string literal).
   ```C++
   big1 = big2 + 1234567890;
   big1 = big2 - "123456789012345678901234567890";
@@ -76,7 +78,8 @@
   ```
 
 * #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
-  The second operand can either be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
+  The second operand can either be a `BigInt`, an integer (up to `long long`)
+  or a string (`std::string` or a string literal).
     ```C++
     big1 += big2;
     big1 -= 1234567890;
@@ -95,7 +98,8 @@
   ```
 
 * #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
-  One of the operands has to be a `BigInt` and the other can be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
+  One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
+  tinteger (up to `long long`) or a string (`std::string` or a string literal).
   ```C++
   if (big1 < 1234567890
       or big1 > "123456789012345678901234567890"
@@ -151,7 +155,9 @@
     ```
 
   * #### `pow`
-    Get the value of _base<sup>exp</sup>_ as a `BigInt`. The base can either be a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a string literal).
+    Get the value of _base<sup>exp</sup>_ as a `BigInt`. The base can either be
+    a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a
+    string literal).
 
     ```C++
     big1 = pow(big2, 789);
@@ -159,14 +165,40 @@
     big1 = pow("1234567890", 123);
     ```
 
-## Compiling and testing
+  * #### `sqrt`
+    Get the integer square root of a `BigInt`.
+
+    ```C++
+    big1 = sqrt(big2);
+    ```
+
+## Development
 
 Since this project is built as a library, there are no source files.
-However, there are unit tests for each header file that the project is split into.
+However, there are unit tests for each header file that the project is split
+into. These can be compiled and built either through the command line, or using
+an IDE that has direct support for CMake (such as CLion, Qt Creator) or for
+which CMake can generate project files (Visual Studio, Eclipse CDT, Code::Blocks
+and more).
+
+### Using the command line
+
+On Linux and macOS, you can compile and run the tests using the command line.
 * To compile the tests, run **`make`**.
 * To build and run the tests, run **`make test`**.
 
-You will need to run **`make`** at least once before you can run **`make test`**.
+### Using an IDE that supports CMake
+
+1. Load the project directory in your IDE.
+1. In the build settings for CMake, which can usually be found at
+   `Settings > Build > CMake`, set the `Generation path` to `build`.
+
+Then you can simply select which target (unit test) you want to build/run, and
+your IDE will do the rest.
+
+In case your IDE does not support CMake directly, you will need to run `cmake`
+via the command line with the appropriate flags to generate the project files
+for your IDE. Give it a try, it's not supposed to be hard!
 
 ## Contributing
 
