@@ -125,18 +125,6 @@ BigInt sqrt(const BigInt& num) {
     return sqrt_current;
 }
 
-
-/*
-    Logic for handling negative case:
-     
-    gcd{a,b}=gcd{|a|,b}=gcd{a,|b|}=gcd{|a|,|b|}
-
-    Alternatively, this can be put:
-
-    gcd{a,b}=gcd{−a,b}=gcd{a,−b}=gcd{−a,−b}, which follows directly from the above.    https://proofwiki.org/wiki/GCD_for_Negative_Integers
-*/
-
-
 /*    
     Gcd (BigInt, BigInt) :
     --------------------
@@ -194,5 +182,4 @@ BigInt gcd(const long long& num1, const BigInt& num2){
 BigInt gcd(const std::string& num1, const BigInt& num2){
     return gcd(num2, BigInt(num1));
 }
-
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP

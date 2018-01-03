@@ -528,6 +528,4 @@ BigInt operator%(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) % rhs;
 }
 
-
-
 #endif  // BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
