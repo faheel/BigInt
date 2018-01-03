@@ -549,8 +549,8 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
     BigInt abs_num2 = abs(num2);
 
     // Trivial Case handling
-    if(abs_num1.value == "0") return abs_num2;
-    else if (abs_num2.value == "0") return abs_num1;
+    if(abs_num1 == 0) return abs_num2;
+    else if (abs_num2 == 0) return abs_num1;
 
     BigInt temp = 1;
     
