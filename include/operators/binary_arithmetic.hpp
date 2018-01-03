@@ -528,4 +528,74 @@ BigInt operator%(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) % rhs;
 }
 
+/*
+    Logic for handling negative case:
+     
+    gcd{a,b}=gcd{|a|,b}=gcd{a,|b|}=gcd{|a|,|b|}
+
+    Alternatively, this can be put:
+
+    gcd{a,b}=gcd{−a,b}=gcd{a,−b}=gcd{−a,−b}, which follows directly from the above.    https://proofwiki.org/wiki/GCD_for_Negative_Integers
+*/
+
+
+/*    
+    Gcd (BigInt, BigInt) :
+    --------------------
+*/
+
+BigInt gcd(const BigInt &num1, const BigInt &num2){
+    BigInt abs_num1 = abs(num1);
+    BigInt abs_num2 = abs(num2);
+
+    // Trivial Case handling
+    if(abs_num1.value == "0") return abs_num2;
+    else if (abs_num2.value == "0") return abs_num1;
+
+    BigInt temp = 1;
+    
+    while(abs_num2 != 0){
+        temp = abs_num1 % abs_num2;
+        abs_num1 = abs_num2;
+        abs_num2 = temp;
+    }
+        
+    return abs_num1;
+}
+
+
+/*
+    Gcd (BigInt, long long) :
+    --------------------
+*/
+BigInt gcd(const BigInt& num1, const long long& num2){
+    return gcd(num1, BigInt(num2));
+}
+
+/*
+    Gcd (BigInt, string) :
+    --------------------
+*/
+BigInt gcd(const BigInt& num1, const std::string& num2){    
+    return gcd(num1, BigInt(num2));
+}
+
+/*
+    Gcd (long long, BigInt) :
+    --------------------
+*/
+BigInt gcd(const long long& num1, const BigInt& num2){
+    return gcd(num2, BigInt(num1));
+}
+
+
+/*
+    Gcd (string, BigInt) :
+    --------------------
+*/
+BigInt gcd(const std::string& num1, const BigInt& num2){
+    return gcd(num2, BigInt(num1));
+}
+
+
 #endif  // BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
