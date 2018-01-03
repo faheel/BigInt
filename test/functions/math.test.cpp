@@ -242,3 +242,70 @@ TEST_CASE("sqrt() of big integers", "[functions][math][sqrt][big]") {
     REQUIRE(sqrt(num) == "7345923450367430967234547374457324572368945609486134"
             "098523490875239876209348752098273450239487562343");
 }
+
+/*
+    Naive gcd for testing purpose.
+*/
+
+long long naive_gcd(long long a, long long b){
+    long long gcd_res=1, min=1;
+    
+    a = abs(a);
+    b = abs(b);
+    
+    if(a==0) return b;
+    else if(b==0) return a;
+    
+    if(a==b) return a;
+    if(a > b) min = b;
+    else min = a;
+    
+    // highest factor which divides both: gcd definition
+    for(long long i=min; i>1; i--){
+        if(a%i == 0 and b%i ==0) return i;
+    }
+    return 1LL;
+}
+
+TEST_CASE("Randomised test for gcd()", "[functions][math][gcd][random]") {
+    std::random_device generator;
+    // uniform distribution of numbers from 0 to SHRT_MAX:
+    std::uniform_int_distribution<long long> distribution(0, (SHRT_MAX));
+    for (size_t i = 0; i < 100; i++) {
+        long long integer1 = distribution(generator);
+        long long integer2 = distribution(generator);
+        
+        
+        BigInt big_int1 = integer1;
+        BigInt big_int2 = integer2;
+        std::string integer2_str = std::to_string(integer2);
+
+        // gcd:
+        long long gcd_res = naive_gcd(integer1, integer2);
+        REQUIRE(gcd(big_int1, big_int2)         == gcd_res);
+        REQUIRE(gcd(big_int1, integer2)         == gcd_res);
+        REQUIRE(gcd(big_int1, integer2_str)     == gcd_res);
+        REQUIRE(gcd(big_int2, big_int1)         == gcd_res);
+        REQUIRE(gcd(integer2,      big_int1)    == gcd_res);
+        REQUIRE(gcd(integer2_str,  big_int1)    == gcd_res);
+    }
+}
+
+
+TEST_CASE("gcd()", "[functions][math][gcd][string]") {
+    std::string num = "15";
+    
+    BigInt big_int1 = num;
+    BigInt big_int2 = 1;
+    REQUIRE(gcd(big_int1, 123) == "3");
+    num = "-88";
+    big_int1 = num;
+    REQUIRE(gcd(big_int1, "164") == "4");
+    num = "673";
+    big_int1 = num;
+    
+    REQUIRE(gcd(big_int1, big_int2) == "1");
+    REQUIRE(gcd("-5910", BigInt(0)) == "5910");
+    REQUIRE(gcd("-5910", BigInt(-5910)) == "5910");
+    REQUIRE(gcd(3, BigInt(4)) == "1");
+}
