@@ -51,10 +51,10 @@ BigInt BigInt::operator+(const BigInt& num) const {
     result.value = "";  // the value is cleared as the digits will be appended
     short carry = 0, sum;
     // add the two values
-    for (int i = larger.size() - 1; i >= 0; i--) {
+    for (long i = larger.size() - 1; i >= 0; i--) {
         sum = larger[i] - '0' + smaller[i] - '0' + carry;
         result.value = std::to_string(sum % 10) + result.value;
-        carry = sum / 10;
+        carry = sum / (short) 10;
     }
     if (carry)
         result.value = std::to_string(carry) + result.value;
@@ -108,11 +108,11 @@ BigInt BigInt::operator-(const BigInt& num) const {
 
     result.value = "";  // the value is cleared as the digits will be appended
     short difference;
+    long i, j;
     // subtract the two values
-    for (int i = larger.size() - 1; i >= 0; i--) {
+    for (i = larger.size() - 1; i >= 0; i--) {
         difference = larger[i] - smaller[i];
         if (difference < 0) {
-            int j;
             for (j = i - 1; j >= 0; j--) {
                 if (larger[j] != '0') {
                     larger[j]--;    // borrow from the j-th digit
@@ -162,7 +162,7 @@ BigInt BigInt::operator*(const BigInt& num) const {
         std::tie(larger, smaller) = get_larger_and_smaller(this->value, num.value);
 
         size_t half_length = larger.size() / 2;
-        size_t half_length_ceil = ceil(larger.size() / 2.0);
+        auto half_length_ceil = (size_t) ceil(larger.size() / 2.0);
 
         BigInt num1_high, num1_low;
         num1_high = larger.substr(0, half_length);
@@ -306,9 +306,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
 
     if (abs_divisor == 0)
         throw std::logic_error("Attempted division by zero");
-    if (abs_divisor == 1)
-        return BigInt(0);
-    if (abs_dividend == abs_divisor)
+    if (abs_divisor == 1 or abs_divisor == abs_dividend)
         return BigInt(0);
 
     BigInt remainder;
