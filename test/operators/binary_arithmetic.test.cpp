@@ -77,32 +77,34 @@ TEST_CASE("Binary arithmetic operations on BigInts with integers, strings and Bi
     }
 }
 
-TEST_CASE("Binary arithmetic operations on BigInts and zeroes",
+TEST_CASE("Binary arithmetic operations with zeroes",
         "[operators][binary-arithmetic][addition][subtraction][multiplication]"
-        "[division][modulo][integer][string][BigInt]") {
-    BigInt big_int = 1234567890;
+        "[division][modulo]") {
+    BigInt num;
+    num = "1234567890123456789012345678901234567890";
 
-    REQUIRE(big_int + 0 == big_int);
-    REQUIRE(big_int - 0 == big_int);
-    REQUIRE(big_int * 0 == 0);
+    REQUIRE(num + 0 == num);
+    REQUIRE(num - 0 == num);
+    REQUIRE(num * 0 == 0);
+
     try {
-        BigInt this_is_undefined = big_int / 0;
+        BigInt undefined = num / 0;
     }
-    catch (std::logic_error e) {
+    catch (std::logic_error &e) {
         CHECK(e.what() == std::string("Attempted division by zero"));
     }
     try {
-        BigInt this_is_undefined = big_int % 0;
+        BigInt undefined = num % 0;
     }
-    catch (std::logic_error e) {
+    catch (std::logic_error &e) {
         CHECK(e.what() == std::string("Attempted division by zero"));
     }
 
-    REQUIRE(0 + big_int == big_int);
-    REQUIRE(0 - big_int == -big_int);
-    REQUIRE(0 * big_int == 0);
-    REQUIRE(0 / big_int == 0);
-    REQUIRE(0 % big_int == 0);
+    REQUIRE(0 + num ==  num);
+    REQUIRE(0 - num == -num);
+    REQUIRE(0 * num == 0);
+    REQUIRE(0 / num == 0);
+    REQUIRE(0 % num == 0);
 }
 
 TEST_CASE("Chaining addition and subtraction",
@@ -278,6 +280,16 @@ TEST_CASE("Multiplication of big numbers",
     REQUIRE(num1 * num2 == big_pow10(43326));
 }
 
+TEST_CASE("Base cases for division", "[binary-arithmetic][operators][division]") {
+    BigInt num;
+    num = "1234567890123456789012345678901234567890";
+
+    REQUIRE(num /  1 ==  num);
+    REQUIRE(num / -1 == -num);
+
+    REQUIRE((num - 1) / num == 0);
+}
+
 TEST_CASE("Division of big numbers",
         "[binary-arithmetic][operators][division][big]") {
     BigInt num1, num2;
@@ -320,6 +332,17 @@ TEST_CASE("Division of big numbers",
     num1 = big_pow10(23459);
     num2 = big_pow10(19867);
     REQUIRE(num1 / num2 == big_pow10(3592));
+}
+
+TEST_CASE("Base cases for modulo", "[binary-arithmetic][operators][modulo]") {
+    BigInt num;
+    num = "1234567890123456789012345678901234567890";
+
+    REQUIRE(num %  1 == 0);
+    REQUIRE(num % -1 == 0);
+
+    REQUIRE(num %  num == 0);
+    REQUIRE(num % -num == 0);
 }
 
 TEST_CASE("Modulo of big numbers",
