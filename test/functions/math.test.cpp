@@ -318,7 +318,8 @@ long long naive_lcm(long long a, long long b){
     a = abs(a);
     b = abs(b);
     
-    if(a==0 || b==0) return 0;
+    if(a == 0 && b == 0)
+        throw std::logic_error("LCM undefined: Both number are zero");
     
     long long lcm_res = naive_gcd(a, b);
     lcm_res = a / lcm_res;
@@ -368,4 +369,10 @@ TEST_CASE("lcm()", "[functions][math][lcm][string]") {
     REQUIRE(lcm("-5910", BigInt(0)) == "0");
     REQUIRE(lcm("-5910", BigInt(-5910)) == "5910");
     REQUIRE(lcm(3, BigInt(4)) == "12");
+    try {
+        BigInt undefined = naive_lcm(0, 0);
+    }
+    catch (std::logic_error &e) {
+        CHECK(e.what() == std::string("LCM undefined: Both number are zero"));
+    }
 }
