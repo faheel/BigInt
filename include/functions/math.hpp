@@ -189,13 +189,10 @@ BigInt gcd(const std::string& num1, const BigInt& num2){
 */
 
 BigInt lcm(const BigInt &num1, const BigInt &num2){
-    BigInt abs_num1 = abs(num1);
-    BigInt abs_num2 = abs(num2);
-
     // Trivial Case handling
     if(abs_num1 == 0 || abs_num2 == 0) return 0;
 
-    return (abs_num1 * abs_num2)/gcd(abs_num1, abs_num2);
+    return abs(num1 * num2)/gcd(abs_num1, abs_num2);
 }
 
 
