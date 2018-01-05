@@ -309,3 +309,63 @@ TEST_CASE("gcd()", "[functions][math][gcd][string]") {
     REQUIRE(gcd("-5910", BigInt(-5910)) == "5910");
     REQUIRE(gcd(3, BigInt(4)) == "1");
 }
+
+/*
+    Naive lcm for testing purpose.
+*/
+
+long long naive_lcm(long long a, long long b){    
+    a = abs(a);
+    b = abs(b);
+    
+    if(a==0 || b==0) return 0;
+    
+    long long lcm_res = naive_gcd(a, b);
+    lcm_res = a / lcm_res;
+    lcm_res = lcm_res * b;
+    return lcm_res;
+}
+
+TEST_CASE("Randomised test for lcm()", "[functions][math][lcm][random]") {
+    std::random_device generator;
+    // uniform distribution of numbers from 0 to SHRT_MAX:
+    std::uniform_int_distribution<long long> distribution(0, (SHRT_MAX));
+    for (size_t i = 0; i < 100; i++) {
+        long long integer1 = distribution(generator);
+        long long integer2 = distribution(generator);
+        
+        if (integer1 == 0 && integer2 == 0) continue;
+        
+        BigInt big_int1 = integer1;
+        BigInt big_int2 = integer2;
+        std::string integer2_str = std::to_string(integer2);
+
+        // lcm:
+        long long lcm_res = naive_lcm(integer1, integer2);
+        REQUIRE(lcm(big_int1, big_int2)         == lcm_res);
+        REQUIRE(lcm(big_int1, integer2)         == lcm_res);
+        REQUIRE(lcm(big_int1, integer2_str)     == lcm_res);
+        REQUIRE(lcm(big_int2, big_int1)         == lcm_res);
+        REQUIRE(lcm(integer2,      big_int1)    == lcm_res);
+        REQUIRE(lcm(integer2_str,  big_int1)    == lcm_res);
+    }
+}
+
+
+TEST_CASE("lcm()", "[functions][math][lcm][string]") {
+    std::string num = "15";
+    
+    BigInt big_int1 = num;
+    BigInt big_int2 = 1;
+    REQUIRE(lcm(big_int1, 123) == "615");
+    num = "-88";
+    big_int1 = num;
+    REQUIRE(lcm(big_int1, "164") == "3608");
+    num = "673";
+    big_int1 = num;
+    
+    REQUIRE(lcm(big_int1, big_int2) == "673");
+    REQUIRE(lcm("-5910", BigInt(0)) == "0");
+    REQUIRE(lcm("-5910", BigInt(-5910)) == "5910");
+    REQUIRE(lcm(3, BigInt(4)) == "12");
+}

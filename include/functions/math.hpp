@@ -193,10 +193,12 @@ BigInt lcm(const BigInt &num1, const BigInt &num2){
     BigInt abs_num2 = abs(num2);
 
     // Trivial Case handling
-    if(abs_num1 == 0 || abs_num2 == 0) return 0;
+    if(abs_num1 == 0 && abs_num2 == 0)
+        throw std::logic_error("LCM undefined: Both number are zero");
 
     BigInt lcm_res = gcd(abs_num1, abs_num2);
-    lcm_res = (abs_num1 * abs_num2) / lcm_res;
+    lcm_res = abs_num1 / lcm_res;
+    lcm_res = lcm_res * abs_num2;
 
     return lcm_res;
 }
