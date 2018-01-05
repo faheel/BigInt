@@ -335,8 +335,6 @@ TEST_CASE("Randomised test for lcm()", "[functions][math][lcm][random]") {
         long long integer1 = distribution(generator);
         long long integer2 = distribution(generator);
         
-        if (integer1 == 0 && integer2 == 0) continue;
-        
         BigInt big_int1 = integer1;
         BigInt big_int2 = integer2;
         std::string integer2_str = std::to_string(integer2);
