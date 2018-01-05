@@ -182,4 +182,57 @@ BigInt gcd(const long long& num1, const BigInt& num2){
 BigInt gcd(const std::string& num1, const BigInt& num2){
     return gcd(num2, BigInt(num1));
 }
+
+/*    
+    lcm (BigInt, BigInt) :
+    --------------------
+*/
+
+BigInt lcm(const BigInt &num1, const BigInt &num2){
+    BigInt abs_num1 = abs(num1);
+    BigInt abs_num2 = abs(num2);
+
+    // Trivial Case handling
+    if(abs_num1 == 0 || abs_num2 == 0) return 0;
+
+    BigInt lcm_res = gcd(abs_num1, abs_num2);
+    lcm_res = (abs_num1 * abs_num2) / lcm_res;
+
+    return lcm_res;
+}
+
+
+/*
+    lcm (BigInt, long long) :
+    --------------------
+*/
+BigInt lcm(const BigInt& num1, const long long& num2){
+    return lcm(num1, BigInt(num2));
+}
+
+/*
+    lcm (BigInt, string) :
+    --------------------
+*/
+BigInt lcm(const BigInt& num1, const std::string& num2){    
+    return lcm(num1, BigInt(num2));
+}
+
+/*
+    lcm (long long, BigInt) :
+    --------------------
+*/
+BigInt lcm(const long long& num1, const BigInt& num2){
+    return lcm(num2, BigInt(num1));
+}
+
+
+/*
+    lcm (string, BigInt) :
+    --------------------
+*/
+BigInt lcm(const std::string& num1, const BigInt& num2){
+    return lcm(num2, BigInt(num1));
+}
+
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
