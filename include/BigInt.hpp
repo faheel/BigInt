@@ -93,7 +93,7 @@ class BigInt {
         // I/O stream operators:
         friend std::istream& operator>>(std::istream&, BigInt&);
         friend std::ostream& operator<<(std::ostream&, const BigInt&);
-        
+
         // Conversion functions:
         std::string to_string() const;
         int to_int() const;
