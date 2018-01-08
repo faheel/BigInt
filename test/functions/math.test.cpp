@@ -314,16 +314,9 @@ TEST_CASE("gcd()", "[functions][math][gcd][string]") {
     Naive lcm for testing purpose.
 */
 
-long long naive_lcm(long long a, long long b){    
-    a = abs(a);
-    b = abs(b);
-    
-    if(a == 0 || b == 0) return 0;
-    
-    long long lcm_res = naive_gcd(a, b);
-    lcm_res = a / lcm_res;
-    lcm_res = lcm_res * b;
-    return lcm_res;
+long long naive_lcm(long long a, long long b){
+    if(a==0 || b==0) return 0;    
+    return (a*b)/naive_gcd(a, b);
 }
 
 TEST_CASE("Randomised test for lcm()", "[functions][math][lcm][random]") {
