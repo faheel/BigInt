@@ -99,7 +99,7 @@
 
 * #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
   One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
-  tinteger (up to `long long`) or a string (`std::string` or a string literal).
+  integer (up to `long long`) or a string (`std::string` or a string literal).
   ```C++
   if (big1 < 1234567890
       or big1 > "123456789012345678901234567890"
@@ -152,6 +152,32 @@
 
     ```C++
     big1 = big_pow10(5000);   // big1 = 10^5000
+    ```
+
+  * #### `gcd`
+    Get the greatest common divisor (GCD aka. HCF) of two `BigInt`s. One of the
+    arguments can be an integer (up to `long long`) or a string (`std::string`
+    or a string literal).
+
+    ```C++
+    big1 = gcd(big2, big3);
+    big1 = gcd(big2, 1234567890);
+    big1 = gcd(big2, "123456789012345678901234567890");
+    big1 = gcd(1234567890, big2);
+    big1 = gcd("123456789012345678901234567890", big2);
+    ```
+
+  * #### `lcm`
+    Get the least common multiple (LCM) of two `BigInt`s. One of the arguments
+    can be an integer (up to `long long`) or a string (`std::string` or a
+    string literal).
+
+    ```C++
+    big1 = lcm(big2, big3);
+    big1 = lcm(big2, 1234567890);
+    big1 = lcm(big2, "123456789012345678901234567890");
+    big1 = lcm(1234567890, big2);
+    big1 = lcm("123456789012345678901234567890", big2);
     ```
 
   * #### `pow`
