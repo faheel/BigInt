@@ -125,106 +125,127 @@ BigInt sqrt(const BigInt& num) {
     return sqrt_current;
 }
 
-/*    
-    Gcd (BigInt, BigInt) :
-    --------------------
+
+/*
+    gcd(BigInt, BigInt)
+    -------------------
+    Returns the greatest common divisor (GCD, a.k.a. HCF) of two BigInts using
+    Euclid's algorithm.
 */
 
 BigInt gcd(const BigInt &num1, const BigInt &num2){
     BigInt abs_num1 = abs(num1);
     BigInt abs_num2 = abs(num2);
 
-    // Trivial Case handling
-    if(abs_num1 == 0) return abs_num2;
-    else if (abs_num2 == 0) return abs_num1;
+    // base cases:
+    if (abs_num2 == 0)
+        return abs_num1;    // gcd(a, 0) = |a|
+    if (abs_num1 == 0)
+        return abs_num2;    // gcd(0, a) = |a|
 
-    BigInt temp = 1;
-    
-    while(abs_num2 != 0){
-        temp = abs_num1 % abs_num2;
-        abs_num1 = abs_num2;
-        abs_num2 = temp;
+    BigInt remainder = abs_num2;
+    while (remainder != 0) {
+        remainder = abs_num1 % abs_num2;
+        abs_num1 = abs_num2;    // previous remainder
+        abs_num2 = remainder;   // current remainder
     }
-        
+
     return abs_num1;
 }
 
 
 /*
-    Gcd (BigInt, long long) :
+    gcd(BigInt, Integer)
     --------------------
 */
+
 BigInt gcd(const BigInt& num1, const long long& num2){
     return gcd(num1, BigInt(num2));
 }
 
+
 /*
-    Gcd (BigInt, string) :
-    --------------------
+    gcd(BigInt, String)
+    -------------------
 */
-BigInt gcd(const BigInt& num1, const std::string& num2){    
+
+BigInt gcd(const BigInt& num1, const std::string& num2){
     return gcd(num1, BigInt(num2));
 }
 
+
 /*
-    Gcd (long long, BigInt) :
+    gcd(Integer, BigInt)
     --------------------
 */
+
 BigInt gcd(const long long& num1, const BigInt& num2){
-    return gcd(num2, BigInt(num1));
+    return gcd(BigInt(num1), num2);
 }
 
 
 /*
-    Gcd (string, BigInt) :
-    --------------------
+    gcd(String, BigInt)
+    -------------------
 */
+
 BigInt gcd(const std::string& num1, const BigInt& num2){
-    return gcd(num2, BigInt(num1));
-}
-
-/*    
-    lcm (BigInt, BigInt) :
-    --------------------
-*/
-
-BigInt lcm(const BigInt &num1, const BigInt &num2){
-    if(num1==0 || num2==0) return 0;
-    return abs(num1 * num2)/gcd(num1, num2);
+    return gcd(BigInt(num1), num2);
 }
 
 
 /*
-    lcm (BigInt, long long) :
+    lcm(BigInt, BigInt)
+    -------------------
+    Returns the least common multiple (LCM) of two BigInts.
+*/
+
+BigInt lcm(const BigInt& num1, const BigInt& num2) {
+    if (num1 == 0 or num2 == 0)
+        return 0;
+
+    return abs(num1 * num2) / gcd(num1, num2);
+}
+
+
+/*
+    lcm(BigInt, Integer)
     --------------------
 */
+
 BigInt lcm(const BigInt& num1, const long long& num2){
     return lcm(num1, BigInt(num2));
 }
 
+
 /*
-    lcm (BigInt, string) :
-    --------------------
+    lcm(BigInt, String)
+    -------------------
 */
-BigInt lcm(const BigInt& num1, const std::string& num2){    
+
+BigInt lcm(const BigInt& num1, const std::string& num2){
     return lcm(num1, BigInt(num2));
 }
 
+
 /*
-    lcm (long long, BigInt) :
+    lcm(Integer, BigInt)
     --------------------
 */
+
 BigInt lcm(const long long& num1, const BigInt& num2){
-    return lcm(num2, BigInt(num1));
+    return lcm(BigInt(num1), num2);
 }
 
 
 /*
-    lcm (string, BigInt) :
-    --------------------
+    lcm(String, BigInt)
+    -------------------
 */
+
 BigInt lcm(const std::string& num1, const BigInt& num2){
-    return lcm(num2, BigInt(num1));
+    return lcm(BigInt(num1), num2);
 }
+
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
