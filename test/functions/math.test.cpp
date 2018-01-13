@@ -243,121 +243,142 @@ TEST_CASE("sqrt() of big integers", "[functions][math][sqrt][big]") {
             "098523490875239876209348752098273450239487562343");
 }
 
-/*
-    Naive gcd for testing purpose.
-*/
 
-long long naive_gcd(long long a, long long b){
-    long long gcd_res=1, min=1;
-    
-    a = abs(a);
-    b = abs(b);
-    
-    if(a==0) return b;
-    else if(b==0) return a;
-    
-    if(a==b) return a;
-    if(a > b) min = b;
-    else min = a;
-    
-    // highest factor which divides both: gcd definition
-    for(long long i=min; i>1; i--){
-        if(a%i == 0 and b%i ==0) return i;
-    }
-    return 1LL;
+long long gcd(long long a, long long b) {
+    return a == 0 ? llabs(b) : gcd(b % a, a);
 }
 
 TEST_CASE("Randomised test for gcd()", "[functions][math][gcd][random]") {
     std::random_device generator;
-    // uniform distribution of numbers from 0 to SHRT_MAX:
-    std::uniform_int_distribution<long long> distribution(0, (SHRT_MAX));
+    // uniform distribution of numbers from LLONG_MIN to LLONG_MAX:
+    std::uniform_int_distribution<long long> distribution((LLONG_MIN), (LLONG_MAX));
     for (size_t i = 0; i < 100; i++) {
         long long integer1 = distribution(generator);
         long long integer2 = distribution(generator);
-        
-        
+
+
         BigInt big_int1 = integer1;
         BigInt big_int2 = integer2;
         std::string integer2_str = std::to_string(integer2);
 
-        // gcd:
-        long long gcd_res = naive_gcd(integer1, integer2);
-        REQUIRE(gcd(big_int1, big_int2)         == gcd_res);
-        REQUIRE(gcd(big_int1, integer2)         == gcd_res);
-        REQUIRE(gcd(big_int1, integer2_str)     == gcd_res);
-        REQUIRE(gcd(big_int2, big_int1)         == gcd_res);
-        REQUIRE(gcd(integer2,      big_int1)    == gcd_res);
-        REQUIRE(gcd(integer2_str,  big_int1)    == gcd_res);
+        long long expected_gcd = gcd(integer1, integer2);
+        REQUIRE(gcd(big_int1, big_int2)     == expected_gcd);
+        REQUIRE(gcd(big_int1, integer2)     == expected_gcd);
+        REQUIRE(gcd(big_int1, integer2_str) == expected_gcd);
+        REQUIRE(gcd(big_int2,     big_int1) == expected_gcd);
+        REQUIRE(gcd(integer2,     big_int1) == expected_gcd);
+        REQUIRE(gcd(integer2_str, big_int1) == expected_gcd);
     }
 }
 
+TEST_CASE("Base cases for gcd()", "[functions][math][gcd]") {
+    BigInt num = 123456789;
+    REQUIRE(gcd(num, 0)  == num);
+    REQUIRE(gcd(0, -num) == num);
 
-TEST_CASE("gcd()", "[functions][math][gcd][string]") {
-    std::string num = "15";
-    
-    BigInt big_int1 = num;
-    BigInt big_int2 = 1;
-    REQUIRE(gcd(big_int1, 123) == "3");
-    num = "-88";
-    big_int1 = num;
-    REQUIRE(gcd(big_int1, "164") == "4");
-    num = "673";
-    big_int1 = num;
-    
-    REQUIRE(gcd(big_int1, big_int2) == "1");
-    REQUIRE(gcd("-5910", BigInt(0)) == "5910");
-    REQUIRE(gcd("-5910", BigInt(-5910)) == "5910");
-    REQUIRE(gcd(3, BigInt(4)) == "1");
+    num = "-5912497820419707218240478194215164153";
+    REQUIRE(gcd(num, 0)  == -num);
+    REQUIRE(gcd(0, -num) == -num);
 }
 
-/*
-    Naive lcm for testing purpose.
-*/
+TEST_CASE("gcd() of big integers", "[functions][math][gcd][big]") {
+    BigInt num1, num2;
+    num1 = "-28701459619301513978950179078087383496799625608342360911660546962"
+        "6226480898832387914378647227381298172400875321359626526";
+    num2 = "259676874116728507995615797792043346565959939008390306340060244299"
+        "957115837743525129541487196215617038210022066763254690980408296383116"
+        "7438735691920771807553565900345087703773104";
+    REQUIRE(gcd(num1, num2) == "2870145961930151397895017907808738349679962560"
+        "834236091166054696262264808988323879143786472273812981724008753213596"
+        "26526");
 
-long long naive_lcm(long long a, long long b){
-    if(a==0 || b==0) return 0;    
-    return abs(a*b)/naive_gcd(a, b);
+    num1 = "502709688287865084979589372814644735042152904730080078588488501749"
+        "304853656848471698577996697331106182773782819152187924589506119423139"
+        "3449809274726857526593076";
+    num2 = "229801173305277725653531537012213553527219194341261839531874161152"
+        "120471652370285152798196993513652596100648576424699198031891109543456"
+        "40291279915526420792768837307589165628581578497517531497793276";
+    REQUIRE(gcd(num1, num2) == "5027096882878650849795893728146447350421529047"
+        "300800785884885017493048536568484716985779966973311061827737828191521"
+        "879245895061194231393449809274726857526593076");
+
+    num1 = "179808363116887720418632899034744992715140532806272754227625836421"
+        "314089790834938436981704176026712384458366664389143163105529357675898"
+        "863842312404914634799999961195725750525719410167387438425426347823552"
+        "0875839344564111160862825105725176379138229960";
+    num2 = "360678681586952249424916997435717051409065719201628568070971812924"
+        "175497184487423342549160121583044936658711604011498293651939726933392"
+        "310411364541796522417366059941501171344834807935292044485515752515846"
+        "5050742997335518052240435760284538105240916712";
+    REQUIRE(gcd(num1, num2) == "2967318005406102180152352893326198207229760677"
+        "892175934946549883420397056138122377874078159295664869224987233341800"
+        "165838235976741016342171914264316392");
+}
+
+
+long long lcm(long long a, long long b) {
+    if (a == 0 or b == 0)
+        return 0;
+    return llabs(a * b) / gcd(a, b);
 }
 
 TEST_CASE("Randomised test for lcm()", "[functions][math][lcm][random]") {
     std::random_device generator;
-    // uniform distribution of numbers from 0 to SHRT_MAX:
-    std::uniform_int_distribution<long long> distribution(0, (SHRT_MAX));
+    // uniform distribution of numbers from -3037000499 to 3037000499:
+    std::uniform_int_distribution<long long> distribution((-FLOOR_SQRT_LLONG_MAX),
+            (FLOOR_SQRT_LLONG_MAX));
     for (size_t i = 0; i < 100; i++) {
         long long integer1 = distribution(generator);
         long long integer2 = distribution(generator);
-        
+
+
         BigInt big_int1 = integer1;
         BigInt big_int2 = integer2;
         std::string integer2_str = std::to_string(integer2);
 
-        // lcm:
-        long long lcm_res = naive_lcm(integer1, integer2);
-        REQUIRE(lcm(big_int1, big_int2)         == lcm_res);
-        REQUIRE(lcm(big_int1, integer2)         == lcm_res);
-        REQUIRE(lcm(big_int1, integer2_str)     == lcm_res);
-        REQUIRE(lcm(big_int2, big_int1)         == lcm_res);
-        REQUIRE(lcm(integer2,      big_int1)    == lcm_res);
-        REQUIRE(lcm(integer2_str,  big_int1)    == lcm_res);
+        long long expected_lcm = lcm(integer1, integer2);
+        REQUIRE(lcm(big_int1, big_int2)     == expected_lcm);
+        REQUIRE(lcm(big_int1, integer2)     == expected_lcm);
+        REQUIRE(lcm(big_int1, integer2_str) == expected_lcm);
+        REQUIRE(lcm(big_int2,     big_int1) == expected_lcm);
+        REQUIRE(lcm(integer2,     big_int1) == expected_lcm);
+        REQUIRE(lcm(integer2_str, big_int1) == expected_lcm);
     }
 }
 
+TEST_CASE("Base cases for lcm()", "[functions][math][lcm]") {
+    BigInt num = -9876543210;
+    REQUIRE(lcm(num, 0)  == 0);
+    REQUIRE(lcm(0, -num) == 0);
 
-TEST_CASE("lcm()", "[functions][math][lcm][string]") {
-    std::string num = "15";
-    
-    BigInt big_int1 = num;
-    BigInt big_int2 = 1;
-    REQUIRE(lcm(big_int1, 123) == "615");
-    num = "-88";
-    big_int1 = num;
-    REQUIRE(lcm(big_int1, "164") == "3608");
-    num = "673";
-    big_int1 = num;
-    
-    REQUIRE(lcm(big_int1, big_int2) == "673");
-    REQUIRE(lcm("-5910", BigInt(0)) == "0");
-    REQUIRE(lcm("-5910", BigInt(-5910)) == "5910");
-    REQUIRE(lcm(3, BigInt(4)) == "12");
-    REQUIRE(lcm(0, BigInt(0)) == "0");
+    num = "219019024102157019457158092713173121573";
+    REQUIRE(lcm(num, 0)  == 0);
+    REQUIRE(lcm(0, -num) == 0);
+}
+
+TEST_CASE("lcm()of big integers", "[functions][math][lcm][big]") {
+    BigInt num1, num2;
+    num1 = "-633293162545235516827204921608484039876880488546867238715155";
+    num2 = "751467462681527802564845512694233047131278025010963143942272";
+    REQUIRE(lcm(num1, num2) == "3660763123010988395932260487955625105886372221"
+        "087113492935131297854937091253061105429105293659470657022754363775165"
+        "6320");
+
+    num1 = "431725782679516687812397269094148164228788688988330296960502266891"
+        "277126317871224101300816470466899";
+    num2 = "210204267611934443161921831201103550498213144947220752751829704138"
+        "0385675074011446417186911955170127";
+    REQUIRE(lcm(num1, num2) == "9075060195733697769850772263661839623306634656"
+        "150065383714705331906315350838857000789836809159490190572469790732585"
+        "553705831078778137138399554273866158564526814198650782346897029240548"
+        "58548667126173");
+
+    num1 = "486478183750203693027954972176960357768543354407814554669357573593"
+        "9153465244560450505234315632071983";
+    num2 = "170392478191571803530259651455950875922139049689136212457315013318"
+        "8135167718854241496296593603612002";
+    REQUIRE(lcm(num1, num2) == "8289222331533204329893614622858422873253500551"
+        "773165023583543979273894307090377362282997909371974857157338418233214"
+        "533220692127153044311875258011747917053108027629278373174251200266431"
+        "428784066739966");
 }
