@@ -28,6 +28,7 @@ printf "$comment" >> "$release_file"
 # topologically sorted list of header files
 header_files="BigInt.hpp \
     functions/utility.hpp \
+    functions/random.hpp \
     constructors/constructors.hpp \
     functions/conversion.hpp \
     operators/assignment.hpp \
@@ -38,6 +39,7 @@ header_files="BigInt.hpp \
     operators/arithmetic_assignment.hpp \
     operators/increment_decrement.hpp \
     operators/io_stream.hpp"
+
 # append the contents of each header file to the release file
 for file in $header_files
 do

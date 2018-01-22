@@ -3,6 +3,7 @@
 test_sources="constructors/constructors.test.cpp \
     functions/conversion.test.cpp \
     functions/math.test.cpp \
+    functions/random.test.cpp \
     operators/arithmetic_assignment.test.cpp \
     operators/assignment.test.cpp \
     operators/binary_arithmetic.test.cpp \

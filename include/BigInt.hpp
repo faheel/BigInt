@@ -99,6 +99,9 @@ class BigInt {
         int to_int() const;
         long to_long() const;
         long long to_long_long() const;
+
+        // Random number generating functions:
+        friend BigInt big_random(size_t);
 };
 
 #endif  // BIG_INT_HPP

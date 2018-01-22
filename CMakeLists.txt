@@ -45,6 +45,10 @@ add_executable(Functions.Math.Test
         test/functions/math.test.cpp)
 target_link_libraries(Functions.Math.Test TestRunner)
 
+add_executable(Functions.Random.Test
+        test/functions/random.test.cpp)
+target_link_libraries(Functions.Random.Test TestRunner)
+
 # Operators:
 add_executable(Operators.ArithmeticAssignment.Test
         test/operators/arithmetic_assignment.test.cpp)
