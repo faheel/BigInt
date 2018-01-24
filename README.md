@@ -80,13 +80,13 @@
 * #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
   The second operand can either be a `BigInt`, an integer (up to `long long`)
   or a string (`std::string` or a string literal).
-    ```C++
-    big1 += big2;
-    big1 -= 1234567890;
-    big1 *= "123456789012345678901234567890";
-    big1 /= big2;
-    big1 %= 1234567890;
-    ```
+  ```C++
+  big1 += big2;
+  big1 -= 1234567890;
+  big1 *= "123456789012345678901234567890";
+  big1 /= big2;
+  big1 %= 1234567890;
+  ```
 
 * #### Increment and decrement: `++`, `--`
   ```C++
@@ -128,15 +128,15 @@
   **Note**: If the `BigInt` is beyond the range of the target type, an
   [out_of_range exception][out_of_range-exception] is thrown.
 
-    ```C++
-    some_str = big1.to_string();
+  ```C++
+  some_str = big1.to_string();
 
-    some_int = big1.to_int();
+  some_int = big1.to_int();
 
-    some_long = big1.to_long();
+  some_long = big1.to_long();
 
-    some_long_long = big1.to_long_long();
-    ```
+  some_long_long = big1.to_long_long();
+  ```
 
 * #### Math
 
@@ -196,6 +196,19 @@
 
     ```C++
     big1 = sqrt(big2);
+    ```
+
+* #### Random
+  * #### `big_random`
+    Get a random `BigInt`, that either has a random number of digits (up to
+    1000), or a specific number of digits.
+
+    ```C++
+    // get a random BigInt that has a random number of digits (up to 1000):
+    big1 = big_random();
+
+    // get a random BigInt that has 12345 digits:
+    big1 = big_random(12345);
     ```
 
 ## Development
