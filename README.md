@@ -256,8 +256,8 @@ This project is licensed under the terms of the [MIT license][license-link].
 [codecov-shield]: https://img.shields.io/codecov/c/github/faheel/BigInt.svg?style=for-the-badge
 [codecov-link]: https://codecov.io/gh/faheel/BigInt
 [try-online-shield]: https://img.shields.io/badge/Try_it-Online-E91E63.svg?style=for-the-badge
-[try-online-link]: https://wandbox.org/permlink/Fb6C7h8fREHg8WWr
+[try-online-link]: https://wandbox.org/permlink/3Zlo2EDmgilQPTKc
 [license-shield]: https://img.shields.io/github/license/faheel/BigInt.svg?style=for-the-badge
 [license-link]: https://github.com/faheel/BigInt/blob/master/LICENSE
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
-[contributing-link]: https://github.com/faheel/BigInt/blob/master/CONTRIBUTING.md
+[contributing-link]: https://github.com/faheel/BigInt/blob/master/.github/CONTRIBUTING.md
