@@ -3,6 +3,7 @@
 tests="Constructors.Test
     Functions.Conversion.Test
     Functions.Math.Test
+    Functions.Random.Test
     Operators.ArithmeticAssignment.Test
     Operators.Assignment.Test
     Operators.BinaryArithmetic.Test
