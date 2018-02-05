@@ -325,6 +325,9 @@ BigInt BigInt::operator%(const BigInt& num) const {
         remainder = std::stoll(abs_dividend.value) % std::stoll(abs_divisor.value);
     else if (abs_dividend < abs_divisor)
         remainder = abs_dividend;
+    else if (is_power_of_10(num.value)){ // if num is a power of 10 use optimised calculation
+        remainder = abs_dividend.value.substr(abs_dividend.value.size() - get_power_of_10(num.value));
+    } 
     else {
         BigInt quotient = abs_dividend / abs_divisor;
         remainder = abs_dividend - quotient * abs_divisor;
