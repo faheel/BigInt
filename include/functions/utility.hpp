@@ -93,4 +93,21 @@ std::tuple<std::string, std::string> get_larger_and_smaller(const std::string& n
     return std::make_tuple(larger, smaller);
 }
 
+
+/*
+    is_power_of_10
+    ----------------------
+    Checks whether a string-represented integer is a power of 10.
+*/
+
+bool is_power_of_10(std::string num){
+    strip_leading_zeroes(num);
+    if(num == "1" or num == "10") return 1;
+    if (num.front() != '1') return 0;
+    while( num.back() == '0'){
+        num.pop_back();
+    }
+    return (num == "1") ? 1 : 0 ;
+}
+
 #endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
