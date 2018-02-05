@@ -253,6 +253,9 @@ BigInt BigInt::operator/(const BigInt& num) const {
         quotient = std::stoll(abs_dividend.value) / std::stoll(abs_divisor.value);
     else if (abs_dividend == abs_divisor)
         quotient = 1;
+    else if (is_power_of_10(abs_divisor.value)) { // if divisor is a power of 10 do optimised calculation
+        quotient.value = abs_dividend.value.substr(0, abs_dividend.value.size() - get_power_of_10(abs_divisor.value));
+    }
     else {
         quotient.value = "";    // the value is cleared as digits will be appended
         BigInt chunk, chunk_quotient, chunk_remainder;
