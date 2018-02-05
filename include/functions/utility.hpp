@@ -110,4 +110,22 @@ bool is_power_of_10(std::string num){
     return (num == "1") ? 1 : 0 ;
 }
 
+
+/*
+    get_power_of_10
+    ----------------------
+    Checks whether a string-represented integer is a power of 10.
+*/
+
+size_t get_power_of_10(std::string num){
+    strip_leading_zeroes(num);
+    if (!is_power_of_10(num)) throw std::invalid_argument("Not a power of 10");
+    size_t zeroes = 0;
+    while(num != "1"){
+        num.pop_back();
+        zeroes++;
+    }
+    return zeroes;
+}
+
 #endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
