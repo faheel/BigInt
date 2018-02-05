@@ -156,6 +156,14 @@ BigInt BigInt::operator*(const BigInt& num) const {
     BigInt product;
     if (abs(*this) <= FLOOR_SQRT_LLONG_MAX and abs(num) <= FLOOR_SQRT_LLONG_MAX)
         product = std::stoll(this->value) * std::stoll(num.value);
+    else if (is_power_of_10(this->value)){ // if LHS is a power of 10 do optimised operation 
+        product = num;
+        add_trailing_zeroes(product.value, get_power_of_10(this->value));
+    }
+    else if (is_power_of_10(num.value)){
+        product = *this;
+        add_trailing_zeroes(product.value, get_power_of_10(num.value));
+    }
     else {
         // identify the numbers as `larger` and `smaller`
         std::string larger, smaller;
