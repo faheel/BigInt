@@ -100,32 +100,16 @@ std::tuple<std::string, std::string> get_larger_and_smaller(const std::string& n
     Checks whether a string-represented integer is a power of 10.
 */
 
-bool is_power_of_10(std::string num){
-    strip_leading_zeroes(num);
-    if(num == "1" or num == "10") return 1;
-    if (num.front() != '1') return 0;
-    while( num.back() == '0'){
-        num.pop_back();
+bool is_power_of_10(const std::string& num){
+    if (num == "1") return true;
+    if (num.front() == '1'){
+        for (char c : num.substr(1)){
+            if (c != '0') return false;
+        }
     }
-    return (num == "1") ? 1 : 0 ;
-}
+    else return false;
 
-
-/*
-    get_power_of_10
-    ----------------------
-    Checks whether a string-represented integer is a power of 10.
-*/
-
-size_t get_power_of_10(std::string num){
-    strip_leading_zeroes(num);
-    if (!is_power_of_10(num)) throw std::invalid_argument("Not a power of 10");
-    size_t zeroes = 0;
-    while(num != "1"){
-        num.pop_back();
-        zeroes++;
-    }
-    return zeroes;
+    return true; // if no digits other than '0' are found return true
 }
 
 #endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
