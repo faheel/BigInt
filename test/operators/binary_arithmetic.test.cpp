@@ -278,6 +278,10 @@ TEST_CASE("Multiplication of big numbers",
     num1 = big_pow10(19876);
     num2 = big_pow10(23450);
     REQUIRE(num1 * num2 == big_pow10(43326));
+
+    num1 = big_pow10(19876) + 1;
+    num2 = big_pow10(23450);
+    REQUIRE(num1 * num2 == big_pow10(43326) + big_pow10(23450));
 }
 
 TEST_CASE("Base cases for division", "[binary-arithmetic][operators][division]") {
