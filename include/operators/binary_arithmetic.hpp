@@ -156,6 +156,14 @@ BigInt BigInt::operator*(const BigInt& num) const {
     BigInt product;
     if (abs(*this) <= FLOOR_SQRT_LLONG_MAX and abs(num) <= FLOOR_SQRT_LLONG_MAX)
         product = std::stoll(this->value) * std::stoll(num.value);
+    else if (is_power_of_10(this->value)){ // if LHS is a power of 10 do optimised operation 
+        product.value = num.value;
+        product.value.append(this->value.begin() + 1, this->value.end());
+    }
+    else if (is_power_of_10(num.value)){ // if RHS is a power of 10 do optimised operation 
+        product.value = this->value;
+        product.value.append(num.value.begin() + 1, num.value.end());
+    }
     else {
         // identify the numbers as `larger` and `smaller`
         std::string larger, smaller;
@@ -253,6 +261,10 @@ BigInt BigInt::operator/(const BigInt& num) const {
         quotient = std::stoll(abs_dividend.value) / std::stoll(abs_divisor.value);
     else if (abs_dividend == abs_divisor)
         quotient = 1;
+    else if (is_power_of_10(abs_divisor.value)) { // if divisor is a power of 10 do optimised calculation
+        size_t digits_in_quotient = abs_dividend.value.size() - abs_divisor.value.size() + 1;
+        quotient.value = abs_dividend.value.substr(0, digits_in_quotient);
+    }
     else {
         quotient.value = "";    // the value is cleared as digits will be appended
         BigInt chunk, chunk_quotient, chunk_remainder;
@@ -314,6 +326,10 @@ BigInt BigInt::operator%(const BigInt& num) const {
         remainder = std::stoll(abs_dividend.value) % std::stoll(abs_divisor.value);
     else if (abs_dividend < abs_divisor)
         remainder = abs_dividend;
+    else if (is_power_of_10(num.value)){ // if num is a power of 10 use optimised calculation
+        size_t no_of_zeroes = num.value.size() - 1;
+        remainder.value = abs_dividend.value.substr(abs_dividend.value.size() - no_of_zeroes);
+    } 
     else {
         BigInt quotient = abs_dividend / abs_divisor;
         remainder = abs_dividend - quotient * abs_divisor;
