@@ -34,12 +34,12 @@
 
 1. Download the [single-include header file][release-link] to a location under
     your include path. Then `#include` it in your code:
-    ```C++
+    ```c++
     #include "BigInt.hpp"   // the actual path may vary
     ```
 
 1. Create objects of the `BigInt` class, and do what you got to do!
-    ```C++
+    ```c++
     BigInt big1 = 1234567890, big2;
     big2 = "9876543210123456789098765432101234567890";
 
@@ -54,14 +54,14 @@
 * #### Assignment: `=`
   The second operand can either be a `BigInt`, an integer (up to `long long`)
   or a string (`std::string` or a string literal).
-  ```C++
+  ```c++
   big1 = 1234567890;
   big1 = "123456789012345678901234567890";
   big1 = big2;
   ```
 
 * #### Unary arithmetic: `+`, `-`
-  ```C++
+  ```c++
   big1 = +big2;   // doesn't return the absolute value
   big1 = -big2;
   ```
@@ -69,7 +69,7 @@
 * #### Binary arithmetic: `+`, `-`, `*`, `/`, `%`
   One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
   integer (up to `long long`) or a string (`std::string` or a string literal).
-  ```C++
+  ```c++
   big1 = big2 + 1234567890;
   big1 = big2 - "123456789012345678901234567890";
   big1 = big2 * big3;
@@ -80,7 +80,7 @@
 * #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
   The second operand can either be a `BigInt`, an integer (up to `long long`)
   or a string (`std::string` or a string literal).
-  ```C++
+  ```c++
   big1 += big2;
   big1 -= 1234567890;
   big1 *= "123456789012345678901234567890";
@@ -89,7 +89,7 @@
   ```
 
 * #### Increment and decrement: `++`, `--`
-  ```C++
+  ```c++
   big1 = ++big2;   // pre-increment
   big1 = --big2;   // pre-decrement
 
@@ -100,7 +100,7 @@
 * #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
   One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
   integer (up to `long long`) or a string (`std::string` or a string literal).
-  ```C++
+  ```c++
   if (big1 < 1234567890
       or big1 > "123456789012345678901234567890"
       or big1 <= big2
@@ -112,7 +112,7 @@
   ```
 
 * #### I/O stream: `<<`, `>>`
-  ```C++
+  ```c++
   std::cout << big1 << ", " << big2 << "\n";
   output_file << big1 << ", " << big2 << "\n";
 
@@ -128,7 +128,7 @@
   **Note**: If the `BigInt` is beyond the range of the target type, an
   [out_of_range exception][out_of_range-exception] is thrown.
 
-  ```C++
+  ```c++
   some_str = big1.to_string();
 
   some_int = big1.to_int();
@@ -143,14 +143,14 @@
   * #### `abs`
     Get the absolute value of a `BigInt`.
 
-    ```C++
+    ```c++
     big1 = abs(big2);
     ```
 
   * #### `big_pow10`
     Get a `BigInt` equal to _10<sup>exp</sup>_.
 
-    ```C++
+    ```c++
     big1 = big_pow10(5000);   // big1 = 10^5000
     ```
 
@@ -159,7 +159,7 @@
     arguments can be an integer (up to `long long`) or a string (`std::string`
     or a string literal).
 
-    ```C++
+    ```c++
     big1 = gcd(big2, big3);
     big1 = gcd(big2, 1234567890);
     big1 = gcd(big2, "123456789012345678901234567890");
@@ -172,7 +172,7 @@
     can be an integer (up to `long long`) or a string (`std::string` or a
     string literal).
 
-    ```C++
+    ```c++
     big1 = lcm(big2, big3);
     big1 = lcm(big2, 1234567890);
     big1 = lcm(big2, "123456789012345678901234567890");
@@ -185,7 +185,7 @@
     a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a
     string literal).
 
-    ```C++
+    ```c++
     big1 = pow(big2, 789);
     big1 = pow(987654321LL, 456);   // suffix literal with LL to prevent conflicts
     big1 = pow("1234567890", 123);
@@ -194,7 +194,7 @@
   * #### `sqrt`
     Get the integer square root of a `BigInt`.
 
-    ```C++
+    ```c++
     big1 = sqrt(big2);
     ```
 
@@ -203,7 +203,7 @@
     Get a random `BigInt`, that either has a random number of digits (up to
     1000), or a specific number of digits.
 
-    ```C++
+    ```c++
     // get a random BigInt that has a random number of digits (up to 1000):
     big1 = big_random();
 
