@@ -18,7 +18,7 @@
 */
 
 bool BigInt::operator==(const BigInt& num) const {
-    return (sign == num.sign) and (value == num.value);
+    return (is_negative == num.is_negative) and (magnitude == num.magnitude);
 }
 
 
@@ -38,18 +38,28 @@ bool BigInt::operator!=(const BigInt& num) const {
 */
 
 bool BigInt::operator<(const BigInt& num) const {
-    if (sign == num.sign) {
-        if (sign == '+') {
-            if (value.length() == num.value.length())
-                return value < num.value;
-            else
-                return value.length() < num.value.length();
+
+    if (is_negative == num.is_negative) {
+        if (not is_negative) {
+            if (magnitude.size() == num.magnitude.size()) {
+                // Check in reverse order, magnitudes are saved LSB first.
+                for (int64_t i = (magnitude.size() - 1); i > 0; i--) {
+                    if (magnitude[i] != num.magnitude[i]) {
+                        return magnitude[i] < num.magnitude[i];
+                    }
+                }
+                // Values equal
+                return true;
+            }
+            else {
+                return magnitude.size() < num.magnitude.size();
+            }
         }
         else
             return -(*this) > -num;
     }
     else
-        return sign == '-';
+        return is_negative;
 }
 
 

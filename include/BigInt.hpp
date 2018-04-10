@@ -9,10 +9,11 @@
 #define BIG_INT_HPP
 
 #include <iostream>
+#include <stdint.h>
 #include <vector>
 
 class BigInt {
-    std::vector<unsigned long long> magnitude;
+    std::vector<uint64_t> magnitude;
     bool is_negative;
 
     public:

@@ -9,6 +9,7 @@
 
 #include <climits>
 #include <cmath>
+#include <stdint.h>
 #include <string>
 
 #include "BigInt.hpp"
@@ -32,36 +33,38 @@ const long long FLOOR_SQRT_LLONG_MAX = 3037000499;
 
 BigInt BigInt::operator+(const BigInt& num) const {
     // if the operands are of opposite signs, perform subtraction
-    if (this->sign == '+' and num.sign == '-') {
+    if (not this->is_negative and num.is_negative) {
         BigInt rhs = num;
-        rhs.sign = '+';
+        rhs.is_negative = false;
         return *this - rhs;
     }
-    else if (this->sign == '-' and num.sign == '+') {
+    else if (this->is_negative and not num.is_negative) {
         BigInt lhs = *this;
-        lhs.sign = '+';
+        lhs.is_negative = false;
         return -(lhs - num);
     }
 
-    // identify the numbers as `larger` and `smaller`
-    std::string larger, smaller;
-    std::tie(larger, smaller) = get_larger_and_smaller(this->value, num.value);
+    BigInt result;
+    int carry = 0;
 
-    BigInt result;      // the resultant sum
-    result.value = "";  // the value is cleared as the digits will be appended
-    short carry = 0, sum;
-    // add the two values
-    for (long i = larger.size() - 1; i >= 0; i--) {
-        sum = larger[i] - '0' + smaller[i] - '0' + carry;
-        result.value = std::to_string(sum % 10) + result.value;
-        carry = sum / (short) 10;
+    std::vector<uint64_t> larger, smaller;
+    std::tie(larger, smaller) = get_larger_and_smaller(this->magnitude, num.magnitude);
+
+    for (size_t i = 0; i < larger.size(); i++) {
+        // On overflow, sum will get the remainder of the overflow
+        uint64_t sum = smaller[i] + larger[i] + carry;
+        result.magnitude.push_back(sum);
+        
+        // Overflow check
+        if (larger[i] > (UINT64_MAX - carry) and smaller[i] > (UINT64_MAX - larger[i] - carry))
+            carry = 1;
+        else if (smaller[i] > (UINT64_MAX - carry) and larger[i] > (UINT64_MAX - smaller[i] - carry))
+            carry = 1;
+        else if (larger[i] == UINT64_MAX and smaller[i] == UINT64_MAX)
+            carry = 1;
+        else
+            carry = 0;
     }
-    if (carry)
-        result.value = std::to_string(carry) + result.value;
-
-    // if the operands are negative, the result is negative
-    if (this->sign == '-' and result.value != "0")
-        result.sign = '-';
 
     return result;
 }
@@ -74,65 +77,71 @@ BigInt BigInt::operator+(const BigInt& num) const {
 */
 
 BigInt BigInt::operator-(const BigInt& num) const {
-    // if the operands are of opposite signs, perform addition
-    if (this->sign == '+' and num.sign == '-') {
+    // If the operands are of opposite signs, perform addition
+    if (not this->is_negative and num.is_negative) {
         BigInt rhs = num;
-        rhs.sign = '+';
+        rhs.is_negative = false;
         return *this + rhs;
     }
-    else if (this->sign == '-' and num.sign == '+') {
+    else if (this->is_negative and not num.is_negative) {
         BigInt lhs = *this;
-        lhs.sign = '+';
+        lhs.is_negative = false;
         return -(lhs + num);
     }
 
-    BigInt result;      // the resultant difference
-    // identify the numbers as `larger` and `smaller`
-    std::string larger, smaller;
-    if (abs(*this) > abs(num)) {
-        larger = this->value;
-        smaller = num.value;
+    // The resultant difference
+    BigInt result;
+    // Identify the numbers as `larger` and `smaller`
+    std::vector<uint64_t> larger, smaller;
 
-        if (this->sign == '-')      // -larger - -smaller = -result
-            result.sign = '-';
+    if (abs(*this) > abs(num)) {
+        larger  = this->magnitude;
+        smaller = num.magnitude;
+
+        if (this->is_negative)      // -larger - -smaller = -result
+            result.is_negative = true;
     }
     else {
-        larger = num.value;
-        smaller = this->value;
+        larger  = num.magnitude;
+        smaller = this->magnitude;
 
-        if (num.sign == '+')        // smaller - larger = -result
-            result.sign = '-';
+        if (not num.is_negative)        // smaller - larger = -result
+            result.is_negative = true;
     }
     // pad the smaller number with zeroes
-    add_leading_zeroes(smaller, larger.size() - smaller.size());
+    add_trailing_zeroes(smaller, larger.size() - smaller.size());
 
-    result.value = "";  // the value is cleared as the digits will be appended
-    short difference;
-    long i, j;
+    uint64_t difference;
+    size_t i, j;
+
     // subtract the two values
-    for (i = larger.size() - 1; i >= 0; i--) {
-        difference = larger[i] - smaller[i];
-        if (difference < 0) {
-            for (j = i - 1; j >= 0; j--) {
-                if (larger[j] != '0') {
-                    larger[j]--;    // borrow from the j-th digit
+    for (i = 0; i < larger.size(); i++) {
+        if (larger[i] >= smaller[i])
+            difference = larger[i] - smaller[i];
+        else {
+            difference = std::numeric_limits<unsigned long long>::max() - smaller[i] + 1 + larger[i];
+            for (j = i + 1; j < larger.size(); j++)
+                if (larger[j] != 0) {
+                    larger[j]--;    // Borrow from the j-th digit
                     break;
                 }
-            }
-            j++;
+            j--;
             while (j != i) {
-                larger[j] = '9';    // add the borrow and take away 1
-                j++;
+                // Add the borrow and take one
+                larger[j] = std::numeric_limits<unsigned long long>::max();
+                // Walk back to i
+                j--;
             }
-            difference += 10;   // add the borrow
         }
-        result.value = std::to_string(difference) + result.value;
+        result.magnitude.push_back(difference);
     }
-    strip_leading_zeroes(result.value);
+
+    strip_trailing_zeroes(result.magnitude);
 
     // if the result is 0, set its sign as +
-    if (result.value == "0")
-        result.sign = '+';
+    if ((result.magnitude.size() == 1 and result.magnitude[0] == 0) or
+         result.magnitude.size() == 0)
+        result.is_negative = false;
 
     return result;
 }

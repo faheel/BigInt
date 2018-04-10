@@ -33,13 +33,10 @@ BigInt BigInt::operator+() const {
 BigInt BigInt::operator-() const {
     BigInt temp;
 
-    temp.value = value;
-    if (value != "0") {
-        if (sign == '+')
-            temp.sign = '-';
-        else
-            temp.sign = '+';
-    }
+    temp.magnitude = magnitude;
+    // If magnitude is not 0
+    if (magnitude.size() != 1 and magnitude[0] != 0)
+        temp.is_negative = not is_negative;
 
     return temp;
 }

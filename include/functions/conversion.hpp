@@ -15,8 +15,16 @@
 */
 
 std::string BigInt::to_string() const {
-    // prefix with sign if negative
-    return this->sign == '-' ? "-" + this->value : this->value;
+
+    std::string num_string;
+
+    for (uint64_t ull : this->magnitude)
+        while (ull > 0) {
+            num_string += ((ull % 10) + '0'); 
+            ull /= 10;
+        }
+    
+    return this->is_negative ? "-" + num_string : num_string;
 }
 
 
