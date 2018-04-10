@@ -39,7 +39,7 @@ BigInt::BigInt(const BigInt& num) {
 */
 
 BigInt::BigInt(const long long& num) {
-    magnitude = { (unsigned long long) llabs(num) };
+    magnitude = { (uint64_t) llabs(num) };
     is_negative = num < 0;
 }
 

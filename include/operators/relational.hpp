@@ -99,6 +99,14 @@ bool BigInt::operator>=(const BigInt& num) const {
 */
 
 bool BigInt::operator==(const long long& num) const {
+    // Check if it is possible to efficiate the method, 99% of the time it will be efficiated
+    if (sizeof(long long) == sizeof(uint64_t)) {
+        if ((num < 0) != this->is_negative or
+             this->magnitude.size() != 1)
+            return false;
+        
+        return this->magnitude[0] == (uint64_t)llabs(num);
+    }
     return *this == BigInt(num);
 }
 
@@ -109,7 +117,7 @@ bool BigInt::operator==(const long long& num) const {
 */
 
 bool operator==(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) == rhs;
+    return rhs == lhs;
 }
 
 
@@ -119,7 +127,7 @@ bool operator==(const long long& lhs, const BigInt& rhs) {
 */
 
 bool BigInt::operator!=(const long long& num) const {
-    return !(*this == BigInt(num));
+    return !(*this == num);
 }
 
 
@@ -129,7 +137,7 @@ bool BigInt::operator!=(const long long& num) const {
 */
 
 bool operator!=(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) != rhs;
+    return !(rhs == lhs);
 }
 
 
@@ -139,6 +147,21 @@ bool operator!=(const long long& lhs, const BigInt& rhs) {
 */
 
 bool BigInt::operator<(const long long& num) const {
+    // Check if it is possible to efficiate the method
+    if (sizeof(long long) == sizeof(uint64_t)) {
+        if (((num <= 0) and not this->is_negative) or
+            this->magnitude.size() > 1) {
+            return false;
+        }
+        if (num >= 0 and this->is_negative) {
+            return true;
+        }
+        if (num > 0) {
+            return this->magnitude[0] < (uint64_t)num;
+        }
+        return this->magnitude[0] > (uint64_t)num;
+    }
+
     return *this < BigInt(num);
 }
 
@@ -149,7 +172,7 @@ bool BigInt::operator<(const long long& num) const {
 */
 
 bool operator<(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) < rhs;
+    return rhs < lhs;
 }
 
 
@@ -159,7 +182,7 @@ bool operator<(const long long& lhs, const BigInt& rhs) {
 */
 
 bool BigInt::operator>(const long long& num) const {
-    return *this > BigInt(num);
+    return !((*this < num) or (*this == num));
 }
 
 
@@ -169,7 +192,7 @@ bool BigInt::operator>(const long long& num) const {
 */
 
 bool operator>(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) > rhs;
+    return rhs > lhs;
 }
 
 
@@ -179,7 +202,7 @@ bool operator>(const long long& lhs, const BigInt& rhs) {
 */
 
 bool BigInt::operator<=(const long long& num) const {
-    return !(*this > BigInt(num));
+    return !(*this > num);
 }
 
 
@@ -189,7 +212,7 @@ bool BigInt::operator<=(const long long& num) const {
 */
 
 bool operator<=(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) <= rhs;
+    return !(rhs > lhs);
 }
 
 
@@ -199,7 +222,7 @@ bool operator<=(const long long& lhs, const BigInt& rhs) {
 */
 
 bool BigInt::operator>=(const long long& num) const {
-    return !(*this < BigInt(num));
+    return !(*this < num);
 }
 
 
@@ -209,7 +232,7 @@ bool BigInt::operator>=(const long long& num) const {
 */
 
 bool operator>=(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) >= rhs;
+    return !(rhs < lhs);
 }
 
 
