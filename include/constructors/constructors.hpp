@@ -17,8 +17,8 @@
 */
 
 BigInt::BigInt() {
-    value = "0";
-    sign = '+';
+    magnitude = { 0 };
+    is_negative = false;
 }
 
 
@@ -28,8 +28,8 @@ BigInt::BigInt() {
 */
 
 BigInt::BigInt(const BigInt& num) {
-    value = num.value;
-    sign = num.sign;
+    magnitude = num.magnitude;
+    is_negative = num.is_negative;
 }
 
 
@@ -39,13 +39,8 @@ BigInt::BigInt(const BigInt& num) {
 */
 
 BigInt::BigInt(const long long& num) {
-    value = std::to_string(num);
-    if (num < 0) {
-        sign = '-';
-        value = value.substr(1);    // remove minus sign from value
-    }
-    else
-        sign = '+';
+    magnitude = { (unsigned long long) llabs(num) };
+    is_negative = num < 0;
 }
 
 
@@ -56,10 +51,15 @@ BigInt::BigInt(const long long& num) {
 
 BigInt::BigInt(const std::string& num) {
     if (num[0] == '+' or num[0] == '-') {     // check for sign
-        std::string magnitude = num.substr(1);
-        if (is_valid_number(magnitude)) {
-            value = magnitude;
-            sign = num[0];
+        std::string num_magnitude = num.substr(1);
+        if (is_valid_number(num_magnitude)) {
+            /*
+                TODO
+                ----
+                magnitude = convert_to_base_2_to_the_64(num_magnitude);
+            */
+            magnitude = {0};
+            is_negative = num[0] == '-';
         }
         else {
             throw std::invalid_argument("Expected an integer, got \'" + num + "\'");
@@ -67,14 +67,18 @@ BigInt::BigInt(const std::string& num) {
     }
     else {      // if no sign is specified
         if (is_valid_number(num)) {
-            value = num;
-            sign = '+';    // positive by default
+            /*
+                TODO
+                ----
+                magnitude = convert_to_base_2_to_the_64(num_magnitude);
+            */
+            magnitude = {0};
+            is_negative = false;    // positive by default
         }
         else {
             throw std::invalid_argument("Expected an integer, got \'" + num + "\'");
         }
     }
-    strip_leading_zeroes(value);
 }
 
 #endif  // BIG_INT_CONSTRUCTORS_HPP

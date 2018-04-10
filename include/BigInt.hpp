@@ -9,10 +9,11 @@
 #define BIG_INT_HPP
 
 #include <iostream>
+#include <vector>
 
 class BigInt {
-    std::string value;
-    char sign;
+    std::vector<unsigned long long> magnitude;
+    bool is_negative;
 
     public:
         // Constructors:
