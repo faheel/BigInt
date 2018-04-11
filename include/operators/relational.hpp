@@ -43,7 +43,7 @@ bool BigInt::operator<(const BigInt& num) const {
         if (not is_negative) {
             if (magnitude.size() == num.magnitude.size()) {
                 // Check in reverse order, magnitudes are saved LSB first.
-                for (int64_t i = (magnitude.size() - 1); i > 0; i--) {
+                for (int64_t i = (magnitude.size() - 1); i >= 0; i--) {
                     if (magnitude[i] != num.magnitude[i]) {
                         return magnitude[i] < num.magnitude[i];
                     }
@@ -99,7 +99,7 @@ bool BigInt::operator>=(const BigInt& num) const {
 */
 
 bool BigInt::operator==(const long long& num) const {
-    // Check if it is possible to efficiate the method, 99% of the time it will be efficiated
+    // Check if it is possible to optimize the method, 99% of the time it will be optimized
     if (sizeof(long long) == sizeof(uint64_t)) {
         if ((num < 0) != this->is_negative or
              this->magnitude.size() != 1)
@@ -147,7 +147,7 @@ bool operator!=(const long long& lhs, const BigInt& rhs) {
 */
 
 bool BigInt::operator<(const long long& num) const {
-    // Check if it is possible to efficiate the method
+    // Check if it is possible to optimize the method
     if (sizeof(long long) == sizeof(uint64_t)) {
         if (((num <= 0) and not this->is_negative) or
             this->magnitude.size() > 1) {
