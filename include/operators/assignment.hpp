@@ -29,10 +29,9 @@ BigInt& BigInt::operator=(const BigInt& num) {
     ----------------
 */
 
-BigInt& BigInt::operator=(const long long& num) {
-    BigInt temp(num);
-    magnitude = temp.magnitude;
-    is_negative = temp.is_negative;
+BigInt& BigInt::operator=(const int64_t& num) {
+    magnitude = { (uint64_t) llabs(num) };
+    is_negative = (num < 0);
 
     return *this;
 }

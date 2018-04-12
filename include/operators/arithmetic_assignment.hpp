@@ -78,7 +78,7 @@ BigInt& BigInt::operator%=(const BigInt& num) {
     -----------------
 */
 
-BigInt& BigInt::operator+=(const long long& num) {
+BigInt& BigInt::operator+=(const int64_t& num) {
     *this = *this + BigInt(num);
 
     return *this;
@@ -90,7 +90,7 @@ BigInt& BigInt::operator+=(const long long& num) {
     -----------------
 */
 
-BigInt& BigInt::operator-=(const long long& num) {
+BigInt& BigInt::operator-=(const int64_t& num) {
     *this = *this - BigInt(num);
 
     return *this;
@@ -102,7 +102,7 @@ BigInt& BigInt::operator-=(const long long& num) {
     -----------------
 */
 
-BigInt& BigInt::operator*=(const long long& num) {
+BigInt& BigInt::operator*=(const int64_t& num) {
     *this = *this * BigInt(num);
 
     return *this;
@@ -114,7 +114,7 @@ BigInt& BigInt::operator*=(const long long& num) {
     -----------------
 */
 
-BigInt& BigInt::operator/=(const long long& num) {
+BigInt& BigInt::operator/=(const int64_t& num) {
     *this = *this / BigInt(num);
 
     return *this;
@@ -126,7 +126,7 @@ BigInt& BigInt::operator/=(const long long& num) {
     -----------------
 */
 
-BigInt& BigInt::operator%=(const long long& num) {
+BigInt& BigInt::operator%=(const int64_t& num) {
     *this = *this % BigInt(num);
 
     return *this;

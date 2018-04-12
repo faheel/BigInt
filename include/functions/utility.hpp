@@ -8,7 +8,7 @@
 #define BIG_INT_UTILITY_FUNCTIONS_HPP
 
 #include <tuple>
-#include <stdint.h>
+#include <cstdint>
 #include <limits>
 
 

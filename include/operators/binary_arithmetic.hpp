@@ -9,7 +9,6 @@
 
 #include <climits>
 #include <cmath>
-#include <stdint.h>
 #include <string>
 
 #include "BigInt.hpp"
@@ -119,7 +118,7 @@ BigInt BigInt::operator-(const BigInt& num) const {
         if (larger[i] >= smaller[i])
             difference = larger[i] - smaller[i];
         else {
-            difference = std::numeric_limits<unsigned long long>::max() - smaller[i] + 1 + larger[i];
+            difference = UINT64_MAX - smaller[i] + 1 + larger[i];
             for (j = i + 1; j < larger.size(); j++)
                 if (larger[j] != 0) {
                     larger[j]--;    // Borrow from the j-th digit
@@ -128,7 +127,7 @@ BigInt BigInt::operator-(const BigInt& num) const {
             j--;
             while (j != i) {
                 // Add the borrow and take one
-                larger[j] = std::numeric_limits<unsigned long long>::max();
+                larger[j] = UINT64_MAX;
                 // Walk back to i
                 j--;
             }
@@ -359,7 +358,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
     ----------------
 */
 
-BigInt BigInt::operator+(const long long& num) const {
+BigInt BigInt::operator+(const int64_t& num) const {
     return *this + BigInt(num);
 }
 
@@ -369,7 +368,7 @@ BigInt BigInt::operator+(const long long& num) const {
     ----------------
 */
 
-BigInt operator+(const long long& lhs, const BigInt& rhs) {
+BigInt operator+(const int64_t& lhs, const BigInt& rhs) {
     return BigInt(lhs) + rhs;
 }
 
@@ -379,7 +378,7 @@ BigInt operator+(const long long& lhs, const BigInt& rhs) {
     ----------------
 */
 
-BigInt BigInt::operator-(const long long& num) const {
+BigInt BigInt::operator-(const int64_t& num) const {
     return *this - BigInt(num);
 }
 
@@ -389,7 +388,7 @@ BigInt BigInt::operator-(const long long& num) const {
     ----------------
 */
 
-BigInt operator-(const long long& lhs, const BigInt& rhs) {
+BigInt operator-(const int64_t& lhs, const BigInt& rhs) {
     return BigInt(lhs) - rhs;
 }
 
@@ -399,7 +398,7 @@ BigInt operator-(const long long& lhs, const BigInt& rhs) {
     ----------------
 */
 
-BigInt BigInt::operator*(const long long& num) const {
+BigInt BigInt::operator*(const int64_t& num) const {
     return *this * BigInt(num);
 }
 
@@ -409,7 +408,7 @@ BigInt BigInt::operator*(const long long& num) const {
     ----------------
 */
 
-BigInt operator*(const long long& lhs, const BigInt& rhs) {
+BigInt operator*(const int64_t& lhs, const BigInt& rhs) {
     return BigInt(lhs) * rhs;
 }
 
@@ -419,7 +418,7 @@ BigInt operator*(const long long& lhs, const BigInt& rhs) {
     ----------------
 */
 
-BigInt BigInt::operator/(const long long& num) const {
+BigInt BigInt::operator/(const int64_t& num) const {
     return *this / BigInt(num);
 }
 
@@ -429,7 +428,7 @@ BigInt BigInt::operator/(const long long& num) const {
     ----------------
 */
 
-BigInt operator/(const long long& lhs, const BigInt& rhs) {
+BigInt operator/(const int64_t& lhs, const BigInt& rhs) {
     return BigInt(lhs) / rhs;
 }
 
@@ -439,7 +438,7 @@ BigInt operator/(const long long& lhs, const BigInt& rhs) {
     ----------------
 */
 
-BigInt BigInt::operator%(const long long& num) const {
+BigInt BigInt::operator%(const int64_t& num) const {
     return *this % BigInt(num);
 }
 
@@ -449,7 +448,7 @@ BigInt BigInt::operator%(const long long& num) const {
     ----------------
 */
 
-BigInt operator%(const long long& lhs, const BigInt& rhs) {
+BigInt operator%(const int64_t& lhs, const BigInt& rhs) {
     return BigInt(lhs) % rhs;
 }
 

@@ -71,7 +71,7 @@ BigInt pow(const BigInt& base, int exp) {
     Returns a BigInt equal to base^exp.
 */
 
-BigInt pow(const long long& base, int exp) {
+BigInt pow(const int64_t& base, int exp) {
     return pow(BigInt(base), exp);
 }
 
@@ -159,7 +159,7 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
     --------------------
 */
 
-BigInt gcd(const BigInt& num1, const long long& num2){
+BigInt gcd(const BigInt& num1, const int64_t& num2){
     return gcd(num1, BigInt(num2));
 }
 
@@ -179,7 +179,7 @@ BigInt gcd(const BigInt& num1, const std::string& num2){
     --------------------
 */
 
-BigInt gcd(const long long& num1, const BigInt& num2){
+BigInt gcd(const int64_t& num1, const BigInt& num2){
     return gcd(BigInt(num1), num2);
 }
 
@@ -213,7 +213,7 @@ BigInt lcm(const BigInt& num1, const BigInt& num2) {
     --------------------
 */
 
-BigInt lcm(const BigInt& num1, const long long& num2){
+BigInt lcm(const BigInt& num1, const int64_t& num2){
     return lcm(num1, BigInt(num2));
 }
 
@@ -233,7 +233,7 @@ BigInt lcm(const BigInt& num1, const std::string& num2){
     --------------------
 */
 
-BigInt lcm(const long long& num1, const BigInt& num2){
+BigInt lcm(const int64_t& num1, const BigInt& num2){
     return lcm(BigInt(num1), num2);
 }
 
