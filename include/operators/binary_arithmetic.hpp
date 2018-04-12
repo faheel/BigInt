@@ -46,6 +46,9 @@ BigInt BigInt::operator+(const BigInt& num) const {
     BigInt result;
     int carry = 0;
 
+    // Reset results magnitude
+    result.magnitude = std::vector<uint64_t>();
+
     std::vector<uint64_t> larger, smaller;
     std::tie(larger, smaller) = get_larger_and_smaller(this->magnitude, num.magnitude);
 
@@ -63,6 +66,10 @@ BigInt BigInt::operator+(const BigInt& num) const {
             carry = 1;
         else
             carry = 0;
+    }
+
+    if (carry == 1) {
+        result.magnitude.push_back(1);
     }
 
     return result;
@@ -90,6 +97,9 @@ BigInt BigInt::operator-(const BigInt& num) const {
 
     // The resultant difference
     BigInt result;
+    // Reset results magnitude
+    result.magnitude = std::vector<uint64_t>();
+
     // Identify the numbers as `larger` and `smaller`
     std::vector<uint64_t> larger, smaller;
 
@@ -118,7 +128,9 @@ BigInt BigInt::operator-(const BigInt& num) const {
         if (larger[i] >= smaller[i])
             difference = larger[i] - smaller[i];
         else {
-            difference = UINT64_MAX - smaller[i] + 1 + larger[i];
+            // When carrying: difference = (UINT64_MAX + 1 + larger[i]) - smaller[i]
+            // Write like this to avoid overflow
+            difference = UINT64_MAX - (smaller[i] - larger[i]) + 1;
             for (j = i + 1; j < larger.size(); j++)
                 if (larger[j] != 0) {
                     larger[j]--;    // Borrow from the j-th digit
@@ -138,8 +150,7 @@ BigInt BigInt::operator-(const BigInt& num) const {
     strip_trailing_zeroes(result.magnitude);
 
     // if the result is 0, set its sign as +
-    if ((result.magnitude.size() == 1 and result.magnitude[0] == 0) or
-         result.magnitude.size() == 0)
+    if (result.magnitude.size() == 1 and result.magnitude[0] == 0)
         result.is_negative = false;
 
     return result;

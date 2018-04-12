@@ -20,6 +20,7 @@ std::string BigInt::to_string() const {
         ----
         Convert to string
     */
+    return "";
 }
 
 

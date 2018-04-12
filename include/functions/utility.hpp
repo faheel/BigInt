@@ -134,26 +134,20 @@ void add_leading_zeroes(std::vector<uint64_t>& num, size_t num_zeroes) {
 */
 
 void add_trailing_zeroes(std::vector<uint64_t>& num, size_t num_zeroes) {
-    std::vector<uint64_t> tmp(num_zeroes, 0);
-    num.insert(num.end(), tmp.begin(), tmp.end());
+    for (size_t i = 0; i < num_zeroes; i++)
+        num.push_back(0);
 }
 
 /*
-    strip_leading_zeroes
+    strip_trailing_zeroes
     --------------------
-    Strip the leading zeroes from a number represented as a vector.
+    Strip the trailing zeroes from a number represented as a vector.
 */
 
 void strip_trailing_zeroes(std::vector<uint64_t>& num) {
-    for (auto digit_itter = num.rbegin(); digit_itter != num.rend(); digit_itter++)
-        if (*digit_itter != 0) {
-            num = std::vector<uint64_t>(num.rend(), digit_itter + 1);
-            return;
-        }
-
-    // If all 0's
-    num.clear();
-    num.push_back(0);
+    // Do not strip the last zero if num is all zeros
+    while (num.size() > 1 and num[num.size() - 1] == 0)
+        num.pop_back();
 }
 
 /*

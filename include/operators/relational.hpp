@@ -143,10 +143,10 @@ bool BigInt::operator<(const int64_t& num) const {
         return is_negative;
 
     if (is_negative)    // Both numbers are negative
-        return -(this) > -num;
+        return -(*this) > -num;
 
     // Both numbers are positive
-    return magnitude.size() == 1 and magnitude[0] < num;
+    return magnitude.size() == 1 and magnitude[0] < (uint64_t)num;
 }
 
 

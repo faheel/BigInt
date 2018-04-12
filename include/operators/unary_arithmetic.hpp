@@ -34,8 +34,9 @@ BigInt BigInt::operator-() const {
     BigInt temp;
 
     temp.magnitude = magnitude;
-    
-    if (magnitude != { 0 })
+
+    // If magnitude is not 0
+    if (magnitude.size() != 1 and magnitude[0] != 0)
         temp.is_negative = not is_negative;
 
     return temp;
