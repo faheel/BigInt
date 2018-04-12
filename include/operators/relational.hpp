@@ -18,7 +18,7 @@
 */
 
 bool BigInt::operator==(const BigInt& num) const {
-    return (sign == num.sign) and (value == num.value);
+    return (is_negative == num.is_negative) and (magnitude == num.magnitude);
 }
 
 
@@ -38,18 +38,22 @@ bool BigInt::operator!=(const BigInt& num) const {
 */
 
 bool BigInt::operator<(const BigInt& num) const {
-    if (sign == num.sign) {
-        if (sign == '+') {
-            if (value.length() == num.value.length())
-                return value < num.value;
-            else
-                return value.length() < num.value.length();
-        }
-        else
-            return -(*this) > -num;
-    }
-    else
-        return sign == '-';
+
+    if (is_negative == num.is_negative) // Signs are opposite
+        return is_negative;
+    if (is_negative)    // Both numbers are negative
+        return -(*this) > -num;
+
+    if (magnitude.size() != num.magnitude.size())
+        return magnitude.size() < num.magnitude.size();
+    
+    // Compare their digits from MSB to LSB
+    for (int64_t i = magnitude.size() - 1; i >= 0; i--)
+        if (magnitude[i] != num.magnitude[i])
+            return magnitude[i] < num.magnitude[i];
+
+    // Both numbers are equal
+    return false;
 }
 
 
@@ -59,7 +63,7 @@ bool BigInt::operator<(const BigInt& num) const {
 */
 
 bool BigInt::operator>(const BigInt& num) const {
-    return !((*this < num) or (*this == num));
+    return num < *this;
 }
 
 
@@ -69,7 +73,7 @@ bool BigInt::operator>(const BigInt& num) const {
 */
 
 bool BigInt::operator<=(const BigInt& num) const {
-    return (*this < num) or (*this == num);
+    return !(*this > num);
 }
 
 
@@ -88,8 +92,12 @@ bool BigInt::operator>=(const BigInt& num) const {
     -----------------
 */
 
-bool BigInt::operator==(const long long& num) const {
-    return *this == BigInt(num);
+bool BigInt::operator==(const int64_t& num) const {
+    bool num_is_negative = (num < 0);
+
+    return is_negative == num_is_negative
+           and magnitude.size() == 1
+           and magnitude[0] == (uint64_t)llabs(num);
 }
 
 
@@ -98,8 +106,8 @@ bool BigInt::operator==(const long long& num) const {
     -----------------
 */
 
-bool operator==(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) == rhs;
+bool operator==(const int64_t& lhs, const BigInt& rhs) {
+    return rhs == lhs;
 }
 
 
@@ -108,8 +116,8 @@ bool operator==(const long long& lhs, const BigInt& rhs) {
     -----------------
 */
 
-bool BigInt::operator!=(const long long& num) const {
-    return !(*this == BigInt(num));
+bool BigInt::operator!=(const int64_t& num) const {
+    return !(*this == num);
 }
 
 
@@ -118,8 +126,8 @@ bool BigInt::operator!=(const long long& num) const {
     -----------------
 */
 
-bool operator!=(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) != rhs;
+bool operator!=(const int64_t& lhs, const BigInt& rhs) {
+    return !(rhs == lhs);
 }
 
 
@@ -128,8 +136,17 @@ bool operator!=(const long long& lhs, const BigInt& rhs) {
     ----------------
 */
 
-bool BigInt::operator<(const long long& num) const {
-    return *this < BigInt(num);
+bool BigInt::operator<(const int64_t& num) const {
+    bool num_is_negative = (num < 0);
+
+    if (is_negative != num_is_negative) // Signs are opposite
+        return is_negative;
+
+    if (is_negative)    // Both numbers are negative
+        return -(*this) > -num;
+
+    // Both numbers are positive
+    return magnitude.size() == 1 and magnitude[0] < (uint64_t)num;
 }
 
 
@@ -138,8 +155,8 @@ bool BigInt::operator<(const long long& num) const {
     ----------------
 */
 
-bool operator<(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) < rhs;
+bool operator<(const int64_t& lhs, const BigInt& rhs) {
+    return rhs > lhs;
 }
 
 
@@ -148,8 +165,8 @@ bool operator<(const long long& lhs, const BigInt& rhs) {
     ----------------
 */
 
-bool BigInt::operator>(const long long& num) const {
-    return *this > BigInt(num);
+bool BigInt::operator>(const int64_t& num) const {
+    return !(*this < num or *this == num);
 }
 
 
@@ -158,8 +175,8 @@ bool BigInt::operator>(const long long& num) const {
     ----------------
 */
 
-bool operator>(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) > rhs;
+bool operator>(const int64_t& lhs, const BigInt& rhs) {
+    return rhs < lhs;
 }
 
 
@@ -168,8 +185,8 @@ bool operator>(const long long& lhs, const BigInt& rhs) {
     -----------------
 */
 
-bool BigInt::operator<=(const long long& num) const {
-    return !(*this > BigInt(num));
+bool BigInt::operator<=(const int64_t& num) const {
+    return !(*this > num);
 }
 
 
@@ -178,8 +195,8 @@ bool BigInt::operator<=(const long long& num) const {
     -----------------
 */
 
-bool operator<=(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) <= rhs;
+bool operator<=(const int64_t& lhs, const BigInt& rhs) {
+    return !(rhs < lhs);
 }
 
 
@@ -188,8 +205,8 @@ bool operator<=(const long long& lhs, const BigInt& rhs) {
     -----------------
 */
 
-bool BigInt::operator>=(const long long& num) const {
-    return !(*this < BigInt(num));
+bool BigInt::operator>=(const int64_t& num) const {
+    return !(*this < num);
 }
 
 
@@ -198,8 +215,8 @@ bool BigInt::operator>=(const long long& num) const {
     -----------------
 */
 
-bool operator>=(const long long& lhs, const BigInt& rhs) {
-    return BigInt(lhs) >= rhs;
+bool operator>=(const int64_t& lhs, const BigInt& rhs) {
+    return !(rhs > lhs);
 }
 
 

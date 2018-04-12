@@ -17,8 +17,8 @@
 */
 
 BigInt& BigInt::operator=(const BigInt& num) {
-    value = num.value;
-    sign = num.sign;
+    magnitude = num.magnitude;
+    is_negative = num.is_negative;
 
     return *this;
 }
@@ -29,10 +29,9 @@ BigInt& BigInt::operator=(const BigInt& num) {
     ----------------
 */
 
-BigInt& BigInt::operator=(const long long& num) {
-    BigInt temp(num);
-    value = temp.value;
-    sign = temp.sign;
+BigInt& BigInt::operator=(const int64_t& num) {
+    magnitude = { (uint64_t) llabs(num) };
+    is_negative = (num < 0);
 
     return *this;
 }
@@ -45,8 +44,8 @@ BigInt& BigInt::operator=(const long long& num) {
 
 BigInt& BigInt::operator=(const std::string& num) {
     BigInt temp(num);
-    value = temp.value;
-    sign = temp.sign;
+    magnitude = temp.magnitude;
+    is_negative = temp.is_negative;
 
     return *this;
 }

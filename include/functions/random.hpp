@@ -30,14 +30,13 @@ BigInt big_random(size_t num_digits = 0) {
         // use a random number for it:
         num_digits = 1 + rand_generator() % MAX_RANDOM_LENGTH;
 
-    BigInt big_rand;
-    big_rand.value = "";    // clear value to append digits
-    while (big_rand.value.size() < num_digits)
-        big_rand.value += std::to_string(rand_generator());
-    if (big_rand.value.size() != num_digits)
-        big_rand.value.erase(num_digits);   // erase extra digits
+    std::string random_value = "";
+    while (random_value.size() < num_digits)
+        random_value += std::to_string(rand_generator());
+    if (random_value.size() != num_digits)
+        random_value.erase(num_digits);   // erase extra digits
 
-    return big_rand;
+    return BigInt(random_value);
 }
 
 

@@ -10,6 +10,7 @@
 #include "BigInt.hpp"
 #include "constructors/constructors.hpp"
 #include "operators/assignment.hpp"
+#include "functions/conversion.hpp"
 
 
 /*
@@ -32,9 +33,9 @@ std::istream& operator>>(std::istream& in, BigInt& num) {
 */
 
 std::ostream& operator<<(std::ostream& out, const BigInt& num) {
-    if (num.sign == '-')
-        out << num.sign;
-    out << num.value;
+    if (num.is_negative)
+        out << '-';
+    out << num.to_string();
 
     return out;
 }

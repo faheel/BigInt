@@ -15,8 +15,12 @@
 */
 
 std::string BigInt::to_string() const {
-    // prefix with sign if negative
-    return this->sign == '-' ? "-" + this->value : this->value;
+    /*
+        TODO
+        ----
+        Convert to string
+    */
+    return "";
 }
 
 

@@ -9,22 +9,23 @@
 #define BIG_INT_HPP
 
 #include <iostream>
+#include <cstdint>
 #include <vector>
 
 class BigInt {
-    std::vector<unsigned long long> magnitude;
+    std::vector<uint64_t> magnitude;
     bool is_negative;
 
     public:
         // Constructors:
         BigInt();
         BigInt(const BigInt&);
-        BigInt(const long long&);
+        BigInt(const int64_t&);
         BigInt(const std::string&);
 
         // Assignment operators:
         BigInt& operator=(const BigInt&);
-        BigInt& operator=(const long long&);
+        BigInt& operator=(const int64_t&);
         BigInt& operator=(const std::string&);
 
         // Unary arithmetic operators:
@@ -37,11 +38,11 @@ class BigInt {
         BigInt operator*(const BigInt&) const;
         BigInt operator/(const BigInt&) const;
         BigInt operator%(const BigInt&) const;
-        BigInt operator+(const long long&) const;
-        BigInt operator-(const long long&) const;
-        BigInt operator*(const long long&) const;
-        BigInt operator/(const long long&) const;
-        BigInt operator%(const long long&) const;
+        BigInt operator+(const int64_t&) const;
+        BigInt operator-(const int64_t&) const;
+        BigInt operator*(const int64_t&) const;
+        BigInt operator/(const int64_t&) const;
+        BigInt operator%(const int64_t&) const;
         BigInt operator+(const std::string&) const;
         BigInt operator-(const std::string&) const;
         BigInt operator*(const std::string&) const;
@@ -54,11 +55,11 @@ class BigInt {
         BigInt& operator*=(const BigInt&);
         BigInt& operator/=(const BigInt&);
         BigInt& operator%=(const BigInt&);
-        BigInt& operator+=(const long long&);
-        BigInt& operator-=(const long long&);
-        BigInt& operator*=(const long long&);
-        BigInt& operator/=(const long long&);
-        BigInt& operator%=(const long long&);
+        BigInt& operator+=(const int64_t&);
+        BigInt& operator-=(const int64_t&);
+        BigInt& operator*=(const int64_t&);
+        BigInt& operator/=(const int64_t&);
+        BigInt& operator%=(const int64_t&);
         BigInt& operator+=(const std::string&);
         BigInt& operator-=(const std::string&);
         BigInt& operator*=(const std::string&);
@@ -78,12 +79,12 @@ class BigInt {
         bool operator>=(const BigInt&) const;
         bool operator==(const BigInt&) const;
         bool operator!=(const BigInt&) const;
-        bool operator<(const long long&) const;
-        bool operator>(const long long&) const;
-        bool operator<=(const long long&) const;
-        bool operator>=(const long long&) const;
-        bool operator==(const long long&) const;
-        bool operator!=(const long long&) const;
+        bool operator<(const int64_t&) const;
+        bool operator>(const int64_t&) const;
+        bool operator<=(const int64_t&) const;
+        bool operator>=(const int64_t&) const;
+        bool operator==(const int64_t&) const;
+        bool operator!=(const int64_t&) const;
         bool operator<(const std::string&) const;
         bool operator>(const std::string&) const;
         bool operator<=(const std::string&) const;

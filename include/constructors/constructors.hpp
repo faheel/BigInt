@@ -16,10 +16,9 @@
     -------------------
 */
 
-BigInt::BigInt() {
-    magnitude = { 0 };
-    is_negative = false;
-}
+BigInt::BigInt():
+    magnitude(1,0),
+    is_negative(false) { }
 
 
 /*
@@ -27,10 +26,9 @@ BigInt::BigInt() {
     ----------------
 */
 
-BigInt::BigInt(const BigInt& num) {
-    magnitude = num.magnitude;
-    is_negative = num.is_negative;
-}
+BigInt::BigInt(const BigInt& num) :
+    magnitude(num.magnitude),
+    is_negative(num.is_negative) { }
 
 
 /*
@@ -38,8 +36,8 @@ BigInt::BigInt(const BigInt& num) {
     -----------------
 */
 
-BigInt::BigInt(const long long& num) {
-    magnitude = { (unsigned long long) llabs(num) };
+BigInt::BigInt(const int64_t& num) {
+    magnitude = { (uint64_t) llabs(num) };
     is_negative = num < 0;
 }
 
