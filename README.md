@@ -213,7 +213,7 @@
 
 ## Development
 
-Since this project is built as a library, there are no source files.
+Since this project is built as a header-only library, there are no source files.
 However, there are unit tests for each header file that the project is split
 into. These can be compiled and built either through the command line, or using
 an IDE that has direct support for CMake (such as CLion, Qt Creator) or for
