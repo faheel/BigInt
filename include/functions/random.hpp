@@ -9,6 +9,8 @@
 
 #include <random>
 #include <climits>
+#include <chrono>
+#include <string>
 
 #include "BigInt.hpp"
 
@@ -40,5 +42,23 @@ BigInt big_random(size_t num_digits = 0) {
     return big_rand;
 }
 
+/*
+ Within a certain range:
+
+Returns a random BigInt such that low <= BigInt <= high.
+*/
+friend BigInt big_random(long long low, long long high){
+
+BigInt big_rand;
+
+unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine generator(seed);
+std::uniform_int_distribution<long long> distribution(low,high);
+long long random_ll = distribution(generator);
+
+big_rand.value = to_string(random_ll);
+
+return big_rand;
+}
 
 #endif  // BIG_INT_RANDOM_FUNCTIONS_HPP
