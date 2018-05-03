@@ -1,7 +1,7 @@
-/*
-    ===========================================================================
-    Constructors
-    ===========================================================================
+/**
+ * @file constructors/constructors.hpp
+ *
+ * @brief contains constructors of BigInt
 */
 
 #ifndef BIG_INT_CONSTRUCTORS_HPP
@@ -11,32 +11,35 @@
 #include "functions/utility.hpp"
 
 
-/*
-    Default constructor
-    -------------------
-*/
-
+/**
+ *  @brief  Default constructor for BigInt
+ *  
+ *  @return BigInt with value initialized to zero.
+ */ 
 BigInt::BigInt() {
     value = "0";
     sign = '+';
 }
 
 
-/*
-    Copy constructor
-    ----------------
-*/
-
+/**
+ *  @brief Copy constructor for BigInt
+ *
+ *  @param num a BigInt that is to be copied
+ *  @return BigInt with equal value as `num` 
+ */
 BigInt::BigInt(const BigInt& num) {
     value = num.value;
     sign = num.sign;
 }
 
 
-/*
-    Integer to BigInt
-    -----------------
-*/
+/**
+ *  @brief Constructor that converts `long long` to BigInt
+ *
+ *  @param num a `long long` value
+ *  @return BigInt with equal value as `num`
+ */
 
 BigInt::BigInt(const long long& num) {
     value = std::to_string(num);
@@ -49,11 +52,12 @@ BigInt::BigInt(const long long& num) {
 }
 
 
-/*
-    String to BigInt
-    ----------------
-*/
-
+/**
+ *  @brief Constructor that converts `std::string` to BigInt
+ *
+ *  @param num std::string that represents an integer
+ *  @return BigInt with value represented in `num`
+ */
 BigInt::BigInt(const std::string& num) {
     if (num[0] == '+' or num[0] == '-') {     // check for sign
         std::string magnitude = num.substr(1);
