@@ -42,6 +42,11 @@ BigInt big_random(size_t num_digits = 0) {
     return big_rand;
 }
 
+/*
+ Within a certain range:
+
+Returns a random BigInt such that low <= BigInt <= high.
+*/
 friend BigInt big_random(long long low, long long high){
 
 BigInt big_rand;
