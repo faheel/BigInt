@@ -7,9 +7,11 @@
 #ifndef BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
 #define BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
 
+#include <thread>
 #include <climits>
 #include <cmath>
 #include <string>
+#include <functional>
 
 #include "BigInt.hpp"
 #include "constructors/constructors.hpp"
@@ -180,10 +182,15 @@ BigInt BigInt::operator*(const BigInt& num) const {
         num2_high = smaller.substr(0, half_length);
         num2_low = smaller.substr(half_length);
 
-        strip_leading_zeroes(num1_high.value);
-        strip_leading_zeroes(num1_low.value);
-        strip_leading_zeroes(num2_high.value);
-        strip_leading_zeroes(num2_low.value);
+        std::thread t1(strip_leading_zeroes, std::ref(num1_high.value));
+        std::thread t2(strip_leading_zeroes, std::ref(num1_low.value));
+        std::thread t3(strip_leading_zeroes, std::ref(num2_high.value));
+        std::thread t4(strip_leading_zeroes, std::ref(num2_low.value));
+
+        t1.join();
+        t2.join();
+        t3.join();
+        t4.join();
 
         BigInt prod_high, prod_mid, prod_low;
         prod_high = num1_high * num2_high;
@@ -329,7 +336,7 @@ BigInt BigInt::operator%(const BigInt& num) const {
     else if (is_power_of_10(num.value)){ // if num is a power of 10 use optimised calculation
         size_t no_of_zeroes = num.value.size() - 1;
         remainder.value = abs_dividend.value.substr(abs_dividend.value.size() - no_of_zeroes);
-    } 
+    }
     else {
         BigInt quotient = abs_dividend / abs_divisor;
         remainder = abs_dividend - quotient * abs_divisor;
