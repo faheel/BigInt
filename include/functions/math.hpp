@@ -10,6 +10,8 @@
 #include <string>
 #include <time.h>
 #include <cstdlib>
+#include <algorithm>
+#include <cmath>
 
 #include "functions/conversion.hpp"
 
@@ -155,14 +157,20 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
     return abs_num1;
 }
 
-BigInt is_probable_prime(const BigInt& num, size_t k) {
+bool BigInt::is_probable_prime(size_t k) {
+  // Little Fermat's Theorem
   srand(time(NULL));
+  const BigInt ONE = 1;
   BigInt a;
   while (k > 0) {
-      a = rand() % (num.to_long_long()-1) + 1;
-      if (exp(a, num-1)%num == 1) {
-        return true;
-      } else if (exp(a, num-1) == 1%num) {
+      // 1 <= a < n
+      a = BigInt(rand()+1) % *this-ONE;
+
+      if (gcd(a, *this) != ONE) {
+        return false;
+      }
+      // a^n-1 % n == 1, then n is prime
+      if (pow(a, this->to_int()-1) % *this == ONE) {
         return true;
       }
       --k;
