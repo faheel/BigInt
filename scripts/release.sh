@@ -46,6 +46,9 @@ do
     cat "include/$file" >> "$release_file"
     printf "\n\n" >> "$release_file"
 done
-
-# delete includes for non-standard header files from the release file
-sed -i "/#include \"*\"/d" "$release_file"
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  # delete includes for non-standard header files from the release file
+  sed -i "/#include \"*\"/d" "$release_file"
+else
+  sed -i .hpp "/#include \"*\"/d" "$release_file"
+fi
