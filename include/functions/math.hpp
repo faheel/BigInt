@@ -8,6 +8,8 @@
 #define BIG_INT_MATH_FUNCTIONS_HPP
 
 #include <string>
+#include <time.h>
+#include <cstdlib>
 
 #include "functions/conversion.hpp"
 
@@ -151,6 +153,21 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
     }
 
     return abs_num1;
+}
+
+BigInt is_probable_prime(const BigInt& num, size_t k) {
+  srand(time(NULL));
+  BigInt a;
+  while (k > 0) {
+      a = rand() % (num.to_long_long()-1) + 1;
+      if (exp(a, num-1)%num == 1) {
+        return true;
+      } else if (exp(a, num-1) == 1%num) {
+        return true;
+      }
+      --k;
+  }
+  return false;
 }
 
 
