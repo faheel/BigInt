@@ -11,7 +11,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - gcc-6
             - g++-6
+            - ggcov
             - lcov
       env:
         - COMPILER='g++-6'
@@ -24,7 +26,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - gcc-7
             - g++-7
+            - ggcov
             - lcov
       env:
         - COMPILER='g++-7'
@@ -98,12 +102,10 @@ install:
     fi
 
 script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - make && make test
   - |
-    cd ${TRAVIS_BUILD_DIR}
-    make
-    make test
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]
     then
-      make coverage
-      bash <(curl -s https://codecov.io/bash) -X gcov
+      make coverage && bash <(curl -s https://codecov.io/bash) -X gcov
     fi
