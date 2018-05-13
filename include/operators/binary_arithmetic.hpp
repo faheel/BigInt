@@ -182,15 +182,15 @@ BigInt BigInt::operator*(const BigInt& num) const {
         num2_high = smaller.substr(0, half_length);
         num2_low = smaller.substr(half_length);
 
-        std::thread t1(strip_leading_zeroes, std::ref(num1_high.value));
-        std::thread t2(strip_leading_zeroes, std::ref(num1_low.value));
-        std::thread t3(strip_leading_zeroes, std::ref(num2_high.value));
-        std::thread t4(strip_leading_zeroes, std::ref(num2_low.value));
+        std::thread thread1(strip_leading_zeroes, std::ref(num1_high.value));
+        std::thread thread2(strip_leading_zeroes, std::ref(num1_low.value));
+        std::thread thread3(strip_leading_zeroes, std::ref(num2_high.value));
+        std::thread thread4(strip_leading_zeroes, std::ref(num2_low.value));
 
-        t1.join();
-        t2.join();
-        t3.join();
-        t4.join();
+        thread1.join();
+        thread2.join();
+        thread3.join();
+        thread4.join();
 
         BigInt prod_high, prod_mid, prod_low;
         prod_high = num1_high * num2_high;
