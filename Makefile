@@ -1,25 +1,20 @@
 # prevent printing of recipes
 .SILENT:
 
-# compile combined test using CMake
+# compile tests
 .PHONY: default
-default: dirs build/combined.test.cpp
+default: dirs
 	cd build && cmake .. && make
 
-# generate combined test whenever a unit test changes
-build/combined.test.cpp: dirs $(wildcard test/*/*.cpp)
-	scripts/combine_tests.sh
-
-# run combined test
+# run tests
 .PHONY: test
 test: default
-	scripts/run_tests.sh
-	rm testing_io_stream.txt
+	cd build && cmake .. && ctest
 
 # generate coverage report
 .PHONY: coverage
-coverage: build/combined.test.cpp
-	cd build && make combined_test_coverage
+coverage: default
+	cd build && cmake .. -DENABLE_COVERAGE=1 && make gcov && make lcov
 
 # create the single-include header file to release
 .PHONY: release
