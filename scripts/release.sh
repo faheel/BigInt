@@ -48,4 +48,5 @@ do
 done
 
 # delete includes for non-standard header files from the release file
-sed -i "/#include \"*\"/d" "$release_file"
+sed "/#include \"*\"/d" "$release_file" > "$release_file.tmp"
+mv "$release_file.tmp" "$release_file"
