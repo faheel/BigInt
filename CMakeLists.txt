@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(BigInt)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+if(ENABLE_COVERAGE)
     set(CMAKE_BUILD_TYPE Coverage)
 else()
     set(CMAKE_BUILD_TYPE Debug)
@@ -17,75 +17,96 @@ include_directories(include)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -pedantic-errors")
 
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    # Add coverage flags
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-
-    # Include code coverage module
-    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/modules/")
-    include(CodeCoverage)
-    set(LCOV_REMOVE_EXTRA "'/usr/*'" "'test/*'" "'build/*'" "'include/third_party/*'")
-endif()
-
 # Test runner
 add_library(TestRunner STATIC
         test/test_runner.cpp)
 
 # Constructors:
-add_executable(Constructors.Test
-        test/constructors/constructors.test.cpp)
-target_link_libraries(Constructors.Test TestRunner)
+add_executable(ConstructorsTest
+        test/constructors/constructors.cpp)
+target_link_libraries(ConstructorsTest TestRunner)
 
 # Functions:
-add_executable(Functions.Conversion.Test
-        test/functions/conversion.test.cpp)
-target_link_libraries(Functions.Conversion.Test TestRunner)
+add_executable(FunctionsConversionTest
+        test/functions/conversion.cpp)
+target_link_libraries(FunctionsConversionTest TestRunner)
 
-add_executable(Functions.Math.Test
-        test/functions/math.test.cpp)
-target_link_libraries(Functions.Math.Test TestRunner)
+add_executable(FunctionsMathTest
+        test/functions/math.cpp)
+target_link_libraries(FunctionsMathTest TestRunner)
 
-add_executable(Functions.Random.Test
-        test/functions/random.test.cpp)
-target_link_libraries(Functions.Random.Test TestRunner)
+add_executable(FunctionsRandomTest
+        test/functions/random.cpp)
+target_link_libraries(FunctionsRandomTest TestRunner)
 
 # Operators:
-add_executable(Operators.ArithmeticAssignment.Test
-        test/operators/arithmetic_assignment.test.cpp)
-target_link_libraries(Operators.ArithmeticAssignment.Test TestRunner)
+add_executable(OperatorsArithmeticAssignmentTest
+        test/operators/arithmetic_assignment.cpp)
+target_link_libraries(OperatorsArithmeticAssignmentTest TestRunner)
 
-add_executable(Operators.Assignment.Test
-        test/operators/assignment.test.cpp)
-target_link_libraries(Operators.Assignment.Test TestRunner)
+add_executable(OperatorsAssignmentTest
+        test/operators/assignment.cpp)
+target_link_libraries(OperatorsAssignmentTest TestRunner)
 
-add_executable(Operators.BinaryArithmetic.Test
-        test/operators/binary_arithmetic.test.cpp)
-target_link_libraries(Operators.BinaryArithmetic.Test TestRunner)
+add_executable(OperatorsBinaryArithmeticTest
+        test/operators/binary_arithmetic.cpp)
+target_link_libraries(OperatorsBinaryArithmeticTest TestRunner)
 
-add_executable(Operators.IncrementDecrement.Test
-        test/operators/increment_decrement.test.cpp)
-target_link_libraries(Operators.IncrementDecrement.Test TestRunner)
+add_executable(OperatorsIncrementDecrementTest
+        test/operators/increment_decrement.cpp)
+target_link_libraries(OperatorsIncrementDecrementTest TestRunner)
 
-add_executable(Operators.IOStream.Test
-        test/operators/io_stream.test.cpp)
-target_link_libraries(Operators.IOStream.Test TestRunner)
+add_executable(OperatorsIOStreamTest
+        test/operators/io_stream.cpp)
+target_link_libraries(OperatorsIOStreamTest TestRunner)
 
-add_executable(Operators.Relational.Test
-        test/operators/relational.test.cpp)
-target_link_libraries(Operators.Relational.Test TestRunner)
+add_executable(OperatorsRelationalTest
+        test/operators/relational.cpp)
+target_link_libraries(OperatorsRelationalTest TestRunner)
 
-add_executable(Operators.UnaryArithmetic.Test
-        test/operators/unary_arithmetic.test.cpp)
-target_link_libraries(Operators.UnaryArithmetic.Test TestRunner)
+add_executable(OperatorsUnaryArithmeticTest
+        test/operators/unary_arithmetic.cpp)
+target_link_libraries(OperatorsUnaryArithmeticTest TestRunner)
 
-# Combined test
-add_executable(Combined.Test
-        build/combined.test.cpp)
-target_link_libraries(Combined.Test TestRunner)
-
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    # Target for combined test coverage
-    SETUP_TARGET_FOR_COVERAGE(combined_test_coverage    # make target
-            Combined.Test   # executable
-            coverage)       # directory
+if(ENABLE_COVERAGE)
+    # Include code coverage module
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
+    find_package(codecov)
+    add_coverage(ConstructorsTest)
+    add_coverage(FunctionsConversionTest)
+    add_coverage(FunctionsMathTest)
+    add_coverage(FunctionsRandomTest)
+    add_coverage(OperatorsArithmeticAssignmentTest)
+    add_coverage(OperatorsAssignmentTest)
+    add_coverage(OperatorsBinaryArithmeticTest)
+    add_coverage(OperatorsIncrementDecrementTest)
+    add_coverage(OperatorsIOStreamTest)
+    add_coverage(OperatorsRelationalTest)
+    add_coverage(OperatorsUnaryArithmeticTest)
+    list(APPEND LCOV_REMOVE_PATTERNS "'/usr/*'" "'include/third_party/*'")
+    coverage_evaluate()
 endif()
+
+include(CTest)
+add_test(NAME ConstructorsTest
+        COMMAND $<TARGET_FILE:ConstructorsTest>)
+add_test(NAME FunctionsConversionTest
+        COMMAND $<TARGET_FILE:FunctionsConversionTest>)
+add_test(NAME FunctionsMathTest
+        COMMAND $<TARGET_FILE:FunctionsMathTest>)
+add_test(NAME FunctionsRandomTest
+        COMMAND $<TARGET_FILE:FunctionsRandomTest>)
+add_test(NAME OperatorsArithmeticAssignmentTest
+        COMMAND $<TARGET_FILE:OperatorsArithmeticAssignmentTest>)
+add_test(NAME OperatorsAssignmentTest
+        COMMAND $<TARGET_FILE:OperatorsAssignmentTest>)
+add_test(NAME OperatorsBinaryArithmeticTest
+        COMMAND $<TARGET_FILE:OperatorsBinaryArithmeticTest>)
+add_test(NAME OperatorsIncrementDecrementTest
+        COMMAND $<TARGET_FILE:OperatorsIncrementDecrementTest>)
+add_test(NAME OperatorsIOStreamTest
+        COMMAND $<TARGET_FILE:OperatorsIOStreamTest>)
+add_test(NAME OperatorsRelationalTest
+        COMMAND $<TARGET_FILE:OperatorsRelationalTest>)
+add_test(NAME OperatorsUnaryArithmeticTest
+        COMMAND $<TARGET_FILE:OperatorsUnaryArithmeticTest>)
