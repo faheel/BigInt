@@ -16,10 +16,10 @@ option(ENABLE_COVERAGE "Enable coverage build." OFF)
 
 set(COVERAGE_FLAG_CANDIDATES
 	# gcc and clang
-	"-O0 -g -fprofile-arcs -ftest-coverage"
+	"-fprofile-arcs -ftest-coverage"
 
 	# gcc and clang fallback
-	"-O0 -g --coverage"
+	"--coverage"
 )
 
 
