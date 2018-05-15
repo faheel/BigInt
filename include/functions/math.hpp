@@ -12,8 +12,10 @@
 #include <cstdlib>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 #include "functions/conversion.hpp"
+#include "functions/utility.hpp"
 
 
 /*
@@ -160,23 +162,38 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
 bool BigInt::is_probable_prime(size_t k) {
   #define COMPOSITE false
   #define PRIME true
-  // Little Fermat's Theorem
+  if (*this <= BigInt(3) || *this == BigInt(5)) {
+      return PRIME;
+  }
   srand(time(NULL));
   const BigInt ONE = 1;
+  const BigInt TWO = 2;
   BigInt a;
   while (k-- > 0) {
       // 1 <= a < n
-      a = BigInt(rand()+1) % *this-ONE;
+      a = BigInt(rand()+2) % *this-TWO;
       if (gcd(a, *this) != ONE) {
         return COMPOSITE;
       }
-
-      // a^n-1 != -1/+1 (mod n), then n is composite 
-      if (pow(a, this->to_int()-1) != ONE (% *this) || (pow(a, this->to_int()-1) != -ONE (% *this)) {
-        return COMPOSITE;
+      int s, m;
+      std::tie(s, m) = calculate_vars(*this);
+      // x = a^m%n
+      BigInt x = pow(a, m)%*this;
+      if (x == ONE || x == *this-ONE) {
+          continue;
+      }
+      for (int i = 0; i < s-1; i++) {
+          // x = x^2%n
+          x = pow(x, 2)%*this;
+          if (x == 1) {
+              return COMPOSITE;
+          } else if (x == *this-ONE) {
+              continue;
+          }
+          return COMPOSITE;
       }
   }
-  return COMPOSITE;
+  return PRIME;
 }
 
 
