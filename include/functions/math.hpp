@@ -158,24 +158,25 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
 }
 
 bool BigInt::is_probable_prime(size_t k) {
+  #define COMPOSITE false
+  #define PRIME true
   // Little Fermat's Theorem
   srand(time(NULL));
   const BigInt ONE = 1;
   BigInt a;
-  while (k > 0) {
+  while (k-- > 0) {
       // 1 <= a < n
       a = BigInt(rand()+1) % *this-ONE;
-
       if (gcd(a, *this) != ONE) {
-        return false;
+        return COMPOSITE;
       }
-      // a^n-1 % n == 1, then n is prime
-      if (pow(a, this->to_int()-1) % *this == ONE) {
-        return true;
+
+      // a^n-1 != -1/+1 (mod n), then n is composite 
+      if (pow(a, this->to_int()-1) != ONE (% *this) || (pow(a, this->to_int()-1) != -ONE (% *this)) {
+        return COMPOSITE;
       }
-      --k;
   }
-  return false;
+  return COMPOSITE;
 }
 
 

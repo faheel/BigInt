@@ -1,44 +1,69 @@
 language: cpp
-sudo: required
+sudo: false
+
+common_sources: &all_sources
+  - ubuntu-toolchain-r-test
+  - llvm-toolchain-trusty
+  - llvm-toolchain-trusty-4.0
+  - llvm-toolchain-trusty-5.0
+  - llvm-toolchain-trusty-6.0
 
 matrix:
   include:
-    # Linux GCC 6 build
+    # Linux GCC 5 build
     - os: linux
       compiler: gcc
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
+          sources: *all_sources
+          packages:
+            - g++-5
+      env:
+        - COMPILER='g++-5'
+
+    # Linux GCC 6 build
+    - os: linux
+      compiler: gcc
+      addons: &gcc6
+        apt:
+          sources: *all_sources
           packages:
             - g++-6
-            - lcov
       env:
         - COMPILER='g++-6'
 
     # Linux GCC 7 build
     - os: linux
       compiler: gcc
-      addons:
+      addons: &gcc7
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
+          sources: *all_sources
           packages:
             - g++-7
-            - lcov
       env:
         - COMPILER='g++-7'
+
+    # Linux GCC 8 build (with coverage)
+    - os: linux
+      compiler: gcc
+      addons: &gcc8
+        apt:
+          sources: *all_sources
+          packages:
+            - g++-8
+            - lcov
+      env:
+        - COMPILER='g++-8'
+        - COVERAGE=1
 
     # Linux Clang 4 build
     - os: linux
       compiler: clang
       addons:
         apt:
-          sources:
-            - llvm-toolchain-trusty-4.0
+          sources: *all_sources
           packages:
             - clang-4.0
-            - lcov
       env:
         - COMPILER='clang++-4.0'
 
@@ -47,13 +72,23 @@ matrix:
       compiler: clang
       addons:
         apt:
-          sources:
-            - llvm-toolchain-trusty-5.0
+          sources: *all_sources
           packages:
             - clang-5.0
-            - lcov
       env:
         - COMPILER='clang++-5.0'
+
+    # Linux Clang 6 build
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-6.0
+            - libstdc++-6-dev
+      env:
+        - COMPILER='clang++-6.0'
 
     # OS X Xcode8 GCC build
     - os: osx
@@ -83,27 +118,29 @@ matrix:
       env:
         - COMPILER='clang++'
 
-before_install:
-  - export CXX=${COMPILER}
-
 install:
   - mkdir -p tmp && cd tmp
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]
+    then
       CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.tar.gz"
       mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
       export PATH=tmp/cmake/bin:${PATH}
-    elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+    elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]
+    then
         which cmake || brew install cmake;
     fi
 
+before_script:
+  - export CXX=${COMPILER}
+  - cd ${TRAVIS_BUILD_DIR}
+
 script:
+  - make
   - |
-    cd ${TRAVIS_BUILD_DIR}
-    make
-    make test
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ "${COVERAGE}" == "1" ]]
     then
-      make coverage
-      bash <(curl -s https://codecov.io/bash) -X gcov
+      make coverage && bash <(curl -s https://codecov.io/bash) -X gcov
+    else
+      make test
     fi
