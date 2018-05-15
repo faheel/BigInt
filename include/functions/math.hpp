@@ -7,12 +7,10 @@
 #ifndef BIG_INT_MATH_FUNCTIONS_HPP
 #define BIG_INT_MATH_FUNCTIONS_HPP
 
-#include <string>
-#include <time.h>
-#include <cstdlib>
-#include <algorithm>
-#include <cmath>
-#include <iostream>
+
+#include <tuple>
+#include <random>
+#include <functional>
 
 #include "functions/conversion.hpp"
 #include "functions/utility.hpp"
@@ -159,24 +157,44 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
     return abs_num1;
 }
 
-bool BigInt::is_probable_prime(size_t k) {
+/*
+   	BigInt::is_probable_prime(size_t)
+	---------------------------------
+	Returns boolean representing the primality of the BigInt object that this method refers
+   	to using Rabin-Miller Primality testing.
+	NOTE: This test is probablisitic so it is not failproof. A composite number passes the test
+	for at most 1/4 of the possible bases. This is true for each iteration of the test, so the
+	Probability a composite number passes is 1/4^N or less, where N is equal to certainty	
+ */
+
+bool BigInt::is_probable_prime(size_t certainty) {
+  // The BigInt object that this method refers to will be referred to as n in comments
   #define COMPOSITE false
   #define PRIME true
+
   if (*this <= BigInt(3) || *this == BigInt(5)) {
       return PRIME;
   }
-  srand(time(NULL));
+
+  std::default_random_engine generator;
+  std::uniform_int_distribution<int> distribution(2, this->to_long_long()-2);
+  auto random_number = std::bind(distribution, generator);
+
   const BigInt ONE = 1;
   const BigInt TWO = 2;
   BigInt a;
-  while (k-- > 0) {
+  while (certainty-- > 0) {
       // 1 <= a < n
-      a = BigInt(rand()+2) % *this-TWO;
+      a = random_number();
+	  // If there exists an x > 1 such that a % x == 0 && n % x == 0
+	  // then n is composite 
       if (gcd(a, *this) != ONE) {
         return COMPOSITE;
       }
       int s, m;
-      std::tie(s, m) = calculate_vars(*this);
+	  // Calculates needed variables that fit the equation
+	  // n - 1 = 2^s*m such that s >= 1 and m is odd
+      std::tie(s, m) = calculate_vars(this->to_int());
       // x = a^m%n
       BigInt x = pow(a, m)%*this;
       if (x == ONE || x == *this-ONE) {
