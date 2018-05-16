@@ -194,7 +194,7 @@ bool BigInt::is_probable_prime(size_t certainty) {
       int s, m;
 	  // Calculates needed variables that fit the equation
 	  // n - 1 = 2^s*m such that s >= 1 and m is odd
-      std::tie(s, m) = calculate_vars(this->to_int());
+      std::tie(s, m) = calculate_vars(this->to_long_long());
       // x = a^m%n
       BigInt x = pow(a, m)%*this;
       if (x == ONE || x == *this-ONE) {

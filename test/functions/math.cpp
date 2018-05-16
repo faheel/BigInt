@@ -91,8 +91,8 @@ TEST_CASE("Base cases for pow()", "[functions][math][pow]") {
 }
 
 TEST_CASE("pow() with BigInt base", "[functions][math][pow]") {
-    BigInt num = 11;
-    REQUIRE(pow(num, 9) == 2357947691);
+    BigInt num = 11; 
+	REQUIRE(pow(num, 9) == 2357947691);
     num = -27;
     REQUIRE(pow(num, 16) == "79766443076872509863361");
     num = 174;
@@ -381,4 +381,15 @@ TEST_CASE("lcm()of big integers", "[functions][math][lcm][big]") {
         "773165023583543979273894307090377362282997909371974857157338418233214"
         "533220692127153044311875258011747917053108027629278373174251200266431"
         "428784066739966");
+}
+
+TEST_CASE("Base cases for is_probable_prime()", "[functions][math][is_probable_prime]") {
+	BigInt num = 1;
+	REQUIRE(num.is_probable_prime(25) == 1);
+	num = 2;
+	REQUIRE(num.is_probable_prime(25) == 1);
+	num = 3;
+	REQUIRE(num.is_probable_prime(25) == 1);
+	num = 5;
+	REQUIRE(num.is_probable_prime(25) == 1);
 }

@@ -120,11 +120,11 @@ bool is_power_of_10(const std::string& num){
     s and m come from the formula n-1 = 2^s*m, where m is odd and s >= 1
 */
 
-std::tuple<int, int> calculate_vars(int n) {
+std::tuple<int, int> calculate_vars(long long n) {
     int s = 1;
     int m = 1;
-    const int sentinel_value = n-1;
-    int calculated_value = 2;
+    const long long sentinel_value = n-1;
+    long long calculated_value = 2;
 
     while (sentinel_value >= calculated_value) {
         if (sentinel_value > calculated_value) {
