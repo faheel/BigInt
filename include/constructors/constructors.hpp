@@ -39,11 +39,9 @@ BigInt::BigInt(const BigInt& num) {
 */
 
 BigInt::BigInt(const long long& num) {
-    value = std::to_string(num);
-    if (num < 0) {
+    value = std::to_string(std::abs(num));
+    if (num < 0)
         sign = '-';
-        value = value.substr(1);    // remove minus sign from value
-    }
     else
         sign = '+';
 }
