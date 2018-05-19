@@ -100,6 +100,7 @@ class BigInt {
         int to_int() const;
         long to_long() const;
         long long to_long_long() const;
+        std::std::vector<uint64_t> to_base64();
 
         // Random number generating functions:
         friend BigInt big_random(size_t);

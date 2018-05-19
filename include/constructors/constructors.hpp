@@ -53,12 +53,7 @@ BigInt::BigInt(const std::string& num) {
     if (num[0] == '+' or num[0] == '-') {     // check for sign
         std::string num_magnitude = num.substr(1);
         if (is_valid_number(num_magnitude)) {
-            /*
-                TODO
-                ----
-                magnitude = convert_to_base_2_to_the_64(num_magnitude);
-            */
-            magnitude = {0};
+            magnitude = convert_to_base_64(num_magnitude);
             is_negative = num[0] == '-';
         }
         else {
@@ -67,12 +62,8 @@ BigInt::BigInt(const std::string& num) {
     }
     else {      // if no sign is specified
         if (is_valid_number(num)) {
-            /*
-                TODO
-                ----
-                magnitude = convert_to_base_2_to_the_64(num_magnitude);
-            */
-            magnitude = {0};
+            std::string num_magnitude(num);
+            magnitude = convert_to_base_64(num_magnitude);
             is_negative = false;    // positive by default
         }
         else {
