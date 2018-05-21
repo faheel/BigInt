@@ -58,4 +58,20 @@ long long BigInt::to_long_long() const {
     return std::stoll(this->to_string());
 }
 
+/*
+    to_base64
+    ---------
+    Convers a BigInt to its base64 representation
+*/
+
+std::vector<uint64_t> BigInt::to_base64() {
+    std::vector<uint64_t> magnitude;
+    BigInt max_number("18446744073709551616");  // 2^64 for base conversion
+    while (*this != 0) {
+        magnitude.push_back(*this % max_number);
+        *this /= max_number;
+    }
+    return magnitude;
+};
+
 #endif  // BIG_INT_CONVERSION_FUNCTIONS_HPP
