@@ -1,6 +1,7 @@
 #include <climits>
 #include <cmath>        // to check for conflicts
 #include <cstdlib>      // for abs of integer types
+#include <map>
 #include <random>
 
 #include "constructors/constructors.hpp"
@@ -194,6 +195,39 @@ TEST_CASE("Base cases for sqrt()", "[functions][math][sqrt]") {
     }
     catch (std::logic_error &e) {
         CHECK(e.what() == std::string("Cannot compute square root of a negative integer"));
+    }
+}
+
+TEST_CASE("sqrt() of perfect squares", "[functions][math][sqrt]") {
+    std::map<int, int> sqrt_map = {
+            {4,        2},
+            {9,        3},
+            {16,       4},
+            {25,       5},
+            {36,       6},
+            {49,       7},
+            {64,       8},
+            {81,       9},
+            {100,      10},
+            {121,      11},
+            {144,      12},
+            {169,      13},
+            {196,      14},
+            {225,      15},
+            {256,      16},
+            {1024,     32},
+            {1046529,  1023},
+            {1048576,  1024},
+            {6086089,  2467},
+            {6091024,  2468},
+            {11703241, 3421},
+            {11710084, 3422},
+            {25969216, 5096},
+            {25979409, 5097},
+    };
+
+    for (auto sqrt_pair : sqrt_map) {
+        REQUIRE(sqrt(BigInt(sqrt_pair.first)) == sqrt_pair.second);
     }
 }
 
