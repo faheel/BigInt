@@ -109,7 +109,7 @@ BigInt sqrt(const BigInt& num) {
     else if (num < 16)
         return 3;
 
-    BigInt sqrt_prev = 0;
+    BigInt sqrt_prev = -1;
     // The value for `sqrt_current` is chosen close to that of the actual
     // square root.
     // Since a number's square root has at least one less than half as many
