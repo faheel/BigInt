@@ -51,10 +51,11 @@ matrix:
           sources: *all_sources
           packages:
             - g++-8
-            - lcov
+            # - lcov
       env:
         - COMPILER='g++-8'
-        - COVERAGE=1
+        # disable coverage analysis for now
+        # - COVERAGE=1
 
     # Linux Clang 4 build
     - os: linux
