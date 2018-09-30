@@ -51,11 +51,10 @@ matrix:
           sources: *all_sources
           packages:
             - g++-8
-            # - lcov
+            - lcov
       env:
         - COMPILER='g++-8'
-        # disable coverage analysis for now
-        # - COVERAGE=1
+        - COVERAGE=1
 
     # Linux Clang 4 build
     - os: linux
@@ -137,11 +136,11 @@ before_script:
   - cd ${TRAVIS_BUILD_DIR}
 
 script:
-  - make
+  - make test
+
+after_success:
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ "${COVERAGE}" == "1" ]]
+    if [[ "${COVERAGE}" == "1" ]] && [[ "${TRAVIS_OS_NAME}" == "linux" ]]
     then
       make coverage && bash <(curl -s https://codecov.io/bash) -X gcov
-    else
-      make test
     fi
