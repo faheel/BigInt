@@ -178,14 +178,14 @@ bool BigInt::is_probable_prime(size_t certainty) {
 
   std::default_random_engine generator;
   std::uniform_int_distribution<int> distribution(2, this->to_long_long()-2);
-  auto random_number = std::bind(distribution, generator);
+  auto get_random_number = std::bind(distribution, generator);
 
   const BigInt ONE = 1;
   const BigInt TWO = 2;
-  BigInt a;
+  BigInt rand_num;
   while (certainty-- > 0) {
       // 1 <= a < n
-      a = random_number();
+      rand_num = get_random_number();
 	  // If there exists an x > 1 such that a % x == 0 && n % x == 0
 	  // then n is composite 
       if (gcd(a, *this) != ONE) {
