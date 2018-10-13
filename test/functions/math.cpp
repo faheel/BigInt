@@ -92,7 +92,7 @@ TEST_CASE("Base cases for pow()", "[functions][math][pow]") {
 
 TEST_CASE("pow() with BigInt base", "[functions][math][pow]") {
     BigInt num = 11; 
-	REQUIRE(pow(num, 9) == 2357947691);
+    REQUIRE(pow(num, 9) == 2357947691);
     num = -27;
     REQUIRE(pow(num, 16) == "79766443076872509863361");
     num = 174;
