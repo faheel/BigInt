@@ -128,11 +128,11 @@ std::tuple<int, int> calculate_vars(long long n) {
 
     while (sentinel_value >= calculated_value) {
         if (sentinel_value > calculated_value) {
-            s++;
-			long long spower = pow(2, s);
-			if (spower > sentinel_value) {
-				return std::make_tuple(0,0);	
-			}
+	    s++;
+	    long long spower = pow(2, s);
+	    if (spower > sentinel_value) {
+		return std::make_tuple(0,0);	
+	    }
             m = sentinel_value/spower;
             calculated_value = spower*m;
         } else if (sentinel_value == calculated_value) {
