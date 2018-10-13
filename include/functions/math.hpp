@@ -169,11 +169,9 @@ BigInt gcd(const BigInt &num1, const BigInt &num2){
 
 bool BigInt::is_probable_prime(size_t certainty) {
   // The BigInt object that this method refers to will be referred to as n in comments
-  #define COMPOSITE false
-  #define PRIME true
 
   if (*this <= BigInt(3) || *this == BigInt(5)) {
-      return PRIME;
+      return true;
   }
 
   std::default_random_engine generator;
@@ -189,7 +187,7 @@ bool BigInt::is_probable_prime(size_t certainty) {
 	  // If there exists an x > 1 such that a % x == 0 && n % x == 0
 	  // then n is composite 
       if (gcd(a, *this) != ONE) {
-        return COMPOSITE;
+        return false;
       }
       int s, m;
 	  // Calculates needed variables that fit the equation
@@ -204,14 +202,14 @@ bool BigInt::is_probable_prime(size_t certainty) {
           // x = x^2%n
           x = pow(x, 2)%*this;
           if (x == 1) {
-              return COMPOSITE;
+              return false;
           } else if (x == *this-ONE) {
               continue;
           }
-          return COMPOSITE;
+          return false;
       }
   }
-  return PRIME;
+  return true;
 }
 
 
