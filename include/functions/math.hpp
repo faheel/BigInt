@@ -182,19 +182,19 @@ bool BigInt::is_probable_prime(size_t certainty) {
   const BigInt TWO = 2;
   BigInt rand_num;
   while (certainty-- > 0) {
-      // 1 <= a < n
+      // 1 <= rand_num < n
       rand_num = get_random_number();
-	  // If there exists an x > 1 such that a % x == 0 && n % x == 0
+	  // If there exists an x > 1 such that rand_num % x == 0 && n % x == 0
 	  // then n is composite 
-      if (gcd(a, *this) != ONE) {
+      if (gcd(rand_num, *this) != ONE) {
         return false;
       }
       int s, m;
 	  // Calculates needed variables that fit the equation
 	  // n - 1 = 2^s*m such that s >= 1 and m is odd
       std::tie(s, m) = calculate_vars(this->to_long_long());
-      // x = a^m%n
-      BigInt x = pow(a, m)%*this;
+      // x = rand_num^m%n
+      BigInt x = pow(rand_num, m)%*this;
       if (x == ONE || x == *this-ONE) {
           continue;
       }
