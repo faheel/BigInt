@@ -393,3 +393,36 @@ TEST_CASE("Base cases for is_probable_prime()", "[functions][math][is_probable_p
 	num = 5;
 	REQUIRE(num.is_probable_prime(25) == 1);
 }
+
+TEST_CASE("is_probable_prime() for big integers true", "[functions][math][is_probable_prime]") {
+    BigInt num = 4361161843811;
+    REQUIRE(num.is_probable_prime(25) == 1);
+    num = 91584398720031;
+    REQUIRE(num.is_probable_prime(25) == 1);
+    num = "54362229927468991056799869539182953179604007";
+    REQUIRE(num.is_probable_prime(25) == 1);
+    num = "1141606828476848812192797260322842016771684147"; 
+    REQUIRE(num.is_probable_prime(25) == 1);
+    num = "237082482904158189833801188468727382999221896206963750677"; 
+    REQUIRE(num.is_probable_prime(25) == 1);
+    num = "4978732140987321986509824957843275042983659820346238764217"; 
+    REQUIRE(num.is_probable_prime(25) == 1);
+}
+
+TEST_CASE("is_probable_prime() for big integers false", "[functions][math][is_probable_prime]") {
+    BigInt num = 576308207413;
+    REQUIRE(num.is_probable_prime(25) == 0);
+    num = 648273642634986;
+    REQUIRE(num.is_probable_prime(25) == 0);
+    num = "328964398726983264982";     
+    REQUIRE(num.is_probable_prime(25) == 0);
+    num = "4079327665427094820942557"; 
+    REQUIRE(num.is_probable_prime(25) == 0);
+    num = "879654387682647825646328764";  
+    REQUIRE(num.is_probable_prime(25) == 0);
+    num = "98732243986019286982046325298743"; 
+    REQUIRE(num.is_probable_prime(25) == 0);
+    num = "589658224987973265974369876397863298796328749"; 
+    REQUIRE(num.is_probable_prime(25) == 0);
+
+}
