@@ -243,10 +243,10 @@ cmake --build . --config <configuration> # Default build
 cmake --build . --target <target> --config <configuration> # Other targets, such as
     # coverage or test. For testing, ctest is a better option.
 ```    
-* <options> are any options you pass to CMake (except CMAKE_BUILD_TYPE which doesn't work for multi-config generators anyways).
-* <VS Generator> is a visual studio generator such as those listed here.
-* <configuration> needs to be a valid CMake configuration (Debug, Release, DebWithRelInfo, MinSizeRel). If it is excluded, the default configuration is (usually) Debug.
-* <target> can be any build target. Eg for any target make <target>, you have to pass --target <target> to cmake --build.
+* `<options>` are any options you pass to CMake (except CMAKE_BUILD_TYPE which doesn't work for multi-config generators anyways).
+* `<VS Generator>` is a visual studio generator such as those listed here.
+* `<configuration>` needs to be a valid CMake configuration (Debug, Release, DebWithRelInfo, MinSizeRel). If it is excluded, the default configuration is (usually) Debug.
+* `<target>` can be any build target. Eg for any target make `<target>`, you have to pass --target `<target>` to cmake --build.
 
 In case your IDE does not support CMake directly, you will need to run `cmake`
 via the command line with the appropriate flags to generate the project files
