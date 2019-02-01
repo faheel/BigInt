@@ -23,22 +23,33 @@ const size_t MAX_RANDOM_LENGTH = 1000;
     Returns a random BigInt with a specific number of digits.
 */
 
-BigInt big_random(size_t num_digits = 0) {
-    std::random_device rand_generator;      // true random number generator
+std::random_device rd;
+std::mt19937 randfunc(rd());
+uint digits = uint(log10(ULLONG_MAX)) ;
+std::uniform_int_distribution<unsigned long long> distribution(0, pow(10, digits) -1);
 
+std::string rand_digits(){
+	  unsigned long long val = distribution(randfunc);
+	  std::string s = std::to_string(val);
+	  for (uint len = s.length(); len < digits; len++){
+	     s = std::string("0")  + s;
+	 }
+	 return s;
+}
+
+BigInt big_random(size_t num_digits = 0) {
     if (num_digits == 0)    // the number of digits were not specified
         // use a random number for it:
-        num_digits = 1 + rand_generator() % MAX_RANDOM_LENGTH;
+        num_digits = 1 + randfunc() % MAX_RANDOM_LENGTH;
 
     BigInt big_rand;
     big_rand.value = "";    // clear value to append digits
     while (big_rand.value.size() < num_digits)
-        big_rand.value += std::to_string(rand_generator());
+        big_rand.value += rand_digits();
     if (big_rand.value.size() != num_digits)
         big_rand.value.erase(num_digits);   // erase extra digits
 
     return big_rand;
 }
-
 
 #endif  // BIG_INT_RANDOM_FUNCTIONS_HPP
