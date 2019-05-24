@@ -74,8 +74,8 @@ BigInt big_random(const std::string& low, const std::string& high) {
 }
 
 /*
-      big_random (long, long)
-      ----------------------
+      big_random (long long, long long)
+      ---------------------------------
  */
 
 BigInt big_random(const long long& low, const long long& high) {
