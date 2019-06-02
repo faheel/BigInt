@@ -34,7 +34,7 @@ BigInt big_random(size_t num_digits = 0) {
     big_rand.value = "";    // clear value to append digits
 
     // ensure first digit is non-zero
-    big_rand.value += std::to_string(rand_generator() % 8 + 1);
+    big_rand.value += std::to_string(rand_generator() % 9 + 1);
     while (big_rand.value.size() < num_digits)
         big_rand.value += std::to_string(rand_generator());
     if (big_rand.value.size() != num_digits)
