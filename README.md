@@ -222,10 +222,10 @@ and more).
 
 ### Using the command line
 
-On Linux and macOS, you can compile and run the tests using the command line.
+On Linux and macOS, you can compile and run the tests using the command line from the project's root directory.
 * To compile the tests, run **`make`**.
 * To build and run the tests, run **`make test`**.
-* To generate the single-header file from the headers in the `include` folder, run **`make release`**
+* To generate the single-header file, run **`make release`**. This will appear in the `release` folder.
 
 ### Using an IDE that supports CMake
 
