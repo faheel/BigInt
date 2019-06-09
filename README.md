@@ -32,7 +32,7 @@
 
 ## Usage
 
-1. Download the [single-include header file][release-link] to a location under
+1. Download the [single-include header file][header-link] to a location under
     your include path. Then `#include` it in your code:
     ```c++
     #include "BigInt.hpp"   // the actual path may vary
@@ -222,9 +222,10 @@ and more).
 
 ### Using the command line
 
-On Linux and macOS, you can compile and run the tests using the command line.
+On Linux and macOS, you can compile and run the tests using the command line from the project's root directory.
 * To compile the tests, run **`make`**.
 * To build and run the tests, run **`make test`**.
+* To generate the single-include header file, run **`make release`**. The generated file will appear in the `release` folder.
 
 ### Using an IDE that supports CMake
 
@@ -261,3 +262,4 @@ This project is licensed under the terms of the [MIT license][license-link].
 [license-link]: https://github.com/faheel/BigInt/blob/master/LICENSE
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
 [contributing-link]: https://github.com/faheel/BigInt/blob/master/.github/CONTRIBUTING.md
+[header-link]: https://github.com/faheel/BigInt/releases/download/v0.4.0-dev/BigInt.hpp
