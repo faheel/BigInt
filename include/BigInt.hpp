@@ -102,6 +102,10 @@ class BigInt {
 
         // Random number generating functions:
         friend BigInt big_random(size_t);
+
+        friend BigInt big_random(const BigInt&, const BigInt&);
+        friend BigInt big_random(const std::string&, const std::string&);
+        friend BigInt big_random(const long long&, const long long&);
 };
 
 #endif  // BIG_INT_HPP
