@@ -24,25 +24,39 @@ const size_t MAX_RANDOM_LENGTH = 1000;
 */
 
 BigInt big_random(size_t num_digits = 0) {
-    std::random_device rand_generator;      // true random number generator
+    /**
+     * This generators needed to be created only once,
+     * because properly seeded std::mt19937 can generate
+     * 2^19937 - 1 potential states which is more than
+     * enough for most usecases 
+     */
 
-    if (num_digits == 0)    // the number of digits were not specified
+    // seed sequence, seeded with true random generator
+    // used for better entropy
+    static std::seed_seq sseq{std::random_device{}()};
+    // generator itself
+    static std::mt19937 gen{sseq};                      
+    static std::uniform_int_distribution<> digit_distr(0, 9);
+    static std::uniform_int_distribution<> first_digit_distr(-9, 9);
+    // number to generate
+    static BigInt big_rand;
+
+    if (num_digits == 0) {
+        // the number of digits were not specified
         // use a random number for it:
-        num_digits = 1 + rand_generator() % MAX_RANDOM_LENGTH;
+        num_digits = 1 + gen() % MAX_RANDOM_LENGTH;
+    }
 
-    BigInt big_rand;
-    big_rand.value = "";    // clear value to append digits
+    // first digit and sign
+    auto first_digit = first_digit_distr(gen);
+    big_rand.value = std::to_string(abs(first_digit));
+    big_rand.sign = first_digit < 0 ? '-' : '+';
 
-    // ensure that the first digit is non-zero
-    big_rand.value += std::to_string(1 + rand_generator() % 9);
-
+    // insert other digits
     while (big_rand.value.size() < num_digits)
-        big_rand.value += std::to_string(rand_generator());
-    if (big_rand.value.size() != num_digits)
-        big_rand.value.erase(num_digits);   // erase extra digits
+    big_rand.value += std::to_string(digit_distr(gen));
 
     return big_rand;
 }
-
 
 #endif  // BIG_INT_RANDOM_FUNCTIONS_HPP
