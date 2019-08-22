@@ -2,7 +2,6 @@
   <img alt="BigInt" src="logo.png">
 </p>
 <h3 align="center">Arbitrary-sized integer class for C++</h3>
-
 ---
 
 [![Release version][release-shield]][release-link]
@@ -200,14 +199,14 @@
 
 * #### Random
   * #### `big_random`
-    Get a random `BigInt`, that either has a random number of digits (up to
+    Get a random positive `BigInt`, that either has a random number of digits (up to
     1000), or a specific number of digits.
 
     ```c++
-    // get a random BigInt that has a random number of digits (up to 1000):
+    // get a random postive BigInt that has a random number of digits (up to 1000):
     big1 = big_random();
 
-    // get a random BigInt that has 12345 digits:
+    // get a random positive BigInt that has 12345 digits:
     big1 = big_random(12345);
     ```
 
