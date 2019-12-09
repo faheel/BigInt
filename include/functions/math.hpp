@@ -10,6 +10,7 @@
 #include <string>
 
 #include "functions/conversion.hpp"
+#include "functions/random.hpp"
 
 
 /*
@@ -247,5 +248,108 @@ BigInt lcm(const std::string& num1, const BigInt& num2){
     return lcm(BigInt(num1), num2);
 }
 
+/*
+    BigInt ModPow(BigInt base, BigInt exponent, BigInt modulus)
+    --------------------
+ */
+
+BigInt ModPow(BigInt base, BigInt exponent, BigInt modulus){
+    BigInt x = 1;
+    BigInt y = base;
+    while(exponent > 0){
+        if (exponent % 2 == 1){
+            x = (x * y) % modulus;
+        }
+        y = (y * y) % modulus;
+        exponent = exponent / 2;
+    }
+    return x % modulus;
+}
+
+/*
+    BigInt isJacobian(BigInt a, BigInt n)
+    ----------------------
+    calculate jacobian
+ */
+
+BigInt findJacobian(BigInt a, BigInt n){
+    if (a == 0){
+        return BigInt(0);//(0/n) = 0
+    }
+    int ans = 1;
+    if (a < 0){
+        a = -a; //(a/n) = (-a/n)*(-1/n)
+        if (n % 4 == 3){
+            ans = -ans; // (-1/n) = -1 if n = 3 (mod 4)
+        }
+    }
+    if (a == 1) {
+        return BigInt(ans); // (1/n) = 1
+    }
+    while(a != 0){
+        if (a < 0){
+            a = -a;// (a/n) = (-a/n)*(-1/n)
+            if (n % 4 == 3){
+                ans = -ans;// (-1/n) = -1 if n = 3 (mod 4)
+            }
+        }
+        while(a % 2 == 0) {
+            a = a / 2;
+            if (n % 8 == 3 || n % 8 == 5){
+                ans = -ans;
+            }
+        }
+        //swap
+        BigInt temp = a;
+        a = n;
+        n = temp;
+        if (a % 4 == 3 && n % 4 == 3){
+            ans = -ans;
+        }
+        a = a % n;
+        if (a > n / 2){
+            a = a - n;
+        }
+    }
+    if (n == 1){
+        return BigInt(ans);
+    }
+    return BigInt(0);
+}
+
+/*
+    bool BigInt::is_probable_prime(size_t certainty)
+    -------------------
+    Using Solovay-Strassen primality test.
+    Returns "true" with probability of 1 - (2^-certainty) * 100%
+*/
+
+bool BigInt::is_probable_prime(size_t certainty){
+    if(BigInt(value) < 2 || certainty == 0 || sign == '-' || (BigInt(value) != 2 && BigInt(value) % 2 == 0)){
+        return false;
+    }
+    if(certainty < 0){
+        throw std::invalid_argument("Error: certainty < 0. Please make certainty >= 0.");
+        return false;
+    }
+    
+    //Actual Algorithm
+    for(size_t i = 0; i < certainty; ++i){
+        BigInt a = 0;
+        while(a == 0 || a == 1){ // get value in range [2,n - 1]
+            a = big_random_range((BigInt(value) - 1));
+            strip_leading_zeroes(a.value);
+        }
+        BigInt x = (BigInt(value) + findJacobian(a, BigInt(value))) % BigInt(value);
+        BigInt power = ModPow(a, (BigInt(value) - 1) / 2, BigInt(value));
+        if(x == 0 || power != x){
+            return false;
+        }
+    }
+    return true;
+}
+
+
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
+
