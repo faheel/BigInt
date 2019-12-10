@@ -328,7 +328,7 @@ bool BigInt::is_probable_prime(size_t certainty){
     if(BigInt(value) < 2 || certainty == 0 || sign == '-' || (BigInt(value) != 2 && BigInt(value) % 2 == 0)){
         return false;
     }
-    if(certainty < 0){
+    if(certainty < 0){ // certainty can't be negative
         throw std::invalid_argument("Error: certainty < 0. Please make certainty >= 0.");
         return false;
     }
