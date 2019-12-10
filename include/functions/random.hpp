@@ -44,5 +44,53 @@ BigInt big_random(size_t num_digits = 0) {
     return big_rand;
 }
 
+/*
+    BigInt big_random_range(BigInt UpperBound)
+    ----------------------------------
+    Returns a random BigInt in range [0, UpperBound].
+ */
+
+BigInt big_random_range(BigInt UpperBound) { // range must be greater than 0
+    std::random_device rand_generator; // true random number generator
+    if(UpperBound.sign == '-'){
+        throw std::invalid_argument("Error: Please make UpperBound >= 0.");
+    }
+    BigInt big_rand;
+    big_rand.value = "";    // clear value to append digits
+    
+    size_t num_digits = UpperBound.value.size();
+    bool too_big = true;
+    size_t iter = 0;
+    std::string strValue = "";
+    while (iter < num_digits){
+        int randomDigit = rand_generator() % 10;
+        if(!too_big){
+            strValue += std::to_string(randomDigit);
+            iter = iter + 1;
+        }
+        else {
+            char comp = UpperBound.value[iter];
+            int UpperboundDigit = std::atoi(&comp);
+            if(randomDigit < UpperboundDigit){
+                too_big = false;
+                strValue += std::to_string(randomDigit);
+                iter = iter + 1;
+            }
+            else if(randomDigit > UpperboundDigit){
+                too_big = true;
+                strValue = ""; //clear number because it's too big
+                iter = 0;
+            }
+            else {
+                too_big = true;
+                strValue += std::to_string(randomDigit);
+                iter = iter + 1;
+            }
+        }
+    }
+    big_rand.value = strValue;
+    return big_rand;
+}
+
 
 #endif  // BIG_INT_RANDOM_FUNCTIONS_HPP
