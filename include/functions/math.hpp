@@ -64,6 +64,34 @@ BigInt pow(const BigInt& base, int exp) {
     return result * result_odd;
 }
 
+/* pow (BigInt, BigInt)
+   ----------------
+   Returns a BigInt equal to base^exp where exp is a BigInt
+*/
+
+BigInt pow(const BigInt& base, BigInt exp) {
+    if (exp < 0) {
+        if (base == 0)
+            throw std::logic_error("Cannot divide by zero");
+        return abs(base) == 1 ? base : 0;
+    }
+    if (exp == 0) {
+        if (base == 0)
+            throw std::logic_error("Zero cannot be raised to zero");
+        return 1;
+    }
+  
+    BigInt result = base, result_odd = 1;
+    while (exp > 1){
+        if (exp % 2 == 1)
+            result_odd *= result;
+        result *= result;
+        exp /= 2;
+    }
+
+    return result * result_odd;
+}
+
 
 /*
     pow (Integer)
@@ -272,6 +300,7 @@ bool BigInt::is_probable_prime(size_t certainty){
     
     //need to compute d and r such that d*2^r = n - 1.  where n = this
     BigInt d;
+    BigInt x;
     int r;
     d = maxRand;
     ++d;
@@ -280,33 +309,26 @@ bool BigInt::is_probable_prime(size_t certainty){
         ++r;
         d /= two;
     }
-    int intD = std::stoi(d.value);    
     while ( certainty-- > 0 ){
         //pick a random number 
         randNum = n_random(maxRand.value);
  
-        //there must be no gcd greater than one with a prime and any number
-        if (gcd(randNum, *this) != one) {
-            return false;
-        }
-      
-        BigInt x = pow(randNum, intD) % *this;
+        x = pow(randNum, d);
+        x = x % *this;
+        
         if (x == one || x == *this - one){
             continue;
         }    
 
         for( int i=0; i < r-1; i++){
             x = pow(x, 2) % *this;
-            if (x == 1){
-                return false;
-            }
-            else if (x == *this-one){
+            if (x == *this-one){
                 continue;
             }
-            return false;
 
 
         }
+        return false;
 
     }
     return true;
