@@ -26,6 +26,7 @@ TEST_CASE("Generate random BigInts having a specified number of digits",
 TEST_CASE("Test n_random", "[functions][random]"){
     std::string maxRand = "10";
     BigInt randVal;
+    int zeroA = 0;
     int oneA = 0;
     int twoA = 0;
     int threeA = 0;
@@ -39,7 +40,8 @@ TEST_CASE("Test n_random", "[functions][random]"){
     for(int i=0; i<300; i++){
         randVal = n_random(maxRand);
         REQUIRE(randVal <= maxRand);
-        REQUIRE(randVal >= 0);
+        REQUIRE(randVal >= 2);
+        if(randVal == 0) zeroA = 1;
         if(randVal == 1) oneA = 1;
         if(randVal == 2) twoA = 1;
         if(randVal == 3) threeA = 1;
@@ -51,7 +53,8 @@ TEST_CASE("Test n_random", "[functions][random]"){
         if(randVal == 9) nineA = 1;
         if(randVal == 10) tenA = 1;
     }
-    REQUIRE(oneA == 1);
+    REQUIRE(zeroA == 0);
+    REQUIRE(oneA == 0);
     REQUIRE(twoA == 1);
     REQUIRE(threeA == 1);
     REQUIRE(fourA == 1);
@@ -65,7 +68,7 @@ TEST_CASE("Test n_random", "[functions][random]"){
     for(int i=0; i<300; i++){
         randVal = n_random(maxRand);
         REQUIRE(randVal <= maxRand );
-        REQUIRE(randVal >= 0);
+        REQUIRE(randVal >= 2);
     }
 
 

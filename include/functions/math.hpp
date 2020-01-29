@@ -10,7 +10,7 @@
 #include <string>
 
 #include "functions/conversion.hpp"
-
+#include "functions/random.hpp"
 
 /*
     abs
@@ -264,8 +264,51 @@ bool BigInt::is_probable_prime(size_t certainty){
     if (*this % BigInt(2) == 0){
         return false;
     }
+   
+    const BigInt maxRand = *this - 2; //we later choose random value between 0 to n-1
+    const BigInt one = 1;
+    const BigInt two = 2;
+    BigInt randNum;
+    
+    //need to compute d and r such that d*2^r = n - 1.  where n = this
+    BigInt d;
+    int r;
+    d = maxRand;
+    ++d;
+    r = 0;
+    while( d % two == 0){
+        ++r;
+        d /= two;
+    }
+    int intD = std::stoi(d.value);    
+    while ( certainty-- > 0 ){
+        //pick a random number 
+        randNum = n_random(maxRand.value);
+ 
+        //there must be no gcd greater than one with a prime and any number
+        if (gcd(randNum, *this) != one) {
+            return false;
+        }
+      
+        BigInt x = pow(randNum, intD) % *this;
+        if (x == one || x == *this - one){
+            continue;
+        }    
 
-    BigInt randNum; 
+        for( int i=0; i < r-1; i++){
+            x = pow(x, 2) % *this;
+            if (x == 1){
+                return false;
+            }
+            else if (x == *this-one){
+                continue;
+            }
+            return false;
+
+
+        }
+
+    }
     return true;
 }
 

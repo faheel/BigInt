@@ -49,7 +49,7 @@ BigInt big_random(size_t num_digits = 0) {
 /*
     n_random (n)
     --------------
-    Returns a random BigInt from the range of 0 to n inclusive
+    Returns a random BigInt from the range of 2 to n inclusive
 */
 
 BigInt n_random(std::string val){
@@ -75,7 +75,24 @@ BigInt n_random(std::string val){
     while(*(randVal.begin()) == '0' && randVal.length() > 1){
         randVal.erase(randVal.begin());
     }
+   
     BigInt randomNum = randVal; 
+    
+    //if a 0 or 1 has been generated
+    if(randomNum == 0 || randomNum == 1){
+        if(val.length() == 1){
+            pushVal = rand() % (val[0] - 1) + 2;
+        }
+        else{
+            pushVal = rand() % 7 + 2;
+        }
+        randVal += std::to_string(pushVal);
+        randVal.erase(randVal.begin());
+        randomNum = randVal;
+    }
+
+
+
     return randomNum;
 }
 
