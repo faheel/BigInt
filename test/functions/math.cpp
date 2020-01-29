@@ -438,7 +438,7 @@ TEST_CASE("Even number cases for is_probable_prime()", "[functions][math][is_pro
 }
 
 TEST_CASE("Definitely composite numbers for is_probable_prime()", "[functions][math][is_probable_prime]"){
-    BigInt num = "576308207413";
+    BigInt num = 576308207413;
     REQUIRE(num.is_probable_prime(25) == 0);
     num = "648273642634986";
     REQUIRE(num.is_probable_prime(25) == 0);
@@ -455,7 +455,7 @@ TEST_CASE("Definitely composite numbers for is_probable_prime()", "[functions][m
 }
 
 TEST_CASE("Prime numbers for is_probable_prime()", "[functions][math][is_probable_prime]"){
-    BigInt num = "4361161843811";
+    BigInt num = 4361161843811;
     REQUIRE(num.is_probable_prime(25) == 1);
     num = "91584398720031";
     REQUIRE(num.is_probable_prime(25) == 1);
@@ -470,10 +470,6 @@ TEST_CASE("Prime numbers for is_probable_prime()", "[functions][math][is_probabl
     
     num = 31;
     REQUIRE(num.is_probable_prime(25) == 1);
-
-
-}
-
 
 
 }

@@ -263,7 +263,9 @@ bool BigInt::is_probable_prime(size_t certainty){
     //even numbers cannot be prime
     if (*this % BigInt(2) == 0){
         return false;
-    } 
+    }
+
+    BigInt randNum; 
     return true;
 }
 
