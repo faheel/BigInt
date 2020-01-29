@@ -305,6 +305,7 @@ bool BigInt::is_probable_prime(size_t certainty){
     d = maxRand;
     ++d;
     r = 0;
+    int continueWhile = 1;
     while( d % two == 0){
         ++r;
         d /= two;
@@ -319,15 +320,15 @@ bool BigInt::is_probable_prime(size_t certainty){
         if (x == one || x == *this - one){
             continue;
         }    
-
+        continueWhile = 0;
         for( int i=0; i < r-1; i++){
             x = pow(x, 2) % *this;
             if (x == *this-one){
-                continue;
+                continueWhile = 1;
+                break;
             }
-
-
         }
+        if(continueWhile) continue;
         return false;
 
     }
