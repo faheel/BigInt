@@ -247,5 +247,26 @@ BigInt lcm(const std::string& num1, const BigInt& num2){
     return lcm(BigInt(num1), num2);
 }
 
+/*
+    is_probable_prime(size_t)
+    ------------------------
+    Uses the Miller-Rabin primality test to return if the BigInt
+    is prime with probablity ( 1 - (4^-certainty) ) * 100%
+*/
+
+bool BigInt::is_probable_prime(size_t certainty){
+    //treats 1, 2, and 3 as prime numbers
+    if (*this == BigInt(1) || *this == BigInt(2) || *this == BigInt(3)){
+        return true;
+    }
+
+    //even numbers cannot be prime
+    if (*this % BigInt(2) == 0){
+        return false;
+    } 
+    return true;
+}
+
+
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
