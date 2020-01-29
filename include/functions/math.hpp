@@ -10,7 +10,7 @@
 #include <string>
 
 #include "functions/conversion.hpp"
-
+#include "functions/random.hpp"
 
 /*
     abs
@@ -56,6 +56,34 @@ BigInt pow(const BigInt& base, int exp) {
     BigInt result = base, result_odd = 1;
     while (exp > 1) {
         if (exp % 2)
+            result_odd *= result;
+        result *= result;
+        exp /= 2;
+    }
+
+    return result * result_odd;
+}
+
+/* pow (BigInt, BigInt)
+   ----------------
+   Returns a BigInt equal to base^exp where exp is a BigInt
+*/
+
+BigInt pow(const BigInt& base, BigInt exp) {
+    if (exp < 0) {
+        if (base == 0)
+            throw std::logic_error("Cannot divide by zero");
+        return abs(base) == 1 ? base : 0;
+    }
+    if (exp == 0) {
+        if (base == 0)
+            throw std::logic_error("Zero cannot be raised to zero");
+        return 1;
+    }
+  
+    BigInt result = base, result_odd = 1;
+    while (exp > 1){
+        if (exp % 2 == 1)
             result_odd *= result;
         result *= result;
         exp /= 2;
@@ -246,6 +274,67 @@ BigInt lcm(const long long& num1, const BigInt& num2){
 BigInt lcm(const std::string& num1, const BigInt& num2){
     return lcm(BigInt(num1), num2);
 }
+
+/*
+    is_probable_prime(size_t)
+    ------------------------
+    Uses the Miller-Rabin primality test to return if the BigInt
+    is prime with probablity ( 1 - (4^-certainty) ) * 100%
+*/
+
+bool BigInt::is_probable_prime(size_t certainty){
+    //treats 1, 2, and 3 as prime numbers
+    if (*this == BigInt(1) || *this == BigInt(2) || *this == BigInt(3)){
+        return true;
+    }
+
+    //even numbers cannot be prime
+    if (*this % BigInt(2) == 0){
+        return false;
+    }
+   
+    const BigInt maxRand = *this - 2; //we later choose random value between 0 to n-1
+    const BigInt one = 1;
+    const BigInt two = 2;
+    BigInt randNum;
+    
+    //need to compute d and r such that d*2^r = n - 1.  where n = this
+    BigInt d;
+    BigInt x;
+    int r;
+    d = maxRand;
+    ++d;
+    r = 0;
+    int continueWhile = 1;
+    while( d % two == 0){
+        ++r;
+        d /= two;
+    }
+    while ( certainty-- > 0 ){
+        //pick a random number 
+        randNum = n_random(maxRand.value);
+ 
+        x = pow(randNum, d);
+        x = x % *this;
+        
+        if (x == one || x == *this - one){
+            continue;
+        }    
+        continueWhile = 0;
+        for( int i=0; i < r-1; i++){
+            x = pow(x, 2) % *this;
+            if (x == *this-one){
+                continueWhile = 1;
+                break;
+            }
+        }
+        if(continueWhile) continue;
+        return false;
+
+    }
+    return true;
+}
+
 
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
