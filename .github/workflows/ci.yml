@@ -11,7 +11,7 @@ jobs:
     name: Unit tests
     strategy:
       matrix:
-        runs-on: [ubuntu-latest, macOS-latest, windows-latest]
+        runs-on: [ubuntu-latest, macOS-latest]
     runs-on: ${{ matrix.runs-on }}
     steps:
     - uses: actions/checkout@v2
