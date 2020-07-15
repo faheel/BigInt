@@ -15,11 +15,11 @@ BigInt64::BigInt64(const std::string& s){
 	if(s[0] == '-'){
 		this->negative = true;
 		this->positive = false;
-		newS = s.substr(1,s.length());
+		newS = s.substr(1,s.length()-1);
 	}else if ( s[0] == '+'){
 		this->negative = false;
 		this->positive = true;
-		newS = s.substr(1,s.length());
+		newS = s.substr(1,s.length()-1);
 	}else{
 		this->negative = false;
 		this->positive = true;
