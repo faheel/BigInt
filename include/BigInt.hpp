@@ -92,6 +92,9 @@ class BigInt {
 
         //Bitwise operators:
         BigInt operator&(const BigInt& num) const;
+        BigInt operator|(const BigInt& num) const;
+        BigInt operator^(const BigInt& num) const;
+        BigInt operator~() const;
 
         // I/O stream operators:
         friend std::istream& operator>>(std::istream&, BigInt&);
