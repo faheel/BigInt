@@ -47,7 +47,6 @@ BigInt& BigInt::operator|=(const BigInt& rhs) {
     *this = *this | rhs;
 
     return *this;
-    
 }
 
 
@@ -60,8 +59,7 @@ BigInt& BigInt::operator|=(const BigInt& rhs) {
 BigInt& BigInt::operator&=(const BigInt& rhs) {
     *this = *this & rhs;
 
-    return *this;
-    
+    return *this; 
 }
 
 
@@ -77,7 +75,6 @@ BigInt& BigInt::operator^=(const BigInt& rhs) {
     *this = *this ^ rhs;
 
     return *this;
-    
 }
 
 
@@ -116,7 +113,6 @@ BigInt& BigInt::operator|=(const long long& rhs) {
     *this = *this | rhs;
 
     return *this;
-    
 }
 
 
@@ -130,7 +126,6 @@ BigInt& BigInt::operator&=(const long long& rhs) {
     *this = *this & rhs;
 
     return *this;
-    
 }
 
 /*
@@ -144,7 +139,6 @@ BigInt& BigInt::operator^=(const long long& rhs) {
     *this = *this ^ rhs;
 
     return *this;
-    
 }
 
 /*
@@ -180,8 +174,7 @@ BigInt& BigInt::operator>>=(const std::string& rhs) {
 BigInt& BigInt::operator|=(const std::string& rhs) {
     *this = *this | rhs;
 
-    return *this;
-    
+    return *this;  
 }
 
 
@@ -195,7 +188,6 @@ BigInt& BigInt::operator&=(const std::string& rhs) {
     *this = *this & rhs;
 
     return *this;
-    
 }
 
 /*
@@ -208,8 +200,7 @@ BigInt& BigInt::operator&=(const std::string& rhs) {
 BigInt& BigInt::operator^=(const std::string& rhs) {
     *this = *this ^ rhs;
 
-    return *this;
-    
+    return *this;  
 }
 
 #endif  // BIG_INT_BITWISE_ASSIGNMENT_OPERATORS_HPP 

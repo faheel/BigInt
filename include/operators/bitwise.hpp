@@ -86,8 +86,7 @@ BigInt BigInt::operator|(const BigInt& rhs) const {
         left /= 2;   
         right /= 2;
     }
-    return result;
-    
+    return result; 
 }
 
 
@@ -122,7 +121,6 @@ BigInt BigInt::operator&(const BigInt& rhs) const {
         right /= 2;
     }
     return result;
-    
 }
 
 
@@ -161,7 +159,6 @@ BigInt BigInt::operator^(const BigInt& rhs) const {
         right /= 2;
     }
     return result;
-    
 }
 
 
@@ -194,7 +191,6 @@ BigInt BigInt::operator~() const {
         operand /= 2;   
     }
     return result;
-    
 }
 
 /*
