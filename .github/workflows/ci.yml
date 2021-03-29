@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: Unit tests
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, macOS-latest]
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Compile
+      shell: bash
+      run: make
+    - name: Run tests
+      shell: bash
+      run: make test
