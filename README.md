@@ -6,7 +6,7 @@
 ---
 
 [![Release version][release-shield]][release-link]
-[![Travis][travis-shield]][travis-link]
+[![GitHub CI][github-ci-shield]][github-ci-link]
 [![Codecov][codecov-shield]][codecov-link]
 [![Try it online][try-online-shield]][try-online-link]
 [![License][license-shield]][license-link]
@@ -252,8 +252,8 @@ This project is licensed under the terms of the [MIT license][license-link].
 
 [release-shield]: https://img.shields.io/github/release/faheel/BigInt/all.svg?style=for-the-badge
 [release-link]: https://github.com/faheel/BigInt/releases
-[travis-shield]: https://img.shields.io/travis/faheel/BigInt.svg?style=for-the-badge
-[travis-link]: https://travis-ci.org/faheel/BigInt
+[github-ci-shield]: https://img.shields.io/github/workflow/status/faheel/BigInt/CI?style=for-the-badge
+[github-ci-link]: https://github.com/faheel/BigInt/actions/workflows/ci.yml
 [codecov-shield]: https://img.shields.io/codecov/c/github/faheel/BigInt.svg?style=for-the-badge
 [codecov-link]: https://codecov.io/gh/faheel/BigInt
 [try-online-shield]: https://img.shields.io/badge/Try_it-Online-E91E63.svg?style=for-the-badge
