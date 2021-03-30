@@ -38,7 +38,10 @@ header_files="BigInt.hpp \
     operators/binary_arithmetic.hpp \
     operators/arithmetic_assignment.hpp \
     operators/increment_decrement.hpp \
-    operators/io_stream.hpp"
+    operators/io_stream.hpp \
+	operators/bitwise.hpp \
+	operators/bitwise_assignment.hpp"
+	
 
 # append the contents of each header file to the release file
 for file in $header_files

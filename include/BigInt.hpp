@@ -94,6 +94,41 @@ class BigInt {
         friend std::istream& operator>>(std::istream&, BigInt&);
         friend std::ostream& operator<<(std::ostream&, const BigInt&);
 
+        // Bitwise operators: 
+        BigInt operator<<(const BigInt&) const;
+        BigInt operator>>(const BigInt&) const;
+        BigInt operator|(const BigInt&) const;
+        BigInt operator&(const BigInt&) const;
+        BigInt operator^(const BigInt&) const;
+        BigInt operator<<(const long long&) const;
+        BigInt operator>>(const long long&) const;
+        BigInt operator|(const long long&) const;
+        BigInt operator&(const long long&) const;
+        BigInt operator^(const long long&) const;
+        BigInt operator<<(const std::string&) const;
+        BigInt operator>>(const std::string&) const;
+        BigInt operator|(const std::string&) const;
+        BigInt operator&(const std::string&) const;
+        BigInt operator^(const std::string&) const;
+        BigInt operator~() const;
+        
+        //Bitwise assignment operators: 
+        BigInt& operator<<=(const BigInt&);
+        BigInt& operator>>=(const BigInt&);
+        BigInt& operator|=(const BigInt&);
+        BigInt& operator&=(const BigInt&);
+        BigInt& operator^=(const BigInt&);
+        BigInt& operator<<=(const long long&);
+        BigInt& operator>>=(const long long&);
+        BigInt& operator|=(const long long&);
+        BigInt& operator&=(const long long&);
+        BigInt& operator^=(const long long&);
+        BigInt& operator<<=(const std::string&);
+        BigInt& operator>>=(const std::string&);
+        BigInt& operator|=(const std::string&);
+        BigInt& operator&=(const std::string&);
+        BigInt& operator^=(const std::string&);
+
         // Conversion functions:
         std::string to_string() const;
         int to_int() const;
