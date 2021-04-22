@@ -8,7 +8,7 @@
 #define BIG_INT_UTILITY_FUNCTIONS_HPP
 
 #include <tuple>
-
+#include <math.h>
 
 /*
     is_valid_number
@@ -108,6 +108,38 @@ bool is_power_of_10(const std::string& num){
             return false;
 
     return true;    // first digit is 1 and the following digits are all 0
+}
+
+
+/*
+    calculate_vars
+   	-------------- 
+    Calculates the s and m variables needed to complete Rabin Miller Primality
+    test.
+
+    s and m come from the formula n-1 = 2^s*m, where m is odd and s >= 1
+*/
+
+std::tuple<int, int> calculate_vars(long long n) {
+    int s = 1;
+    int m = 1;
+    const long long sentinel_value = n-1;
+    long long calculated_value = 2;
+
+    while (sentinel_value >= calculated_value) {
+        if (sentinel_value > calculated_value) {
+	    s++;
+	    long long spower = pow(2, s);
+	    if (spower > sentinel_value) {
+		return std::make_tuple(0,0);	
+	    }
+            m = sentinel_value/spower;
+            calculated_value = spower*m;
+        } else if (sentinel_value == calculated_value) {
+            return std::make_tuple(s, m);
+        }
+    }
+    return std::make_tuple(s, m);
 }
 
 #endif  // BIG_INT_UTILITY_FUNCTIONS_HPP
