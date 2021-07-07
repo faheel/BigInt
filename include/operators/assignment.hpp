@@ -1,7 +1,7 @@
-/*
-    ===========================================================================
-    Assignment operators
-    ===========================================================================
+/**
+ * @file operators/assignment.hpp
+ *
+ * @brief Assignment operators of BigInt
 */
 
 #ifndef BIG_INT_ASSIGNMENT_OPERATORS_HPP
@@ -11,11 +11,9 @@
 #include "constructors/constructors.hpp"
 
 
-/*
-    BigInt = BigInt
-    ---------------
-*/
-
+/**
+ *  @brief Assigns BigInt value to BigInt object 
+ */
 BigInt& BigInt::operator=(const BigInt& num) {
     value = num.value;
     sign = num.sign;
@@ -24,11 +22,11 @@ BigInt& BigInt::operator=(const BigInt& num) {
 }
 
 
-/*
-    BigInt = Integer
-    ----------------
-*/
-
+/**
+ *  @brief Assigns `long long` value to BigInt object 
+ *
+ *  Makes use of BigInt#BigInt(const long long &num)
+ */
 BigInt& BigInt::operator=(const long long& num) {
     BigInt temp(num);
     value = temp.value;
@@ -38,11 +36,11 @@ BigInt& BigInt::operator=(const long long& num) {
 }
 
 
-/*
-    BigInt = String
-    ---------------
-*/
-
+/**
+ *  @brief Assigns `std::string` value to BigInt object 
+ *
+ *  Makes use of BigInt#BigInt(const std::string &num)
+ */
 BigInt& BigInt::operator=(const std::string& num) {
     BigInt temp(num);
     value = temp.value;

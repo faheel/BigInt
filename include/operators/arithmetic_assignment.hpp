@@ -1,8 +1,7 @@
-/*
-    ===========================================================================
-    Arithmetic-assignment operators
-    ===========================================================================
-*/
+/**
+ * @file operators/arithmetic_assignment.hpp
+ * @brief Arithmetic-assignment operators
+ */
 
 #ifndef BIG_INT_ARITHMETIC_ASSIGNMENT_OPERATORS_HPP
 #define BIG_INT_ARITHMETIC_ASSIGNMENT_OPERATORS_HPP
@@ -13,11 +12,9 @@
 #include "operators/binary_arithmetic.hpp"
 
 
-/*
-    BigInt += BigInt
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator+(const BigInt &) const
+ */
 BigInt& BigInt::operator+=(const BigInt& num) {
     *this = *this + num;
 
@@ -25,11 +22,9 @@ BigInt& BigInt::operator+=(const BigInt& num) {
 }
 
 
-/*
-    BigInt -= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator-(const BigInt &) const
+ */
 BigInt& BigInt::operator-=(const BigInt& num) {
     *this = *this - num;
 
@@ -37,11 +32,9 @@ BigInt& BigInt::operator-=(const BigInt& num) {
 }
 
 
-/*
-    BigInt *= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator*(const BigInt &) const
+ */
 BigInt& BigInt::operator*=(const BigInt& num) {
     *this = *this * num;
 
@@ -49,11 +42,9 @@ BigInt& BigInt::operator*=(const BigInt& num) {
 }
 
 
-/*
-    BigInt /= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator/(const BigInt &) const
+ */
 BigInt& BigInt::operator/=(const BigInt& num) {
     *this = *this / num;
 
@@ -61,11 +52,9 @@ BigInt& BigInt::operator/=(const BigInt& num) {
 }
 
 
-/*
-    BigInt %= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator%(const BigInt &) const
+ */
 BigInt& BigInt::operator%=(const BigInt& num) {
     *this = *this % num;
 
@@ -73,11 +62,9 @@ BigInt& BigInt::operator%=(const BigInt& num) {
 }
 
 
-/*
-    BigInt += Integer
-    -----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator+(const long long &) const
+ */
 BigInt& BigInt::operator+=(const long long& num) {
     *this = *this + BigInt(num);
 
@@ -85,11 +72,9 @@ BigInt& BigInt::operator+=(const long long& num) {
 }
 
 
-/*
-    BigInt -= Integer
-    -----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator-(const long long &) const
+ */
 BigInt& BigInt::operator-=(const long long& num) {
     *this = *this - BigInt(num);
 
@@ -97,11 +82,9 @@ BigInt& BigInt::operator-=(const long long& num) {
 }
 
 
-/*
-    BigInt *= Integer
-    -----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator*(const long long &) const
+ */
 BigInt& BigInt::operator*=(const long long& num) {
     *this = *this * BigInt(num);
 
@@ -109,11 +92,9 @@ BigInt& BigInt::operator*=(const long long& num) {
 }
 
 
-/*
-    BigInt /= Integer
-    -----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator/(const long long &) const
+ */
 BigInt& BigInt::operator/=(const long long& num) {
     *this = *this / BigInt(num);
 
@@ -121,11 +102,9 @@ BigInt& BigInt::operator/=(const long long& num) {
 }
 
 
-/*
-    BigInt %= Integer
-    -----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator%(const long long &) const
+ */
 BigInt& BigInt::operator%=(const long long& num) {
     *this = *this % BigInt(num);
 
@@ -133,11 +112,9 @@ BigInt& BigInt::operator%=(const long long& num) {
 }
 
 
-/*
-    BigInt += String
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator+(const std::string &) const
+ */
 BigInt& BigInt::operator+=(const std::string& num) {
     *this = *this + BigInt(num);
 
@@ -145,11 +122,9 @@ BigInt& BigInt::operator+=(const std::string& num) {
 }
 
 
-/*
-    BigInt -= String
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator-(const std::string &) const
+ */
 BigInt& BigInt::operator-=(const std::string& num) {
     *this = *this - BigInt(num);
 
@@ -157,11 +132,9 @@ BigInt& BigInt::operator-=(const std::string& num) {
 }
 
 
-/*
-    BigInt *= String
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator*(const std::string &) const
+ */
 BigInt& BigInt::operator*=(const std::string& num) {
     *this = *this * BigInt(num);
 
@@ -169,11 +142,9 @@ BigInt& BigInt::operator*=(const std::string& num) {
 }
 
 
-/*
-    BigInt /= String
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator/(const std::string &) const
+ */
 BigInt& BigInt::operator/=(const std::string& num) {
     *this = *this / BigInt(num);
 
@@ -181,11 +152,9 @@ BigInt& BigInt::operator/=(const std::string& num) {
 }
 
 
-/*
-    BigInt %= String
-    ----------------
-*/
-
+/**
+ * @brief Shorthand for BigInt#operator%(const std::string &) const
+ */
 BigInt& BigInt::operator%=(const std::string& num) {
     *this = *this % BigInt(num);
 

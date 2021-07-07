@@ -1,7 +1,7 @@
-/*
-    ===========================================================================
-    Binary arithmetic operators
-    ===========================================================================
+/**
+ * @file operators/binary_arithmetic.hpp
+ *
+ * @brief Binary arithmetic operators for BigInt
 */
 
 #ifndef BIG_INT_BINARY_ARITHMETIC_OPERATORS_HPP
@@ -21,15 +21,16 @@
 #include "operators/relational.hpp"
 #include "operators/unary_arithmetic.hpp"
 
-const long long FLOOR_SQRT_LLONG_MAX = 3037000499;
+const long long FLOOR_SQRT_LLONG_MAX = 3037000499; /**< Square root of `LLONG_MAX` */
 
-
-/*
-    BigInt + BigInt
-    ---------------
-    The operand on the RHS of the addition is `num`.
+/**
+*   @brief Performs addition on two BigInt values 
+*
+*   Values added across by carry addition.
+*
+*   @param num is the BigInt on the right
+*   @return a BigInt containing the sum of the two values
 */
-
 BigInt BigInt::operator+(const BigInt& num) const {
     // if the operands are of opposite signs, perform subtraction
     if (this->sign == '+' and num.sign == '-') {
@@ -67,12 +68,15 @@ BigInt BigInt::operator+(const BigInt& num) const {
 }
 
 
-/*
-    BigInt - BigInt
-    ---------------
-    The operand on the RHS of the subtraction is `num`.
+/**
+*   @brief Performs subtraction on two BigInt values
+*
+*   Implemented using a borrowing-difference based algorithm.
+*
+*   @param num is the BigInt on the right
+*   @return a BigInt containing the difference of the second value from
+*       the first
 */
-
 BigInt BigInt::operator-(const BigInt& num) const {
     // if the operands are of opposite signs, perform addition
     if (this->sign == '+' and num.sign == '-') {
@@ -138,13 +142,14 @@ BigInt BigInt::operator-(const BigInt& num) const {
 }
 
 
-/*
-    BigInt * BigInt
-    ---------------
-    Computes the product of two BigInts using Karatsuba's algorithm.
-    The operand on the RHS of the product is `num`.
+/**
+*   @brief Performs multiplication on two BigInt values
+*
+*   Implemented using Karatsuba's algorithm.
+*
+*   @param num is the BigInt on the right
+*   @return a BigInt containing the product of the two numbers
 */
-
 BigInt BigInt::operator*(const BigInt& num) const {
     if (*this == 0 or num == 0)
         return BigInt(0);
@@ -211,13 +216,17 @@ BigInt BigInt::operator*(const BigInt& num) const {
 }
 
 
-/*
-    divide
-    ------
-    Helper function that returns the quotient and remainder on dividing the
-    dividend by the divisor, when the divisor is 1 to 10 times the dividend.
+/**
+*   @brief Helper function to perform division on two BigInt values
+*
+*   Does naive divisor addition until dividend is crossed. 
+*
+*   @param dividend is the BigInt value to be divided
+*   @param divisor if the BigInt value dividend is to be divided by
+*   @return an `std::tuple` of two BigInt values containing the quotient and remainder
+*   of the division performed.
+*   \relates BigInt
 */
-
 std::tuple<BigInt, BigInt> divide(const BigInt& dividend, const BigInt& divisor) {
     BigInt quotient, remainder, temp;
 
@@ -236,13 +245,14 @@ std::tuple<BigInt, BigInt> divide(const BigInt& dividend, const BigInt& divisor)
 }
 
 
-/*
-    BigInt / BigInt
-    ---------------
-    Computes the quotient of two BigInts using the long-division method.
-    The operand on the RHS of the division (the divisor) is `num`.
+/**
+*   @brief Performs integer division on two BigInt values and returns quotient
+*
+*   Uses the long-division method. Makes use of divide()
+*
+*   @param num (which is the divisor) is the BigInt on the right
+*   @return a BigInt containing the quotient of the division performed
 */
-
 BigInt BigInt::operator/(const BigInt& num) const {
     BigInt abs_dividend = abs(*this);
     BigInt abs_divisor = abs(num);
@@ -305,13 +315,12 @@ BigInt BigInt::operator/(const BigInt& num) const {
 }
 
 
-/*
-    BigInt % BigInt
-    ---------------
-    Computes the modulo (remainder on division) of two BigInts.
-    The operand on the RHS of the modulo (the divisor) is `num`.
+/**
+*   @brief Returns remainder after performing integer division (modulo) on the two BigInt values.
+*
+*   @param num (which is the divisor or modulus) is the BigInt on the right
+*   @return a BigInt containing the remainder of the division (or modulus operation) performed
 */
-
 BigInt BigInt::operator%(const BigInt& num) const {
     BigInt abs_dividend = abs(*this);
     BigInt abs_divisor = abs(num);
@@ -345,201 +354,241 @@ BigInt BigInt::operator%(const BigInt& num) const {
 }
 
 
-/*
-    BigInt + Integer
-    ----------------
-*/
-
+/**
+ * @brief Adds BigInt with `long long` value.
+ *
+ * Uses BigInt#operator+(const BigInt &) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `long long` value
+ * @return BigInt sum of two integers
+ */
 BigInt BigInt::operator+(const long long& num) const {
     return *this + BigInt(num);
 }
 
 
-/*
-    Integer + BigInt
-    ----------------
-*/
-
+/** 
+ * @brief Overloaded operator for adding BigInt to `long long`
+ *
+ * Used for `lhs` (`long long`) + `rhs` (BigInt)
+ */
 BigInt operator+(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) + rhs;
 }
 
 
-/*
-    BigInt - Integer
-    ----------------
-*/
-
+/**
+ * @brief Subtracts `long long` from BigInt value.
+ *
+ * Uses BigInt#operator-(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `long long` value
+ * @return BigInt difference of two integers
+ */
 BigInt BigInt::operator-(const long long& num) const {
     return *this - BigInt(num);
 }
 
 
-/*
-    Integer - BigInt
-    ----------------
-*/
-
+/** 
+ * @brief Overloaded operator for subtracting BigInt by `long long`
+ *
+ * Used for `lhs` (`long long`) - `rhs` (BigInt)
+ */
 BigInt operator-(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) - rhs;
 }
 
 
-/*
-    BigInt * Integer
-    ----------------
-*/
-
+/**
+ * @brief Perform multiplication of BigInt and `long long` value.
+ *
+ * Uses BigInt#operator*(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `long long` value
+ * @return BigInt product of two integers
+ */
 BigInt BigInt::operator*(const long long& num) const {
     return *this * BigInt(num);
 }
 
 
-/*
-    Integer * BigInt
-    ----------------
-*/
-
+/** 
+ * @brief Overloaded operator for multiplying `long long` and BigInt
+ *
+ * Used for `lhs` (`long long`) * `rhs` (BigInt)
+ */
 BigInt operator*(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) * rhs;
 }
 
 
-/*
-    BigInt / Integer
-    ----------------
-*/
-
+/**
+ * @brief Quotient of integer division of BigInt with `long long` value.
+ *
+ * Uses BigInt#operator/(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `long long` value
+ * @return BigInt quotient of two integers
+ */
 BigInt BigInt::operator/(const long long& num) const {
     return *this / BigInt(num);
 }
 
 
-/*
-    Integer / BigInt
-    ----------------
-*/
-
+/** 
+ * @brief Overloaded operator for integer dividing `long long` by BigInt
+ *
+ * Used for `lhs` (`long long`) / `rhs` (BigInt)
+ */
 BigInt operator/(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) / rhs;
 }
 
 
-/*
-    BigInt % Integer
-    ----------------
-*/
-
+/**
+ * @brief Remainder of integer division of BigInt with `long long` value (modulus) 
+ *
+ * Uses BigInt#operator%(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `long long` value (modulus)
+ * @return BigInt remainder of two integers
+ */
 BigInt BigInt::operator%(const long long& num) const {
     return *this % BigInt(num);
 }
 
 
-/*
-    Integer % BigInt
-    ----------------
-*/
-
+/** 
+ * @brief Overloaded operator for performing `long long` modulo BigInt
+ *
+ * Used for `lhs` (`long long`) % `rhs` (BigInt)
+ */
 BigInt operator%(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) % rhs;
 }
 
 
-/*
-    BigInt + String
-    ---------------
-*/
-
+/**
+ * @brief Adds BigInt with `std::string` value.
+ *
+ * Uses BigInt#operator+(const BigInt &) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `std::string` value
+ * @return BigInt sum of two integers
+ */
 BigInt BigInt::operator+(const std::string& num) const {
     return *this + BigInt(num);
 }
 
 
-/*
-    String + BigInt
-    ---------------
-*/
-
+/** 
+ * @brief Overloaded operator for adding BigInt to `std::string`
+ *
+ * Used for `lhs` (`std::string`) + `rhs` (BigInt)
+ */
 BigInt operator+(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) + rhs;
 }
 
 
-/*
-    BigInt - String
-    ---------------
-*/
-
+/**
+ * @brief Subtracts `std::string` from BigInt value.
+ *
+ * Uses BigInt#operator-(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `std::string` value
+ * @return BigInt difference of two integers
+ */
 BigInt BigInt::operator-(const std::string& num) const {
     return *this - BigInt(num);
 }
 
 
-/*
-    String - BigInt
-    ---------------
-*/
-
+/** 
+ * @brief Overloaded operator for subtracting BigInt by `std::string`
+ *
+ * Used for `lhs` (`std::string`) - `rhs` (BigInt)
+ */
 BigInt operator-(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) - rhs;
 }
 
 
-/*
-    BigInt * String
-    ---------------
-*/
-
+/**
+ * @brief Perform multiplication of BigInt and `std::string` value.
+ *
+ * Uses BigInt#operator*(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `std::string` value
+ * @return BigInt product of two integers
+ */
 BigInt BigInt::operator*(const std::string& num) const {
     return *this * BigInt(num);
 }
 
 
-/*
-    String * BigInt
-    ---------------
-*/
-
+/** 
+ * @brief Overloaded operator for multiplying `std::string` and BigInt
+ *
+ * Used for `lhs` (`std::string`) * `rhs` (BigInt)
+ */
 BigInt operator*(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) * rhs;
 }
 
 
-/*
-    BigInt / String
-    ---------------
-*/
-
+/**
+ * @brief Quotient of integer division of BigInt with `std::string` value.
+ *
+ * Uses BigInt#operator/(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `std::string` value
+ * @return BigInt quotient of two integers
+ */
 BigInt BigInt::operator/(const std::string& num) const {
     return *this / BigInt(num);
 }
 
 
-/*
-    String / BigInt
-    ---------------
-*/
-
+/** 
+ * @brief Overloaded operator for integer dividing `std::string` by BigInt
+ *
+ * Used for `lhs` (`std::string`) / `rhs` (BigInt)
+ */
 BigInt operator/(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) / rhs;
 }
 
 
-/*
-    BigInt % String
-    ---------------
-*/
-
+/**
+ * @brief Remainder of integer division of BigInt with `std::string` value (modulus) 
+ *
+ * Uses BigInt#operator%(const BigInt&) const after converting `num` to
+ * BigInt type.
+ *
+ * @param num is a `std::string` value (modulus)
+ * @return BigInt remainder of two integers
+ */
 BigInt BigInt::operator%(const std::string& num) const {
     return *this % BigInt(num);
 }
 
 
-/*
-    String % BigInt
-    ---------------
-*/
-
+/** 
+ * @brief Overloaded operator for performing `std::string` modulo BigInt
+ *
+ * Used for `lhs` (`std::string`) % `rhs` (BigInt)
+ */
 BigInt operator%(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) % rhs;
 }

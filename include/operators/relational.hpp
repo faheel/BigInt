@@ -1,9 +1,8 @@
-/*
-    ===========================================================================
-    Relational operators
-    ===========================================================================
-    All operators depend on the '<' and/or '==' operator(s).
-*/
+/**
+ * @file operators/relational.hpp
+ *
+ * @brief Defining the relational operators for BigInt
+ */
 
 #ifndef BIG_INT_RELATIONAL_OPERATORS_HPP
 #define BIG_INT_RELATIONAL_OPERATORS_HPP
@@ -17,26 +16,25 @@
     ----------------
 */
 
+/**
+ * @brief Equal To operator for two BigInt values
+ */
 bool BigInt::operator==(const BigInt& num) const {
     return (sign == num.sign) and (value == num.value);
 }
 
 
-/*
-    BigInt != BigInt
-    ----------------
-*/
-
+/**
+ * @brief Not Equal To operator for two BigInt values
+ */
 bool BigInt::operator!=(const BigInt& num) const {
     return !(*this == num);
 }
 
 
-/*
-    BigInt < BigInt
-    ---------------
-*/
-
+/**
+ * @brief Less than operator for two BigInt values
+ */
 bool BigInt::operator<(const BigInt& num) const {
     if (sign == num.sign) {
         if (sign == '+') {
@@ -53,271 +51,217 @@ bool BigInt::operator<(const BigInt& num) const {
 }
 
 
-/*
-    BigInt > BigInt
-    ---------------
-*/
-
+/**
+ * @brief Greater than operator for two BigInt values
+ */
 bool BigInt::operator>(const BigInt& num) const {
     return !((*this < num) or (*this == num));
 }
 
 
-/*
-    BigInt <= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Less than equal to operator for two BigInt values
+ */
 bool BigInt::operator<=(const BigInt& num) const {
     return (*this < num) or (*this == num);
 }
 
 
-/*
-    BigInt >= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Greater than equal to operator for two BigInt values
+ */
 bool BigInt::operator>=(const BigInt& num) const {
     return !(*this < num);
 }
 
 
-/*
-    BigInt == Integer
-    -----------------
-*/
-
+/**
+ * @brief Equal To operator for BigInt vs `long long`
+ */
 bool BigInt::operator==(const long long& num) const {
     return *this == BigInt(num);
 }
 
 
-/*
-    Integer == BigInt
-    -----------------
-*/
-
+/**
+ * @brief Equal To operator for `long long` vs BigInt
+ */
 bool operator==(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) == rhs;
 }
 
 
-/*
-    BigInt != Integer
-    -----------------
-*/
-
+/**
+ * @brief Not Equal To operator for BigInt vs `long long`
+ */
 bool BigInt::operator!=(const long long& num) const {
     return !(*this == BigInt(num));
 }
 
 
-/*
-    Integer != BigInt
-    -----------------
-*/
-
+/**
+ * @brief Not Equal To operator for `long long` vs BigInt
+ */
 bool operator!=(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) != rhs;
 }
 
 
-/*
-    BigInt < Integer
-    ----------------
-*/
-
+/**
+ * @brief Less Than operator for BigInt vs `long long`
+ */
 bool BigInt::operator<(const long long& num) const {
     return *this < BigInt(num);
 }
 
 
-/*
-    Integer < BigInt
-    ----------------
-*/
-
+/**
+ * @brief Less Than operator for `long long` vs BigInt
+ */
 bool operator<(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) < rhs;
 }
 
 
-/*
-    BigInt > Integer
-    ----------------
-*/
-
+/**
+ * @brief Greater Than operator for BigInt vs `long long`
+ */
 bool BigInt::operator>(const long long& num) const {
     return *this > BigInt(num);
 }
 
 
-/*
-    Integer > BigInt
-    ----------------
-*/
-
+/**
+ * @brief Greater Than operator for `long long` vs BigInt 
+ */
 bool operator>(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) > rhs;
 }
 
 
-/*
-    BigInt <= Integer
-    -----------------
-*/
-
+/**
+ * @brief Less Than Equal To operator for BigInt vs `long long`
+ */
 bool BigInt::operator<=(const long long& num) const {
     return !(*this > BigInt(num));
 }
 
 
-/*
-    Integer <= BigInt
-    -----------------
-*/
-
+/**
+ * @brief Less Than Equal To operator for `long long` vs BigInt 
+ */
 bool operator<=(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) <= rhs;
 }
 
 
-/*
-    BigInt >= Integer
-    -----------------
-*/
-
+/**
+ * @brief Greater Than Equal To operator for BigInt vs `long long`
+ */
 bool BigInt::operator>=(const long long& num) const {
     return !(*this < BigInt(num));
 }
 
 
-/*
-    Integer >= BigInt
-    -----------------
-*/
-
+/**
+ * @brief Greater Than Equal To operator for `long long` vs BigInt 
+ */
 bool operator>=(const long long& lhs, const BigInt& rhs) {
     return BigInt(lhs) >= rhs;
 }
 
 
-/*
-    BigInt == String
-    ----------------
-*/
-
+/**
+ * @brief Equal To operator for BigInt vs `std::string`
+ */
 bool BigInt::operator==(const std::string& num) const {
     return *this == BigInt(num);
 }
 
 
-/*
-    String == BigInt
-    ----------------
-*/
-
+/**
+ * @brief Equal To operator for `std::string` vs BigInt
+ */
 bool operator==(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) == rhs;
 }
 
 
-/*
-    BigInt != String
-    ----------------
-*/
-
+/**
+ * @brief Not Equal To operator for BigInt vs `std::string`
+ */
 bool BigInt::operator!=(const std::string& num) const {
     return !(*this == BigInt(num));
 }
 
 
-/*
-    String != BigInt
-    ----------------
-*/
-
+/**
+ * @brief Not Equal To operator for `std::string` vs BigInt
+ */
 bool operator!=(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) != rhs;
 }
 
 
-/*
-    BigInt < String
-    ---------------
-*/
-
+/**
+ * @brief Less Than operator for BigInt vs `std::string`
+ */
 bool BigInt::operator<(const std::string& num) const {
     return *this < BigInt(num);
 }
 
 
-/*
-    String < BigInt
-    ---------------
-*/
-
+/**
+ * @brief Less Than operator for `std::string` vs BigInt
+ */
 bool operator<(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) < rhs;
 }
 
 
-/*
-    BigInt > String
-    ---------------
-*/
-
+/**
+ * @brief Greater Than operator for BigInt vs `std::string`
+ */
 bool BigInt::operator>(const std::string& num) const {
     return *this > BigInt(num);
 }
 
 
-/*
-    String > BigInt
-    ---------------
-*/
-
+/**
+ * @brief Greater Than operator for `std::string` vs BigInt 
+ */
 bool operator>(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) > rhs;
 }
 
 
-/*
-    BigInt <= String
-    ----------------
-*/
-
+/**
+ * @brief Less Than Equal To operator for BigInt vs `std::string`
+ */
 bool BigInt::operator<=(const std::string& num) const {
     return !(*this > BigInt(num));
 }
 
 
-/*
-    String <= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Less Than Equal To operator for `std::string` vs BigInt 
+ */
 bool operator<=(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) <= rhs;
 }
 
 
-/*
-    BigInt >= String
-    ----------------
-*/
-
+/**
+ * @brief Greater Than Equal To operator for BigInt vs `std::string`
+ */
 bool BigInt::operator>=(const std::string& num) const {
     return !(*this < BigInt(num));
 }
 
 
-/*
-    String >= BigInt
-    ----------------
-*/
-
+/**
+ * @brief Greater Than Equal To operator for `std::string` vs BigInt 
+ */
 bool operator>=(const std::string& lhs, const BigInt& rhs) {
     return BigInt(lhs) >= rhs;
 }

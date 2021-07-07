@@ -1,8 +1,8 @@
-/*
-    ===========================================================================
-    I/O stream operators
-    ===========================================================================
-*/
+/**
+ * @file operators/io_stream.hpp
+ *
+ * @brief I/O stream operators for BigInt
+ */
 
 #ifndef BIG_INT_IO_STREAM_OPERATORS_HPP
 #define BIG_INT_IO_STREAM_OPERATORS_HPP
@@ -12,11 +12,9 @@
 #include "operators/assignment.hpp"
 
 
-/*
-    BigInt from input stream
-    ------------------------
-*/
-
+/**
+ * @brief Get BigInt from the input stream
+ */
 std::istream& operator>>(std::istream& in, BigInt& num) {
     std::string input;
     in >> input;
@@ -26,11 +24,9 @@ std::istream& operator>>(std::istream& in, BigInt& num) {
 }
 
 
-/*
-    BigInt to output stream
-    -----------------------
-*/
-
+/**
+ * @brief Put BigInt into the output stream
+ */
 std::ostream& operator<<(std::ostream& out, const BigInt& num) {
     if (num.sign == '-')
         out << num.sign;

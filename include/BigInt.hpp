@@ -1,21 +1,25 @@
-/*
-    ===========================================================================
-    BigInt
-    ===========================================================================
-    Definition for the BigInt class.
-*/
+/**
+ * @file BigInt.hpp
+ *
+ * @brief Contains class declaration for BigInt
+ */
 
 #ifndef BIG_INT_HPP
 #define BIG_INT_HPP
 
 #include <iostream>
 
+/**
+ * @brief Class that contains an arbitrarily sized integer. 
+ */
 class BigInt {
+
     std::string value;
     char sign;
 
     public:
-        // Constructors:
+
+        // Constructors 
         BigInt();
         BigInt(const BigInt&);
         BigInt(const long long&);

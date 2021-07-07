@@ -1,7 +1,7 @@
-/*
-    ===========================================================================
-    Increment and decrement operators
-    ===========================================================================
+/**
+ * @file operators/increment_decrement.hpp
+ *
+ * @brief Increment and decrement operators for BigInt
 */
 
 #ifndef BIG_INT_INCREMENT_DECREMENT_OPERATORS_HPP
@@ -14,12 +14,9 @@
 #include "operators/binary_arithmetic.hpp"
 
 
-/*
-    Pre-increment
-    -------------
-    ++BigInt
-*/
-
+/**
+ * @brief Pre-increments the BigInt by 1
+ */
 BigInt& BigInt::operator++() {
     *this += 1;
 
@@ -27,12 +24,9 @@ BigInt& BigInt::operator++() {
 }
 
 
-/*
-    Pre-decrement
-    -------------
-    --BigInt
+/**
+ * @brief Pre-decrements the BigInt by 1
 */
-
 BigInt& BigInt::operator--() {
     *this -= 1;
 
@@ -40,12 +34,9 @@ BigInt& BigInt::operator--() {
 }
 
 
-/*
-    Post-increment
-    --------------
-    BigInt++
-*/
-
+/**
+ * @brief Post-increments the BigInt by 1
+ */
 BigInt BigInt::operator++(int) {
     BigInt temp = *this;
     *this += 1;
@@ -54,12 +45,9 @@ BigInt BigInt::operator++(int) {
 }
 
 
-/*
-    Post-decrement
-    --------------
-    BigInt--
-*/
-
+/**
+ * @brief Post-decrements the BigInt by 1
+ */
 BigInt BigInt::operator--(int) {
     BigInt temp = *this;
     *this -= 1;

@@ -1,8 +1,8 @@
-/*
-    ===========================================================================
-    Utility functions
-    ===========================================================================
-*/
+/**
+ * @file functions/utility.hpp
+ *
+ * @brief Contains some utility functions
+ */
 
 #ifndef BIG_INT_UTILITY_FUNCTIONS_HPP
 #define BIG_INT_UTILITY_FUNCTIONS_HPP
@@ -10,12 +10,12 @@
 #include <tuple>
 
 
-/*
-    is_valid_number
-    ---------------
-    Checks whether the given string is a valid integer.
-*/
-
+/**
+ * @brief Checks if `std::string` value is a valid integer
+ *
+ * @param num `std::string` to be checked for integer validity
+ * @return bool with True if `num` is valid
+ */
 bool is_valid_number(const std::string& num) {
     for (char digit : num)
         if (digit < '0' or digit > '9')
@@ -25,12 +25,11 @@ bool is_valid_number(const std::string& num) {
 }
 
 
-/*
-    strip_leading_zeroes
-    --------------------
-    Strip the leading zeroes from a number represented as a string.
-*/
-
+/**
+ * @brief Removes leading zeroes from an `std::string` integer
+ *
+ * @param num `std::string` representing an integer
+ */
 void strip_leading_zeroes(std::string& num) {
     size_t i;
     for (i = 0; i < num.size(); i++)
@@ -50,30 +49,40 @@ void strip_leading_zeroes(std::string& num) {
     Adds a given number of leading zeroes to a string-represented integer `num`.
 */
 
+/**
+ * @brief Adds leading zeros to `std::string` value
+ *
+ * @param num `std::string` containing the integer value
+ * @param num_zeroes `size_t` specifying number of zeroes to be added
+ */
 void add_leading_zeroes(std::string& num, size_t num_zeroes) {
     num = std::string(num_zeroes, '0') + num;
 }
 
 
-/*
-    add_trailing_zeroes
-    -------------------
-    Adds a given number of trailing zeroes to a string-represented integer `num`.
-*/
-
+/**
+ * @brief Adds trailing zeros to `std::string` value
+ *
+ * @param num `std::string` containing the integer value
+ * @param num_zeroes `size_t` specifying number of zeroes to be added
+ */
 void add_trailing_zeroes(std::string& num, size_t num_zeroes) {
     num += std::string(num_zeroes, '0');
 }
 
 
-/*
-    get_larger_and_smaller
-    ----------------------
-    Identifies the given string-represented integers as `larger` and `smaller`,
-    padding the smaller number with leading zeroes to make it equal in length to
-    the larger number.
-*/
-
+/**
+ * @brief Returns `std::string` parameters in order of value
+ *
+ * Identifies the given `std::string` represented integers as *larger* and
+ * *smaller*, and pads the smaller number with leading zeroes to make it equal in length
+ * to the larger number.
+ *
+ * @param num1 the first `std::string` parameter
+ * @param num2 the second `std::string` parameter
+ * @return `std::tuple` with two values, first value being the larger
+ * parameter and the second value being the smaller parameter
+ */
 std::tuple<std::string, std::string> get_larger_and_smaller(const std::string& num1,
         const std::string& num2) {
     std::string larger, smaller;
@@ -94,12 +103,14 @@ std::tuple<std::string, std::string> get_larger_and_smaller(const std::string& n
 }
 
 
-/*
-    is_power_of_10
-    ----------------------
-    Checks whether a string-represented integer is a power of 10.
-*/
-
+/**
+ * @brief Checks if a `std::string` value is a power of ten
+ *
+ * The number **should** be of the 10* regex form.
+ *
+ * @param num `std::string` to be checked for validity
+ * @return `bool` with True if `num` is a power of ten.
+ */
 bool is_power_of_10(const std::string& num){
     if (num[0] != '1')
         return false;
