@@ -265,4 +265,4 @@ This project is licensed under the terms of the [MIT license][license-link].
 [license-link]: https://github.com/faheel/BigInt/blob/master/LICENSE
 [out_of_range-exception]: http://en.cppreference.com/w/cpp/error/out_of_range
 [contributing-link]: https://github.com/faheel/BigInt/blob/master/.github/CONTRIBUTING.md
-[header-link]: https://github.com/faheel/BigInt/releases/download/v0.4.0-dev/BigInt.hpp
+[header-link]: https://github.com/faheel/BigInt/releases/download/v0.5.0-dev/BigInt.hpp
