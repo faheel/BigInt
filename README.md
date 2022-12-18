@@ -7,6 +7,7 @@
 
 [![Release version][release-shield]][release-link]
 [![GitHub CI][github-ci-shield]][github-ci-link]
+[![CodeFactor][codefactor-shield]][codefactor-link]
 [![Codecov][codecov-shield]][codecov-link]
 [![Try it online][try-online-shield]][try-online-link]
 [![License][license-shield]][license-link]
@@ -252,11 +253,13 @@ This project is licensed under the terms of the [MIT license][license-link].
 
 [release-shield]: https://img.shields.io/github/release/faheel/BigInt/all.svg?style=for-the-badge
 [release-link]: https://github.com/faheel/BigInt/releases
-[github-ci-shield]: https://img.shields.io/github/workflow/status/faheel/BigInt/CI?style=for-the-badge
+[github-ci-shield]: https://img.shields.io/github/actions/workflow/status/faheel/BigInt/ci.yml?branch=master&style=for-the-badge
 [github-ci-link]: https://github.com/faheel/BigInt/actions/workflows/ci.yml
+[codefactor-shield]: https://img.shields.io/codefactor/grade/github/faheel/BigInt?style=for-the-badge
+[codefactor-link]: https://codefactor.io/repository/github/faheel/bigint
 [codecov-shield]: https://img.shields.io/codecov/c/github/faheel/BigInt.svg?style=for-the-badge
 [codecov-link]: https://codecov.io/gh/faheel/BigInt
-[try-online-shield]: https://img.shields.io/badge/Try_it-Online-E91E63.svg?style=for-the-badge
+[try-online-shield]: https://img.shields.io/badge/Wandbox-Try_it_online-E91E63.svg?style=for-the-badge
 [try-online-link]: https://wandbox.org/permlink/3Zlo2EDmgilQPTKc
 [license-shield]: https://img.shields.io/github/license/faheel/BigInt.svg?style=for-the-badge
 [license-link]: https://github.com/faheel/BigInt/blob/master/LICENSE
