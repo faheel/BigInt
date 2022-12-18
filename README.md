@@ -35,11 +35,13 @@
 
 1. Download the [single-include header file][header-link] to a location under
     your include path. Then `#include` it in your code:
+
     ```c++
     #include "BigInt.hpp"   // the actual path may vary
     ```
 
 1. Create objects of the `BigInt` class, and do what you got to do!
+
     ```c++
     BigInt big1 = 1234567890, big2;
     big2 = "9876543210123456789098765432101234567890";
@@ -53,8 +55,10 @@
 ### Operators
 
 * #### Assignment: `=`
+
   The second operand can either be a `BigInt`, an integer (up to `long long`)
   or a string (`std::string` or a string literal).
+
   ```c++
   big1 = 1234567890;
   big1 = "123456789012345678901234567890";
@@ -62,14 +66,17 @@
   ```
 
 * #### Unary arithmetic: `+`, `-`
+
   ```c++
   big1 = +big2;   // doesn't return the absolute value
   big1 = -big2;
   ```
 
 * #### Binary arithmetic: `+`, `-`, `*`, `/`, `%`
+
   One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
   integer (up to `long long`) or a string (`std::string` or a string literal).
+
   ```c++
   big1 = big2 + 1234567890;
   big1 = big2 - "123456789012345678901234567890";
@@ -79,8 +86,10 @@
   ```
 
 * #### Arithmetic-assignment: `+=`, `-=`, `*=`, `/=`, `%=`
+
   The second operand can either be a `BigInt`, an integer (up to `long long`)
   or a string (`std::string` or a string literal).
+
   ```c++
   big1 += big2;
   big1 -= 1234567890;
@@ -90,6 +99,7 @@
   ```
 
 * #### Increment and decrement: `++`, `--`
+
   ```c++
   big1 = ++big2;   // pre-increment
   big1 = --big2;   // pre-decrement
@@ -99,8 +109,10 @@
   ```
 
 * #### Relational: `<`, `>`, `<=`, `>=`, `==`, `!=`
+
   One of the operands has to be a `BigInt` and the other can be a `BigInt`, an
   integer (up to `long long`) or a string (`std::string` or a string literal).
+
   ```c++
   if (big1 < 1234567890
       or big1 > "123456789012345678901234567890"
@@ -113,6 +125,7 @@
   ```
 
 * #### I/O stream: `<<`, `>>`
+
   ```c++
   std::cout << big1 << ", " << big2 << "\n";
   output_file << big1 << ", " << big2 << "\n";
@@ -124,6 +137,7 @@
 ### Functions
 
 * #### Conversion: `to_string`, `to_int`, `to_long`, `to_long_long`
+
   Convert a `BigInt` to either a `string`, `int`, `long`, or `long long`.
 
   **Note**: If the `BigInt` is beyond the range of the target type, an
@@ -142,6 +156,7 @@
 * #### Math
 
   * #### `abs`
+
     Get the absolute value of a `BigInt`.
 
     ```c++
@@ -149,6 +164,7 @@
     ```
 
   * #### `big_pow10`
+
     Get a `BigInt` equal to _10<sup>exp</sup>_.
 
     ```c++
@@ -156,6 +172,7 @@
     ```
 
   * #### `gcd`
+
     Get the greatest common divisor (GCD aka. HCF) of two `BigInt`s. One of the
     arguments can be an integer (up to `long long`) or a string (`std::string`
     or a string literal).
@@ -169,6 +186,7 @@
     ```
 
   * #### `lcm`
+
     Get the least common multiple (LCM) of two `BigInt`s. One of the arguments
     can be an integer (up to `long long`) or a string (`std::string` or a
     string literal).
@@ -182,6 +200,7 @@
     ```
 
   * #### `pow`
+
     Get the value of _base<sup>exp</sup>_ as a `BigInt`. The base can either be
     a `BigInt`, an integer (up to `long long`) or a string (`std::string` or a
     string literal).
@@ -193,6 +212,7 @@
     ```
 
   * #### `sqrt`
+
     Get the integer square root of a `BigInt`.
 
     ```c++
@@ -200,7 +220,9 @@
     ```
 
 * #### Random
+
   * #### `big_random`
+
     Get a random `BigInt`, that either has a random number of digits (up to
     1000), or a specific number of digits.
 
@@ -224,6 +246,7 @@ and more).
 ### Using the command line
 
 On Linux and macOS, you can compile and run the tests using the command line from the project's root directory.
+
 * To compile the tests, run **`make`**.
 * To build and run the tests, run **`make test`**.
 * To generate the single-include header file, run **`make release`**. The generated file will appear in the `release` folder.
@@ -249,7 +272,6 @@ how to contribute to the project.
 ## License
 
 This project is licensed under the terms of the [MIT license][license-link].
-
 
 [release-shield]: https://img.shields.io/github/release/faheel/BigInt/all.svg?style=for-the-badge
 [release-link]: https://github.com/faheel/BigInt/releases
