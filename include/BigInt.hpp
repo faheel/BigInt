@@ -102,6 +102,9 @@ class BigInt {
 
         // Random number generating functions:
         friend BigInt big_random(size_t);
+
+        //Math
+        bool is_probable_prime(size_t);
 };
 
 #endif  // BIG_INT_HPP
