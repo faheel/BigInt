@@ -247,5 +247,60 @@ BigInt lcm(const std::string& num1, const BigInt& num2){
     return lcm(BigInt(num1), num2);
 }
 
+/*
+    decimal(BigInt, BigInt, Integer)
+    -------------------
+*/
+BigInt decimal(const BigInt& divisor, const BigInt& dividend, const long long& max_length = 10){
+    BigInt result;
+    BigInt decimal_divisor = divisor % dividend;
+    int current;
+    
+    while (decimal_divisor % dividend != 0 and result.to_string().length() < max_length){
+        decimal_divisor *= 10;
+        current = (decimal_divisor / dividend).to_int();
+        decimal_divisor %= dividend;
+        result *= 10;
+        result += current;
+    }
+    return result;
+}
+
+
+/*
+    decimal(String, BigInt, Integer)
+    -------------------
+*/
+BigInt decimal(std::string divisor, BigInt dividend, long long max_length = 10){
+    return decimal(BigInt(divisor), dividend);
+}
+
+
+/*
+    decimal(Integer, BigInt, Integer)
+    -------------------
+*/
+BigInt decimal(long long divisor, BigInt dividend, long long max_length = 10){
+    return decimal(BigInt(divisor), dividend);
+}
+
+
+/*
+    decimal(BigInt, String, Integer)
+    -------------------
+*/
+BigInt decimal(BigInt divisor, std::string dividend, long long max_length = 10){
+    return decimal(divisor, BigInt(dividend));
+}
+
+
+/*
+    decimal(BigInt, Integer, Integer)
+    -------------------
+*/
+BigInt decimal(BigInt divisor, long long dividend, long long max_length = 10){
+    return decimal(divisor, BigInt(dividend));
+}
+
 
 #endif  // BIG_INT_MATH_FUNCTIONS_HPP
