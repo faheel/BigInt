@@ -176,10 +176,15 @@ BigInt BigInt::operator~() const {
     {
         throw std::invalid_argument("Operator '~' is undefined on negative operand");
     }
+    else if(*this == 0)
+    {
+        return 1;
+    }
+
     BigInt operand = *this;
     BigInt result = 0; 
     BigInt increment = 1;
-    
+
     while (operand > 0)
     {
         bool lowest_bit = (operand % 2 == 1);

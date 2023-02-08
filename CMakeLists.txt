@@ -68,6 +68,14 @@ add_executable(OperatorsUnaryArithmeticTest
         test/operators/unary_arithmetic.cpp)
 target_link_libraries(OperatorsUnaryArithmeticTest TestRunner)
 
+add_executable(OperatorsBitwiseTest
+        test/operators/bitwise.cpp)
+target_link_libraries(OperatorsBitwiseTest TestRunner)
+
+add_executable(OperatorsBitwiseAssignmentTest
+        test/operators/bitwise_assignment.cpp)
+target_link_libraries(OperatorsBitwiseAssignmentTest TestRunner)
+
 if(ENABLE_COVERAGE)
     # Include code coverage module
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
@@ -83,6 +91,8 @@ if(ENABLE_COVERAGE)
     add_coverage(OperatorsIOStreamTest)
     add_coverage(OperatorsRelationalTest)
     add_coverage(OperatorsUnaryArithmeticTest)
+    add_coverage(OperatorsBitwiseTest)
+    add_coverage(OperatorsBitwiseAssignmentTest)
     list(APPEND LCOV_REMOVE_PATTERNS "'/usr/*'" "'include/third_party/*'")
     coverage_evaluate()
 endif()
@@ -110,3 +120,7 @@ add_test(NAME OperatorsRelationalTest
         COMMAND $<TARGET_FILE:OperatorsRelationalTest>)
 add_test(NAME OperatorsUnaryArithmeticTest
         COMMAND $<TARGET_FILE:OperatorsUnaryArithmeticTest>)
+add_test(NAME OperatorsBitwiseTest
+        COMMAND $<TARGET_FILE:OperatorsBitwiseTest>)
+add_test(NAME OperatorsBitwiseAssignmentTest
+        COMMAND $<TARGET_FILE:OperatorsBitwiseAssignmentTest>)
