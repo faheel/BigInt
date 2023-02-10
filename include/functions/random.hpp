@@ -45,4 +45,24 @@ BigInt big_random(size_t num_digits = 0) {
 }
 
 
+/*
+    big_random (low, high)
+    -----------------------
+    Returns a random BigInt such that low <= BigInt <= high
+*/
+
+BigInt big_random(size_t low = 0, size_t high) {
+    std::random_device rand_generator;      // true random number generator
+
+    num_digits = 1 + rand_generator() % high.value.size();
+
+    BigInt big_rand;
+    big_rand.value = "";    // clear value to append digits
+
+    while (big_rand.value > low && big_rand.value < high)
+        big_rand.value += std::to_string(rand_generator());
+
+    return big_rand;
+}
+
 #endif  // BIG_INT_RANDOM_FUNCTIONS_HPP
