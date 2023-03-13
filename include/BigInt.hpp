@@ -102,6 +102,11 @@ class BigInt {
 
         // Random number generating functions:
         friend BigInt big_random(size_t);
+        friend BigInt big_random_range(BigInt UpperBound);
+    
+        //is_probable_prime:
+        bool is_probable_prime(size_t certainty);
 };
 
 #endif  // BIG_INT_HPP
+
