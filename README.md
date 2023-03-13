@@ -260,6 +260,19 @@ On Linux and macOS, you can compile and run the tests using the command line fro
 Then you can simply select which target (unit test) you want to build/run, and
 your IDE will do the rest.
 
+For example in visual studio you might run these commands:
+```
+mkdir build && cd build
+cmake -D<options> -G<VS Generator> ..
+cmake --build . --config <configuration> # Default build
+cmake --build . --target <target> --config <configuration> # Other targets, such as
+    # coverage or test. For testing, ctest is a better option.
+```    
+* `<options>` are any options you pass to CMake (except CMAKE_BUILD_TYPE which doesn't work for multi-config generators anyways).
+* `<VS Generator>` is a visual studio generator such as those listed here.
+* `<configuration>` needs to be a valid CMake configuration (Debug, Release, DebWithRelInfo, MinSizeRel). If it is excluded, the default configuration is (usually) Debug.
+* `<target>` can be any build target. Eg for any target make `<target>`, you have to pass --target `<target>` to cmake --build.
+
 In case your IDE does not support CMake directly, you will need to run `cmake`
 via the command line with the appropriate flags to generate the project files
 for your IDE. Give it a try, it's not supposed to be hard!
