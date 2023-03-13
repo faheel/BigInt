@@ -1,7 +1,7 @@
-/*
-    ===========================================================================
-    Random number generating functions for BigInt
-    ===========================================================================
+/**
+ * @file functions/random.hpp
+ *
+ * @brief Random BigInt generating functions
 */
 
 #ifndef BIG_INT_RANDOM_FUNCTIONS_HPP
@@ -12,17 +12,26 @@
 
 #include "BigInt.hpp"
 
-// when the number of digits are not specified, a random value is used for it
-// which is kept below the following:
-const size_t MAX_RANDOM_LENGTH = 1000;
+/** when the number of digits are not specified, a random value is used for it
+* which is kept below `MAX_RANDOM_LENGTH`
+*/
+const size_t MAX_RANDOM_LENGTH = 1000; 
 
 
-/*
+/**
     big_random (num_digits)
     -----------------------
     Returns a random BigInt with a specific number of digits.
 */
 
+/**
+ * @brief Generates a random BigInt with a specificied number of digits
+ *
+ * @param num_digits `int` specifying number of digits in BigInt. It is optional.
+ * @return BigInt with `num_digits` number of digits
+ *
+ * \note if num_digits is not specified, the BigInt will have a random length.
+ */
 BigInt big_random(size_t num_digits = 0) {
     std::random_device rand_generator;      // true random number generator
 
