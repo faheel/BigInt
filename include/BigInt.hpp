@@ -102,6 +102,10 @@ class BigInt {
 
         // Random number generating functions:
         friend BigInt big_random(size_t);
+        friend BigInt n_random(std::string);
+
+        //Primality test
+        bool is_probable_prime(size_t);
 };
 
 #endif  // BIG_INT_HPP
