@@ -45,7 +45,12 @@ BigInt pow(const BigInt& base, int exp) {
     if (exp < 0) {
         if (base == 0)
             throw std::logic_error("Cannot divide by zero");
-        return abs(base) == 1 ? base : 0;
+        if (base == 1 || exp % 2 == 0)
+            return 1;
+        else if (base == -1)
+            return exp % 2 == 0 ? 1 : -1;
+        else
+            return 0;
     }
     if (exp == 0) {
         if (base == 0)

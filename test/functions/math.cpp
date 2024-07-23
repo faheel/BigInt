@@ -86,9 +86,11 @@ TEST_CASE("Base cases for pow()", "[functions][math][pow]") {
     REQUIRE(pow("1",  0) == 1);
     REQUIRE(pow("1",  1) == 1);
 
+    REQUIRE(pow("-1", -2) ==  1);
     REQUIRE(pow("-1", -1) == -1);
     REQUIRE(pow("-1",  0) ==  1);
     REQUIRE(pow("-1",  1) == -1);
+    REQUIRE(pow("-1",  2) ==  1);
 }
 
 TEST_CASE("pow() with BigInt base", "[functions][math][pow]") {
